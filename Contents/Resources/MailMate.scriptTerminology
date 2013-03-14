@@ -1,0 +1,24 @@
+{
+    // Classes = {
+    //     NSApplication = {
+    //         Description = "MailMate's top-level object.";
+    //         Name = application;
+    //         PluralName = applications;
+    //     };
+    // };
+	Commands = {
+		OpenLocation = {
+			Description = "Open an URL";
+			Name = "open location";
+			Arguments = {
+				trust = {
+					Description = "whether the creator of the URL can be trusted";
+					Name = "trust";
+				};
+			};
+			UnnamedArgument = { Description = "url to open, should start with mid:, cid:, message:, or mailto:";};
+		};
+	};
+	Description = "AppleScript commands and classes specific to MailMate.";
+	Name = "MailMate suite";
+}

@@ -1,0 +1,91 @@
+{
+	name = "Preview at Right";
+	displayToolbar = 1;
+	rootViewer =
+	{
+		viewerType = "MmSplitView";
+		orientation = "horizontal";
+		identifier = "mainOutline"; //"mainSplit"; -- mainOutline is a special value (FIXME: rename it or come up with a different system, e.g., allowing multiple 'mainOutline's)
+		collapsibleSubview = 2; // Incomplete support -- no way to get it back (1 = first, 2 = last)
+		children =
+		(
+			{
+				viewerType = "MmBoxView";
+				orientation = "vertical";
+				children =
+				(
+					{
+						identifier = "headersEditor";
+						viewerType = "MmHeadersEditor";
+						sources = ( { sourceIdentifier = "mainOutline"; } );
+
+						// Which headers are available and which should be shown by default
+						headers =
+						(
+							{
+								headerName = 'To';
+								type = 'multipleAddresses';
+							},
+							{
+								headerName = 'Cc';
+								type = 'multipleAddresses';
+							},
+							{
+								headerName = 'Bcc';
+								type = 'multipleAddresses';
+							},
+							{
+								headerName = 'Reply-To';
+								type = 'singleAddress';
+							},
+							{
+								headerName = 'Subject';
+								type = 'plain';
+							},
+							{
+								headerName = 'Tags';
+								header = '##tags';
+								type = 'multipleTags';
+							},
+						);
+					},
+					{
+						// identifier = "statusBar";
+						viewerType = "MmComposerStatusBar";
+						sources = ( { sourceIdentifier = "mainOutline"; } );
+					},
+					{	viewerType = "MmSeparatorView"; },
+					{
+						identifier = "messageEditor";
+						viewerType = "MmMessageTextView";
+						sources = ( { sourceIdentifier = "mainOutline"; } );
+					},
+				);
+			},
+			{
+				identifier = "messageBox";
+				viewerType = "MmBoxView";
+				orientation = "vertical";
+				toggleMenuTitle = "Preview";
+				toggleKeyEquivalent = "^~@p";
+				children = (
+					{
+						identifier = "securityView";
+						viewerType = "MmSecurityView";
+						sources = ( { sourceIdentifier = "mainOutline"; } );
+						transformation = "$mainOutline.filter(##security-problem exists)";
+					},
+					{	viewerType = "MmSeparatorView"; showWithViews = ( "securityView" ); },
+					{
+						identifier = "messageView";
+						viewerType = "MmWebView";
+						sources = ( { sourceIdentifier = "mainOutline"; } );
+						minWidth = 175;
+						minHeight = 50;
+						storeScrollLocationDisabled = 1;
+					},
+				);
+			}
+		);
+	};
+}

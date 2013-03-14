@@ -1,0 +1,9 @@
+{	name    = 'HTML to Canonical';
+	events  = ( 'email.reply', 'email.forward' );
+	input   = 'html';
+	output  = 'canonical';
+	select  = 'content-type.type = text and content-type.subtype = html';
+	script  = '#!/usr/bin/env bash\ntidy --quiet yes --wrap 0 --input-encoding utf8 --output-encoding utf8 --force-output 1 --show-warnings no | "$MM_SHARED_SUPPORT/bin/html2text.py" --body-width=0\n';
+	uuid    = 'FEDE3122-0975-4B47-8788-5FDD7D157F37';
+	disabled = 0;
+}

@@ -1,0 +1,7 @@
+{
+	sentMessage =
+	{
+		query = '$Msgs.filter(#relayed exists)';
+		// soundPath = '?'; // Currently no default sound...
+	};
+}

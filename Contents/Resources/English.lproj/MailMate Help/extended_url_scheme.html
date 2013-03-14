@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Extended mailto URL scheme</title>
+</head>
+
+<body>
+<h1 id='extended__url_scheme'>Extended <code>mailto:</code> URL scheme</h1>
+
+<p>MailMate supports the <a href='http://tools.ietf.org/html/rfc6068'><code>mailto:</code> URL scheme</a> which can be used to create new messages. For example, the following link creates a message with recipient, subject, and default body text:</p>
+
+<pre><code>	mailto:me@example.com?subject=Test&amp;body=Body%20text</code></pre>
+
+<p>This can be used within HTML pages as a link, but it can also be called directly, for example, using the <code>open</code> command in the Terminal:</p>
+
+<pre><code>	open &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&quot;</code></pre>
+
+<p>Using the <code>open</code> command it is also possible to specify the application to be used when creating the message:</p>
+
+<pre><code>	open -a MailMate &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&quot;</code></pre>
+
+<p>Otherwise, the default email application is used (this can be configured in the General preferences pane in Apple Mail or MailMate).</p>
+
+<p>MailMate also extends the <code>mailto:</code> syntax to include some additional special parameters. These are <code>attachment-url</code> and <code>send-now</code>. For security reasons they are ignored except if the URL is provided via AppleScript. It can be done as follows using a single line in the Terminal:</p>
+
+<pre><code>	osascript -e &#39;open location &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&amp;attachment-url=file:///full/path/to/file.txt&amp;send-now=yes&quot; with trust&#39;</code></pre>
+
+<p>The “<code>with trust</code>” part of the AppleScript command tells MailMate to not ignore the special parameters.</p>
+
+<p>Note that it is also possible (and easier for shell scripts) to create messages using the <a href='emate.html'><code>emate</code></a> command. The <code>emate</code> command is a simple interface to the <code>mailto:</code> URLs described above.</p>
+
+<h2 id='hacking_integration_with_third_party_applications'>Hacking Integration with Third Party Applications</h2>
+
+<p>In practice, the extended <code>mailto:</code> URL scheme should allow MailMate to be integrated with applications which need to send messages with attachments. Unfortunately this often requires the developers of the applications to add scripts for MailMate. Some example scripts are included with MailMate and they can be enabled as described below using the Terminal (assuming all applications are in <code>/Applications</code>). Note that updating the applications involved or moving MailMate is going to break the symbolic links created.</p>
+
+<h3 id='ical'>iCal</h3>
+
+<pre><code>mv /Applications/iCal.app/Contents/Resources/Scripts/Mail.scpt /Applications/iCal.app/Contents/Resources/Scripts/MailBackup.scpt
+ln -s /Applications/MailMate.app/Contents/SharedSupport/Other/iCal/Mail.scpt /Applications/iCal.app/Contents/Resources/Scripts/</code></pre>
+
+<p><em>Note:</em> The above does not work on Mountain Lion since Apple no longer uses the <code>Mail.scpt</code> file. It is unknown whether or not a workaround exists.</p>
+
+<h3 id='busycal'>BusyCal</h3>
+
+<pre><code>mv /Applications/BusyCal.app/Contents/Resources/Scripts/MailAttachmentScript.scpt /Applications/BusyCal.app/Contents/Resources/Scripts/MailAttachmentScriptBackup.scpt
+ln -s /Applications/MailMate.app/Contents/SharedSupport/Other/BusyCal/MailAttachmentScript.scpt /Applications/BusyCal.app/Contents/Resources/Scripts/</code></pre>
+
+<p><em>Note:</em> The above only works for BusyCal 1.6.</p>
+
+<h3 id='launchbar'>Launchbar</h3>
+
+<p>An example script for LaunchBar is also included. It should be used with the “Preferences ▸ Actions ▸ Options ▸ Create Emails with” preferences item. The script is located here: <code>MailMate.app/Contents/SharedSupport/Other/Launchbar/SentHandlers.scpt</code>. LaunchBar should then allow you to create an email with any selected files attached (selected in the Finder).</p>
+
+<p><em>Note:</em> This has not been recently tested.</p>
+</body>
+</html>

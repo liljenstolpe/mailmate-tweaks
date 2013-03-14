@@ -1,0 +1,66 @@
+{
+	name = "Dual Mode";
+	enabled = 1;
+	rootViewer =
+	{
+		viewerType = "MmMultiView";
+		children =
+		(
+			{
+				viewerType = "MmSplitView";
+				orientation = "horizontal";
+				children =
+				(
+					{
+						viewerType = "MmBoxView";
+						orientation = "vertical";
+						defaultSize = 200;
+						minWidth = 100;
+						autoresize = 0;
+						toggleMenuTitle = "Mailboxes";
+						toggleKeyEquivalent = "^~@d";
+
+						dragRect = { width = 16.0; height = 16.0; location = "bottomRight"; };
+
+						children =
+						(
+							{
+								identifier = "mailboxesOutline";
+								viewerType = "MmMailboxesOutlineView";
+								stickyMessages = 1;
+							},
+							{
+								viewerType = "MmMailboxesStatusBar";
+							},
+						);
+					},
+					{
+						identifier = "pathOutlineBox";
+						viewerType = "MmBoxView";
+						orientation = "vertical";
+						defaultSize = 250;
+						autoresize = 0;
+						children =
+						(
+							{
+								identifier = "pathControl";
+								viewerType = "MmPathControlView";
+								sources = ( { sourceIdentifier = "mailboxesOutline"; } );
+							},
+							{	viewerType = "MmSeparatorView"; showWithViews = ( "pathControl" ); },
+							{
+								identifier = "mainOutline";
+								viewerType = "MmMessagesOutlineView";
+								sources = ( { sourceIdentifier = "pathControl"; } );
+								minHeight = 50;
+							},
+						);
+					},
+				);
+			},
+			{
+				inject = ( "messageView.plist" );
+			},
+		);
+	};
+}

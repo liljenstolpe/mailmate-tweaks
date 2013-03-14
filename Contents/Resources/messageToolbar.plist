@@ -1,0 +1,39 @@
+{
+	type = message;
+
+	defaultIdentifiers =
+	(
+		archive-moveToJunk-deleteMessage,
+		NSToolbarSpaceItem,
+		reply-forwardMessage,
+		NSToolbarSpaceItem,
+		quickLook,
+
+		// NSToolbarSpaceItem,
+
+		// sameThread-correspondence, // Could be implemented in a way that works
+
+		NSToolbarFlexibleSpaceItem,
+
+		NSToolbarPrintItem,
+	);
+
+	allowedIdentifiers =
+	(
+		// delete,
+		reply,
+		replyAll,
+		toggleFlag,
+		quickLook,
+		// sameThread,
+		// correspondence,
+		// search,
+
+		// Using the following verbatim which is not so nice. The variables names are extended with 'Identifier'.
+		NSToolbarPrintItem,
+		NSToolbarCustomizeToolbarItem,
+		NSToolbarSeparatorItem,
+		NSToolbarSpaceItem,
+		NSToolbarFlexibleSpaceItem,
+	);
+}

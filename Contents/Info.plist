@@ -1,0 +1,101 @@
+{
+	CFBundleName                  = "MailMate";
+	CFBundleShortVersionString    = "1.5.2";                   // shown in About window
+	CFBundleVersion               = "3256";                  // shown in About window in parenthesis (but this format is not well-formed)
+	CFBundleGetInfoString         = "1.5.2 (3256)"; // shown in Finder as ‘version’
+	CFBundleIdentifier            = "com.freron.MailMate";
+
+	CFBundleDevelopmentRegion     = English;
+	CFBundleExecutable            = "MailMate";
+	CFBundleHelpBookFolder        = "MailMate Help";
+	CFBundleHelpBookName          = "MailMate Help";
+	CFBundleIconFile              = "MailMate.icns";
+	CFBundleInfoDictionaryVersion = "6.0";
+	CFBundlePackageType           = APPL;
+	CFBundleSignature             = MlMt;
+	LSMinimumSystemVersion        = "10.6";
+	LSApplicationCategoryType     = "public.app-category.productivity";
+	NSAppleScriptEnabled          = YES;
+	NSMainNibFile                 = MainMenu;
+	NSPrincipalClass              = NSApplication;
+
+	CFBundleURLTypes = (
+		{	CFBundleURLName    = "Email Address URL (RFC 6068)";
+			CFBundleURLSchemes = ( mailto );
+		},
+		{	CFBundleURLName    = "Message-ID Uniform Resource Locator (Apple)";
+			CFBundleURLSchemes = ( message );
+		},
+		{	CFBundleURLName    = "Message-ID Uniform Resource Locator (RFC 2392)";
+			CFBundleURLSchemes = ( mid );
+		},
+		{	CFBundleURLName    = "Content-ID Uniform Resource Locator (RFC 2392)";
+			CFBundleURLSchemes = ( cid );
+		},
+	);
+
+	CFBundleDocumentTypes = (
+		// {	CFBundleTypeName       = "Document";
+		// 	CFBundleTypeIconFile   = GenericDocumentIcon;
+		// 	CFBundleTypeOSTypes    = ("****");
+		// 	CFBundleTypeRole       = Editor;
+		// 	LSItemContentTypes     = ( public.data );
+		// },
+
+		/* General types */
+		{	CFBundleTypeName       = "Generic Document";
+			CFBundleTypeExtensions = ("*");
+			CFBundleTypeOSTypes    = ("****");
+			CFBundleTypeRole       = Viewer;
+		},
+		{	CFBundleTypeName       = "Email Message";
+			CFBundleTypeExtensions = ("eml"); // Note: Why not .msg as well? And .u8msg or whatever it is the latest RFC suggests?
+			CFBundleTypeMIMETypes  = ("message/rfc822");
+			CFBundleTypeRole       = Editor;
+		},
+		{	CFBundleTypeName       = "Apple Mail Message";
+			CFBundleTypeExtensions = ("emlx");
+			CFBundleTypeMIMETypes  = ("message/rfc822");
+			CFBundleTypeRole       = Viewer;
+		},
+		{	CFBundleTypeName       = "Mailbox";
+			CFBundleTypeExtensions = ("mbox");
+			CFBundleTypeRole       = Viewer;
+		},
+
+		/* MailMate types */
+		{	CFBundleTypeName       = "MailMate bundle";
+			CFBundleTypeExtensions = (mmBundle);
+			CFBundleTypeIconFile   = 'MailMate Bundle';
+			CFBundleTypeRole       = Editor;
+			LSTypeIsPackage        = 1;
+		},
+	);
+
+	NSServices = (
+		{	NSMenuItem = {
+				default = "MailMate/New Email With Attachment";
+			};
+			NSMessage = "mailFiles";
+			NSPortName = "MailMate";
+			NSSendTypes = (
+				"NSFilenamesPboardType"
+			);
+			NSRequiredContext = (); // Needed to display service by default
+		},
+		{	NSMenuItem = {
+				default = "MailMate/New Email With Selection";
+			};
+			NSMessage = "mailSelection";
+			NSPortName = "MailMate";
+			NSSendTypes = (
+            "NSStringPboardType",
+			);
+			NSRequiredContext = (); // Needed to display service by default
+		},
+	);
+
+	// http://developer.apple.com/library/mac/#qa/qa1722/_index.html
+	MailLinkSupported = YES;
+	MailPageSupported = YES;
+}

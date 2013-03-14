@@ -1,0 +1,22 @@
+{
+	popUpHeaders = (
+		{ title = "From"; },
+		{ title = "Recipient (To, Cc, Bcc)"; specifier = "#recipient"; },
+		{ title = "To"; },
+		{ title = "Any Address"; specifier = "#any-address"; },
+		// { title = "Cc"; },
+		// { title = "In-Reply-To"; },
+		{ title = "Subject"; },
+		{ title = "Date"; specifier = "#date"; },
+		{ title = "Tags/Keywords"; specifier = "#flags.flag"; },
+		{ title = "Mailer"; specifier = "#mailer"; },
+		{ /************************/ },
+		// { title = "Message is Read"; type = singular; queryString = "#flags.flag = '\\Seen'"; },
+		// { title = "Message is not Read"; type = singular; queryString = "#flags.flag !=[x] '\\Seen'"; },
+		// { /************************/ },
+		// Note: allBodyParts is currently not used (but hardcoded for the following 3 in code)
+		{ title = "Unquoted Body Text"; specifier = "#unquoted"; allBodyParts = 1; },
+		{ title = "Quoted Body Text"; specifier = "#quoted"; allBodyParts = 1; },
+		{ title = "Common Headers or Body"; specifier = "#common"; allBodyParts = 1; },
+	);
+}

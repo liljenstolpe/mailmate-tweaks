@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Custom Key Bindings</title>
+</head>
+
+<body>
+<a name='custom_key_bindings'> </a>
+<h1 id='custom_key_bindings'>Custom Key Bindings</h1>
+
+<p>If you simply want key bindings similar to those available in the <a href='http://mail.google.com/support/bin/answer.py?answer=6594'>Gmail web interface</a> then go to General pane of the Preferences (⌘,) and enable the default custom key bindings.</p>
+
+<h2 id='background'>Background</h2>
+
+<p>A key binding is the translation of a key stroke (or series of keystrokes) to some action. For example, the key stroke ⌘Q is most often bound to the action of quitting. The key stroke for quitting is fairly high-level in the sense that it is handled by each application individually and this is true for most key bindings involving the use of ⌘.</p>
+
+<p>But there is also a more low-level system for key bindings in Mac OS X. These key bindings affect most applications and most of them affect keyboard navigation in text fields or other views. The standard definitions are located in a file named <a href='file:///System/Library/Frameworks/AppKit.framework/Versions/C/Resources/StandardKeyBinding.dict'>StandardKeyBinding.dict</a> in the so-called AppKit framework, but this file is in a binary format and viewing it either requires a property list editor as distributed with Apples developer tools or conversion using the <code>plutil</code> command line program. A detailed <a href='http://www.hcs.harvard.edu/~jrus/site/cocoa-text.html'>description of key bindings</a> has been written by Jacob Rus and this is recommended reading if you want to get the full story.</p>
+
+<p>This is a couple of the standard key bindings defined in Mac OS X (converted to plain text property list format):</p>
+
+<pre><code>&quot;^a&quot; = &quot;moveToBeginningOfParagraph:&quot;;
+&quot;^e&quot; = &quot;moveToEndOfParagraph:&quot;;</code></pre>
+
+<p>The basic format is very simple. The first string defines the key stroke and the other string defines the action (by stating its <a href='http://developer.apple.com/library/iOS/#documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocSelectors.html'>selector</a> name). In the above example ⌃a (control-a) is bound to the action of moving the caret to the beginning of a paragraph. This works in most applications on Mac OS X. The plain text format for defining key strokes with modifiers is shown in the following table:</p>
+<table><thead><tr><th>Shortcut</th><th>Code</th><th>Description</th></tr></thead><tbody><tr><td style='text-align: right;'>a</td><td style='text-align: right;'><code>a</code></td><td style='text-align: left;'>-</td>
+</tr><tr><td style='text-align: right;'>⇧a</td><td style='text-align: right;'><code>A</code></td><td style='text-align: left;'>Shift-a</td>
+</tr><tr><td style='text-align: right;'>⌘a</td><td style='text-align: right;'><code>@a</code></td><td style='text-align: left;'>Command-a</td>
+</tr><tr><td style='text-align: right;'>⌃a</td><td style='text-align: right;'><code>^a</code></td><td style='text-align: left;'>Control-a</td>
+</tr><tr><td style='text-align: right;'>⌥a</td><td style='text-align: right;'><code>~a</code></td><td style='text-align: left;'>Option-a</td>
+</tr></tbody></table>
+<p>In addition to the above, <code>$</code> can be used to bind to the shift key (⇧) for non-letter-keys.</p>
+
+<p>You could look through the <a href='file:///System/Library/Frameworks/AppKit.framework/Versions/C/Resources/StandardKeyBinding.dict'>standard key bindings</a> to get an idea of what is possible by default in Mac OS X. As an example, you may not know the following useful key binding:</p>
+
+<pre><code>&quot;^&#39;&quot; = &quot;insertSingleQuoteIgnoringSubstitution:&quot;;</code></pre>
+
+<p>This is useful if you have smart quotes enabled (globally or using “View ▸ Edit Substitutions ▸ Smart Quotes”) since it allows you to insert plain quotes using the control key. The same is possible for double quotes.</p>
+
+<p>If you want to add or change the standard key bindings (in all applications) then you can do it by creating a new property list in the following location:</p>
+
+<pre><code>~/Library/KeyBindings/DefaultKeyBinding.dict</code></pre>
+
+<p>You can use the standard key bindings as inspiration, but they do not reveal all that is possible. In particular, note the power of <a href='http://blog.macromates.com/2006/multi-stroke-key-bindings/'>multi-stroke key bindings</a> which we are also going to utilize further below.</p>
+
+<h2 id='key_bindings_in_mailmate'>Key Bindings in MailMate</h2>
+
+<p>Similar to the standard key bindings system, the behavior of MailMate can be tweaked using key bindings files. Examples can be found in the following folder within the MailMate application:</p>
+
+<pre><code>MailMate.app/Contents/Resources/KeyBindings/</code></pre>
+
+<p>The file named <code>Standard.plist</code> is always in use, but <code>Gmail.plist</code> is more interesting. It shows how to replicate many of the <a href='http://mail.google.com/support/bin/answer.py?answer=6594'>Gmail key bindings</a> available when using Gmails web interface. Here are some simple examples from the file:</p>
+
+<pre><code>&quot;c&quot;	= &quot;newMessage:&quot;;
+&quot;r&quot;	= &quot;reply:&quot;;
+&quot;f&quot;	= &quot;forwardMessage:&quot;;
+&quot;s&quot;	= &quot;toggleFlag:&quot;;</code></pre>
+
+<p>You can enable these key bindings in the Preferences (General pane). Note that you can specify a comma-separated list of key bindings files (without file extensions). The order determines the priority of the files and <code>Standard</code> is automatically appended to the list.</p>
+
+<p>It is also possible to create new key bindings files in the following folder location:</p>
+
+<pre><code>~/Library/Application Support/MailMate/Resources/KeyBindings/</code></pre>
+
+<p>If you create a file named <code>Special.plist</code> then you need to add <code>Special</code> to the comma-separated list of names in the Preferences, for example, <code>Gmail, Special</code>.</p>
+
+<p>A complete list of the <a href='key_binding_selectors.html'>key binding selectors</a> available can be found in the appendix.</p>
+
+<h2 id='id1'><a name='special_actions'>Special Actions</a></h2>
+
+<p>The standard key binding system in Mac OS X supports the use of a special selector for inserting text which needs an additional argument. Here is an example binding ⇧F1 to a snippet of text:</p>
+
+<pre><code>&quot;$\UF704&quot; = ( &quot;insertText:&quot;, &quot;Thanks for trying out MailMate.&quot; );</code></pre>
+<!--
+`insertFormatString:` has been added as an alternative to `insertText:` for key bindings. Mainly to allow one to do something like `"x" = ( "reply:", "insertFormatString:", "Hi ${from.name.first},\n\n");`.
+-->
+<p>MailMate extends the list of selectors accepting an argument. The following table contains some of the most interesting examples. More can be found in <a href='key_binding_selectors.html'>the appendix</a>.</p>
+<table><thead><tr><th>Selector</th><th>Argument</th></tr></thead><tbody><tr><td style='text-align: left;'><code>goToMailbox:</code></td><td style='text-align: left;'>Mailbox UUID (optional)</td>
+</tr><tr><td style='text-align: left;'><code>moveToMailbox:</code></td><td style='text-align: left;'>Mailbox UUID (optional)</td>
+</tr><tr><td style='text-align: left;'><code>toggleTag:</code></td><td style='text-align: left;'>IMAP keyword</td>
+</tr><tr><td style='text-align: left;'><code>setTag:</code></td><td style='text-align: left;'>IMAP keyword</td>
+</tr><tr><td style='text-align: left;'><code>removeTag:</code></td><td style='text-align: left;'>IMAP keyword</td>
+</tr><tr><td style='text-align: left;'><code>selectWithFilter:</code></td><td style='text-align: left;'>Filter string (experimental feature)</td>
+</tr></tbody></table>
+<p>The <code>goToMailbox:</code> and <code>moveToMailbox:</code> selectors work both with and without an argument. A mailbox <a href='http://en.wikipedia.org/wiki/Universally_unique_identifier'>UUID</a> is not always a UUID in a strict sense, but it is always a unique identifier for a mailbox. It can be one of the following:</p>
+
+<ol>
+<li>The UUID of a smart mailbox (see <code>~/Library/Application Support/MailMate/Mailboxes.plist</code>)</li>
+
+<li>A standard mailbox name such as <code>inbox</code>, <code>archive</code>, <code>drafts</code>, <code>sent</code>, <code>junk</code>, and <code>trash</code>.</li>
+
+<li>A full path for a mailbox within an account such as <code>imap://you@imap.example.com/Special</code></li>
+
+<li>A mailbox path without an account such as <code>/Special</code> (does not work for <code>goToMailbox:</code>).</li>
+</ol>
+
+<p>The following is an example from the Gmail key bindings file. It also shows how to use multi-stroke key bindings:</p>
+
+<pre><code>&quot;g&quot; = {
+	&quot;a&quot; = ( &quot;goToMailbox:&quot;, &quot;ALL_MESSAGES&quot; );
+	&quot;i&quot; = ( &quot;goToMailbox:&quot;, &quot;INBOX&quot; );
+	&quot;l&quot; = &quot;goToMailbox:&quot;; // Opens the “Go to Mailbox...” window
+};</code></pre>
+
+<p>The following example binds the key <code>g</code> to move a message to a mailbox named <code>Special</code> — within the account the message is currently located:</p>
+
+<pre><code>g = ( &quot;moveToMailbox:&quot;, &quot;/Special&quot;);</code></pre>
+
+<p>Finally, here is an example which allows you to use basic tagging in MailMate.</p>
+
+<pre><code>&quot;t&quot; = {
+	&quot;s&quot; = ( &quot;toggleTag:&quot;, &quot;Special&quot; );
+};</code></pre>
+
+<p>Using the above, entering <code>ts</code> toggles a tag named <code>Special</code> on the currently selected messages. When at least 1 message is tagged the tag should be available as an IMAP keyword for searching and configuring smart mailboxes. Note that the tag is given “as is” to the IMAP server and thus you should not use any special characters including no use of the space character (technically, they need to be <a href='http://tools.ietf.org/html/rfc3501#page-82'>IMAP atoms</a>). Also note that some servers do not support custom tags at all (MS Exchange is an example). In those cases the tags are not synchronized with the server (and thus can more easily be lost).</p>
+
+<p>It is also possible to explicitly set or remove a tag using selectors as in the following example:</p>
+
+<pre><code>&quot;s&quot; = ( &quot;setTag:&quot;, &quot;Special&quot; );
+&quot;S&quot; = ( &quot;removeTag:&quot;, &quot;Special&quot; );</code></pre>
+
+<p>The <code>selectWithFilter:</code> selector is quite powerful. It can be seen as a generalization of the standard <code>selectAll:</code> and <code>deselectAll:</code> selectors since it can be used to select any set of messages matching a filter. Using this selector the default Gmail key bindings for selecting messages can be defined as follows:</p>
+
+<pre><code>&quot;*&quot; = {
+	&quot;a&quot; = &quot;selectAll:&quot;;
+	&quot;n&quot; = &quot;deselectAll:&quot;;
+	&quot;r&quot; = ( &quot;selectWithFilter:&quot;, &quot;#flags.flag = &#39;\\Seen&#39;&quot;); // Selects all mail you&#39;ve read.
+	&quot;u&quot; = ( &quot;selectWithFilter:&quot;, &quot;#flags.flag !=[x] &#39;\\Seen&#39;&quot;); // Selects all unread mail.
+	&quot;s&quot; = ( &quot;selectWithFilter:&quot;, &quot;#flags.flag = &#39;\\Flagged&#39;&quot;); // Selects all starred mail.
+	&quot;t&quot; = ( &quot;selectWithFilter:&quot;, &quot;#flags.flag !=[x] &#39;\\Flagged&#39;&quot;); // Selects all unstarred mail.
+};</code></pre>
+
+<p>Note that the filter (query) language is undocumented. This means that you should consider this feature experimental. Details may change in the future.</p>
+
+<h2 id='id2'><a name='special_keys'>Special “Keys”</a></h2>
+
+<p>Trackpad gestures are supported by MailMate and they have been implemented with customization in mind as described in the following. The 4 standard swipe directions, left, right, up, and down, are transformed into key down events with the unicode characters <code>\U2193</code>, <code>\U2190</code>, <code>\U2192</code>, and <code>\U2191</code> (→ ← ↑ ↓). It allows for great flexibility with respect to what can now be done with gestures. By default, standard key bindings include the following:</p>
+
+<pre><code>&quot;→&quot;  = &quot;nextMessage:&quot;;
+&quot;←&quot;  = &quot;previousMessage:&quot;;
+&quot;↑&quot;  = &quot;previousThread:&quot;;
+&quot;↓&quot;  = &quot;nextThread:&quot;;
+&quot;^→&quot; = &quot;nextUnreadMessage:&quot;;
+&quot;^←&quot; = &quot;previousUnreadMessage:&quot;;
+&quot;^↑&quot; = &quot;previousUnreadThread:&quot;;
+&quot;^↓&quot; = &quot;nextUnreadThread:&quot;;</code></pre>
+
+<p>Using your own key bindings, you can override the above or create more using other modifier keys. Swipe to archive, switch mailbox, delete messages, or whatever you like.</p>
+</body>
+</html>

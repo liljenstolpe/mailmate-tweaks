@@ -1,0 +1,30 @@
+{
+	AppleEventCode = MlMt;
+	// Classes = {
+	//     NSApplication = {
+	//         AppleEventCode = capp;
+	//         Superclass = "NSCoreSuite.NSApplication";
+	//     };
+	// };
+	Commands = {
+		OpenLocation = {
+			AppleEventClassCode = GURL;
+			AppleEventCode = GURL;
+			CommandClass = OpenLocationScriptCommand;
+			Type = "";
+			Arguments = {
+				trust = {
+					AppleEventCode = Trus;
+					Optional = YES;
+					Type = "NSNumber<Bool>";
+				};
+			};
+			UnnamedArgument = {
+				Type = NSString;
+				Optional = NO;
+			};
+		};
+	};
+	Name = MailMate;
+	UsedFeatures = (UnnamedArguments);
+}

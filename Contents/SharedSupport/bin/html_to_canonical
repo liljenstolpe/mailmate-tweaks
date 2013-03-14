@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+tidy --quiet yes --wrap 0 --input-encoding utf8 --output-encoding utf8 --force-output 1 --show-warnings no | "$MM_SHARED_SUPPORT/bin/html2text.py" --body-width=0

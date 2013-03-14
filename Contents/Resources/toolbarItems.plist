@@ -1,0 +1,149 @@
+{
+	toolbarItems =
+	{
+		back = {
+			label = "Back";
+			paletteLabel = "Back in History";
+			toolTip = "Move backward in the history of displayed messages";
+			image = NSGoLeftTemplate;
+			selector = "backInHistory:";
+		};
+		forward = {
+			label = "Forward";
+			paletteLabel = "Forward in History";
+			toolTip = "Move forward in the history of displayed messages";
+			image = NSGoRightTemplate;
+			selector = "forwardInHistory:";
+		};
+		deleteMessage = {
+			label = "Delete";
+			paletteLabel = "Delete Message";
+			toolTip = "Delete selected messages";
+			// image = NSRemoveTemplate;
+			selector = "deleteMessage:";
+		};
+		archive = {
+			label = "Archive";
+			toolTip = "Move messages to archive";
+			selector = "archive:";
+		};
+		moveToJunk = {
+			label = "Move to Junk";
+			toolTip = "Move messages to junk mailbox";
+			selector = "moveToJunk:";
+		};
+		reply = {
+			label = "Reply";
+			// paletteLabel = "Reply"; // Falls back on the 'label'
+			toolTip = "Compose a reply to the selected messages";
+			// image = NSRefreshTemplate;
+			selector = "primaryReply:";
+		};
+		replyAll = {
+			label = "Reply All";
+			toolTip = "Compose a reply to all recipients of the selected messages";
+			// image = NSRefreshTemplate;
+			selector = "replyAll:";
+		};
+		newMessage = {
+			label = "New";
+			toolTip = "Compose a new message";
+			// image = NSAddTemplate;
+			selector = "newMessage:";
+		};
+		forwardMessage = {
+			label = "Forward";
+			toolTip = "Forward a new message";
+			selector = "forwardMessage:";
+		};
+		quickLook = {
+			label = "Quick Look";
+			image = NSQuickLookTemplate;
+			toolTip = "Quick Look attachments";
+			selector = "quickLookAttachments:";
+		};
+		toggleFlag = {
+			label = "Flag";
+			image = "Flag0";
+			toolTip = "Toggle flag";
+			selector = "toggleFlag:";
+		};
+		sameThread = {
+			label = "Thread";
+			toolTip = "Display messages in the same thread";
+			// image = NSPathTemplate;
+			selector = "showThread:";
+		};
+		correspondence = {
+			label = "Correspondence";
+			toolTip = "Messages sent between the same people as selected";
+			// image = NSEveryone;
+			selector = "showCorrespondence:";
+		};
+		// search = {
+		// 	label = "Search";
+		// 	toolTip = "Search headers and bodies for specific content";
+		// 	viewController = "MmMessagesSearchViewController";
+		// 	visibilityPriority = 1000; // High
+		// };
+		customSearch = {
+			label = "Search";
+			toolTip = "Search headers and bodies for specific content";
+			// image = NSRevealFreestandingTemplate;
+			selector = "mailboxSearch:";
+		};
+		back-forward = {
+			segmentedItems = ( back, forward );
+			label = "Back/Forward";
+			paletteLabel = "Back/Forward in History";
+		};
+		archive-moveToJunk-deleteMessage = {
+			segmentedItems = ( archive, moveToJunk, deleteMessage );
+			label = "Actions";
+			paletteLabel = "Message Actions";
+		};
+		newMessage-reply-forwardMessage = {
+			segmentedItems = ( newMessage, reply, forwardMessage );
+			label = "Composition";
+			paletteLabel = "Message Composition";
+		};
+		reply-forwardMessage = {
+			segmentedItems = ( reply, forwardMessage );
+			label = "Composition";
+			paletteLabel = "Message Composition";
+		};
+		sameThread-correspondence = {
+			segmentedItems = ( sameThread, correspondence );
+			label = "Special Searches";
+		};
+		sameThread-correspondence-customSearch = {
+			segmentedItems = ( sameThread, correspondence, customSearch );
+			label = "Special Searches";
+		};
+		sendMessage = {
+			label = "Send Message";
+			toolTip = "Send message";
+			selector = "attemptSend:";
+		};
+		sendAndArchiveParent = {
+			label = "Send and Archive";
+			toolTip = "Send and archive replied message";
+			selector = "sendAndArchiveParent:";
+		};
+		addressBook = {
+			label = "Address Book";
+			toolTip = "Select recipients in Address Book";
+			selector = "toggleAddressPanel:";
+		};
+		fonts = {
+			label = "Fonts";
+			toolTip = "Change display font";
+			selector = "orderFrontFontPanel:";
+		};
+		save = {
+			label = "Save";
+			toolTip = "Save draft";
+			selector = "saveDocument:";
+		};
+	};
+}

@@ -1,0 +1,35 @@
+{
+	// Keybindings to emulate Postbox defaults in MailMate
+	// From: http://www.postbox-inc.com/support/postbox_shortcuts
+	// Created by Ian Beck <http://beckism.com>
+	// Copied and edited by Benny Kjær Nielsen based on: https://gist.github.com/3060762/2ade5111f95c8f219e147761070858467627daf3
+
+	"f" = "nextMessage:";
+	"b" = "previousMessage:";
+	"n" = "nextUnreadMessage:";
+	"p" = "previousUnreadMessage:";
+	"T" = "nextUnreadThread:";
+	"o" = "openMessages:"; // This isn't actually equivalent, but it's the closest I can find
+	"\UF703" = "expandThread:"; // →
+	"\UF702" = "collapseThread:"; // ←
+	"a" = "archive:";
+	"g" = "goToMailbox:";
+	"v" = "moveToMailbox:";
+	"s" = "toggleFlag:";
+	"m" = "toggleReadState:";
+	"r" = "markThreadAsRead:";
+	"j" = "markAsJunk:";
+	"J" = "markAsNotJunk:";
+	"/" = "mailboxSearch:";
+	
+	// These are not the standard Postbox shortcuts, because those shortcuts are already in use
+	"c" = "showCorrespondence:";
+	"t" = "showThread:"; // Not a Postbox default, but darn useful in MailMate
+
+	// Associate indent/outdent with quoting
+	"@]" = "increaseQuoteLevel:";
+	"@[" = "decreaseQuoteLevel:";
+
+	// Mark deleted messages as read (Postbox does this automatically)
+	"\U007F" = ( "setTag:", "\\Seen", "deleteMessage:" ); // ⌫ (or use \UF728 for ⌦)
+}

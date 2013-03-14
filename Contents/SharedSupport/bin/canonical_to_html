@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby -wKU
+# == Synopsis
+#
+# canonical_to_html: generates HTML file from canonical plain text
+#
+# == Usage
+#
+# canonical_to_html [FILE]
+#
+# FILE: The canonical document to read (defaults to stdin)
+
+require 'cgi'
+
+# io = DATA
+io = ARGF
+
+def prepare_linkify (text)
+  # Some links are tricky to handle, for example <http://freron.com>, since escapeHTML is called before linkify.
+  # We handle this by marking links without using HTML before calling escapeHTML.
+  return text.gsub(/(\b(?:https?|ftp|mailto|mid|cid):\S+?)(?=[)>,.':;\"`]*(\s|$))/, '93C67E4B9D2B44E7\1FC756B349A13DC5C')
+  # return text.gsub(/(\b(?:https?|ftp|mailto|mid|cid):\S+?)(?=[)>,.':;\"`]*(\s|$))/, '<a href="\1">\1</a>')
+end
+
+def linkify (text)
+  return text.gsub(/93C67E4B9D2B44E7(.*?)FC756B349A13DC5C/, '<a href="\1">\1</a>')
+end
+
+block_prefix = "<blockquote>"
+block_suffix = "</blockquote>"
+
+print '<div style="white-space: pre-wrap">'
+old_quote_level = 0
+new_quote_level = 0
+while line = io.gets
+  new_quote_level = line.match('>*')[0].size
+  diff = new_quote_level - old_quote_level
+
+  (1..diff).each {|i| print block_prefix} if diff > 0
+  (1..-diff).each {|i| print block_suffix} if diff < 0
+
+  # In the canonical format, the character '>' can be space-stuffed.
+  # If space-stuffed, we should skip a single space.
+  # If space after quotes, we should skip a single space.
+  skip_space = (line.match('^ +>') or line.match('^>+ ')) ? 1 : 0
+  print linkify(CGI::escapeHTML(prepare_linkify(line[new_quote_level + skip_space..line.size])))
+  old_quote_level = new_quote_level;
+end
+
+(1..new_quote_level).each {|i| print block_suffix}
+puts '</div>' # white-space
+
+__END__
+Unquoted line.
+> 1 level
+>> 2 levels
+ > Space-stuffed. Not quoted. Must be encoded using &gt;.
+  > Also space-stuffed.
+This is an easy link to spot: http://example.com
+This link <http://example.com> is more tricky, because of the use of <>.
+And it's even worse if punctuation is involved: <http://example.com>.
+Two links on one line: <http://example.com>, and <http://example.com>.

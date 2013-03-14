@@ -1,0 +1,42 @@
+{
+	name = "Standard";
+	rootViewer =
+	{
+		viewerType = "MmBoxView";
+		orientation = "vertical";
+		identifier = "mainOutline"; // "mainSplit"; -- mainOutline is a special value (FIXME: rename it or come up with a different system, e.g., allowing multiple 'mainOutline's)
+		children =
+		(
+			{
+				identifier = "headersView";
+				viewerType = "MmHeadersView";
+				sources = ( { sourceIdentifier = "mainOutline"; } );
+				// defaultSize = 36;
+				defaultSize = 100;
+				inject = ( "headersFormatting.plist" );
+			},
+			{	viewerType = "MmSeparatorView"; },
+			{
+				identifier = "blockingView";
+				viewerType = "MmImageBlockingView";
+				sources = ( { sourceIdentifier = "mainOutline"; } );
+				transformation = "$mainOutline.filter(##blocked-count exists)";
+			},
+			{	viewerType = "MmSeparatorView"; showWithViews = ( "blockingView" ); },
+			{
+				identifier = "securityView";
+				viewerType = "MmSecurityView";
+				sources = ( { sourceIdentifier = "mainOutline"; } );
+				transformation = "$mainOutline.filter(##security-problem exists)";
+			},
+			{	viewerType = "MmSeparatorView"; showWithViews = ( "securityView" ); },
+			{
+				identifier = "messageView";
+				viewerType = "MmWebViewWithActions";
+				sources = ( { sourceIdentifier = "mainOutline"; } );
+				minWidth = 175;
+				minHeight = 50;
+			},
+		);
+	};
+}

@@ -1,0 +1,9 @@
+{	name    = 'Canonical to HTML';
+	events   = ( 'email.display' );
+	input   = 'canonical';
+	output  = 'html';
+	select  = '(content-type.type !exists or (content-type.type = text and content-type.subtype = plain)) and (content-type.markup !exists or content-type.markup != markdown)';
+	script  = '#!/usr/bin/env bash\n"$MM_SHARED_SUPPORT/bin/canonical_to_html"\n';
+	uuid = '99569E6E-977D-4E9A-9577-3AC9BAF35212';
+	disabled = 0;
+}

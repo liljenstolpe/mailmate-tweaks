@@ -1,0 +1,205 @@
+/* General styling of quotation blocks (and colors for level 2 and upwards)*/
+blockquote {
+	margin: 0 0 5px;
+	padding-left: 5px;
+	border-left: 2px solid #136BCE;
+	color: #136BCE;
+}
+
+/* Specific styling of level 1 quotation blocks */
+blockquote blockquote {
+	border-left: 2px solid #4B89CF;
+	color: #4B89CF;
+}
+
+/* Discrete links in quoted text */
+blockquote a:link { color: #136BCE; }
+blockquote a:active { color: red; }
+blockquote blockquote a:link { color: #4B89CF; }
+blockquote blockquote a:active { color: red; }
+
+pre {
+	margin-left: 15px;
+	margin-right: 15px;
+	padding: 5px;
+	background-color: #E4E4E4;
+	border: thin solid gray;
+	overflow: auto;
+}
+
+/* Show Raw Source */
+pre.raw {
+	margin-left: 5px;
+	margin-right: 5px;
+	white-space: pre-wrap;
+}
+
+/* Attached messages are indented and given a frame and background color */
+div.bodypart[type=message][subtype=rfc822] {
+	margin-left: 20px;
+	padding: 5px;
+	background-color: #FDF5E6;
+	border: thin solid gray;
+}
+
+div.bodypart[disposition="inline"][type=image] img {
+	max-width:600px;
+	height: auto;
+}
+
+/* Doesn't work.
+div.bodypart[disposition="attachment"] + div.bodypart[disposition="attachment"] {
+	margin-top: 10px;
+}
+*/
+
+/*div.bodypart[disposition="attachment"] div {
+	float: left;
+	border-left: thin solid #A4A4A4;
+	border-top: thin solid #A4A4A4;
+	border-bottom: thin solid #A4A4A4;
+	background-color: #D5DCE4;
+	height: 1.2em;
+	min-height: 16px;
+	vertical-align: middle;
+	padding: 3px;
+	margin-bottom:5px;
+}
+*/
+
+
+/* Markdown table */
+
+div.markdown table {
+	border-collapse: collapse;
+	margin: 0 2em;
+/*	width: 320px;*/
+}
+
+div.markdown th {
+	padding: 0.5em;
+}
+
+div.markdown td {
+	border-top: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
+	padding: 0.5em;
+}
+
+div.markdown td+td {
+	border-left: 1px solid lightgray;
+}
+
+/* Attachments table */
+
+table.attachments {
+	border-collapse: collapse;
+	margin: 1em 0em;
+}
+
+table.attachments th {
+	padding: 0.5em;
+}
+
+table.attachments td {
+	border-top: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
+	padding: 0.5em 1em;
+
+	/* FIXME: This needs to be improved. */
+	max-width: 400px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+table.attachments td.icon {
+	-webkit-user-select: none;
+	padding: 0em;
+}
+
+table.attachments td.icon img {
+	min-width: 16px;
+	width: 1.5em;
+	height: auto;
+}
+
+table.attachments td.description {
+	border-left: none;
+	padding-left: 5px;
+}
+
+table.attachments td.description a:link {
+	color: black;
+	text-decoration: none;
+}
+
+table.attachments td.description a:active {
+	color: gray;
+}
+
+table.attachments td.description a:hover {
+	text-decoration:underline;
+}
+
+table.attachments td.description a:visited {
+	color: gray;
+}
+
+table.attachments td.size {
+	text-align: right;
+	padding-right: 0;
+}
+
+table.attachments form {
+	margin: 0;
+}
+
+/* OpenPGP */
+
+.details_toggle {
+	cursor: pointer;
+	text-decoration: underline;
+	color:#00f;
+}
+
+div.openpgp_output {
+/*	border: thin solid gray;*/
+	border: thin solid lightgray;
+	margin: 1em 0em;
+	padding: 0.2em;
+}
+div.openpgp_output[state="ok"] {
+/*	background-color: lightgreen;*/
+}
+div.openpgp_output[state="fail"] {
+/*	background-color: #FF7F00;*/
+}
+div.openpgp_output img {
+	vertical-align: middle;
+	float: left;
+	padding-right: 1em;
+}
+div.openpgp_output a {
+	font-size: 80%;
+}
+.more { display: none; }
+
+/* The header related stuff is currently only used when displaying multiple messages */
+/* Add a ':' after each header title */
+span.header_name:after { content: ": " }
+span.header_name { color: blue; font-weight: bold; }
+span.header_body { font-weight: bold; }
+/* How to style a specific header */
+span.header_name[type="from.name"] { color: red; font-weight: bold; }
+
+/* Various spacings between messages and message-elements. */
+hr.messagedivider { clear: both; margin-top: 10px; margin-bottom: 10px; }
+span.header + div.body { margin-top: 10px }
+div.bodypart + div.bodypart { margin-top: 10px;  }
+
+/* Styling the horizontal divider between messages. */
+hr.messagedivider {
+	border-top: thin solid gray;
+	height: 2px;
+}

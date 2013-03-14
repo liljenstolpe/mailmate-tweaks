@@ -1,0 +1,8 @@
+{	name    = 'Strip Whitespace';
+	events   = ( 'email.reply', 'email.display' );
+	input   = 'canonical';
+	output  = 'canonical';
+	script  = "#!/usr/bin/env bash\nsed '/./,$!d' | sed -e :a -e '/^\\n*$/N;/\\n$/ba'"; // http://www.unixguide.net/unix/sedoneliner.shtml
+	uuid = '78A877F5-F80C-4127-8380-ACBC7FE09663';
+	disabled = 0;
+}

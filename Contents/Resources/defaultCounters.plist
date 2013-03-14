@@ -1,0 +1,34 @@
+{
+	counters =
+	(
+		{
+			position = "topLeft";
+			set = "INBOX";
+			count = "unreplied";
+			color = "#87A3D5CC"; // "#0000E6CC";
+		},
+		{
+			position = "topRight";
+			count = "all";
+			color = "#E47910CC"; // "#FF6600CC";
+		},
+		{
+			inDock = "yes";
+			inMenuBar = "yes";
+			position = "bottomLeft";
+			set = "INBOX";
+			count = "flagged";
+			color = "#519523CC"; // "#00E600CC";
+		},
+		{
+			inDock = "yes";
+			inMenuBar = "yes";
+			position = "bottomRight";
+			set = "INBOX";
+			count = "unread";
+			// filter = "#flags.flag !=[x] '\\Seen'";
+			color = "#C2382ECC"; // #E60000CC";
+			soundPath = "/System/Library/Sounds/Glass.aiff";
+		},
+	);
+}

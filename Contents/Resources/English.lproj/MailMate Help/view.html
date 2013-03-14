@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>View</title>
+</head>
+
+<body>
+<a name='view'> </a>
+<h1 id='view'>View</h1>
+
+<h2 id='id1'><a name='layouts'>Layouts</a></h2>
+
+<p>You could easily miss it if you are not looking for it. Go to the “View ▸ Layout” menu and play with the alternative layouts currently available for MailMate. The Correspondence layout allows you to immediately see any messages in any correspondence similar to the currently selected message(s). The Statistics layout replaces the message display with a simple tableview listing the frequency of any message header (again, note the “Other…” menu item in the headers popup). You can use this to easily find out who writes most often, what is the most popular email client, how many messages you have received per year and so forth. You can even combine these searches by double-clicking items. The Thread Arcs layout provides an alternative view of threads. It can be used as an immediate overview of where the currently selected message is located in a discussion (even if the other messages are in a different mailbox). Clicking on a node brings you to the corresponding message. The default layout is the standard three pane layout used by most email clients.</p>
+<img src='images/thread_arcs.png' class='center' alt='Thread arcs' />
+<p>The current selection of layouts is also a proof-of-concept. They are defined using an experimental file format which is likely to evolve over time. You can play with this file format yourself, but it is currently undocumented with the exception of a blog post about how to get a <a href='http://blog.freron.com/2010/widescreen-layout/'>widescreen layout</a> (this layout is now included in MailMate).</p>
+
+<h2 id='id2'><a name='search'>Search View</a></h2>
+
+<p>For advanced searching you should try out “Edit ▸ Find ▸ Mailbox Search…” (⌥⌘F). This opens a filter editor within the main window which is very similar to the filter editor of the mailbox editor. Remember that you can hold down ⌥ to create advanced All/Any conditions. This view differs from the mailbox editor with respect to empty values – such filter rules are ignored when searching.</p>
+
+<p>Note that the toolbar contains a “Thread” button and a “Correspondence” button which currently have no corresponding menu items. They can be used to expand a search to include related messages. Again, the ⌥ key can be used to do the search in “All Messages”.</p>
+
+<h2 id='id3'><a name='messages_outline'>Messages Outline</a></h2>
+
+<p>Threading of messages can be enabled or disabled (⇧⌘T). When enabled, messages are completely threaded. It is useful to know that if you hold down ⌥ while expanding an item then all subitems are expanded as well. You can jump to the root of a thread (⇧⌘R) and you can select all the messages of a thread (⌃⌘A) which is especially useful when not threading messages. The context sensitive menu has a range of options including finding messages related to the currently selected message. Double-clicking messages also initiates a search for related messages based on the column double-clicked.</p>
+<img src='images/link_search.png' class='center' alt='Link searching' />
+<p>Like other email applications, MailMate has a configurable selection of columns to display in the outline (see the context sensitive menu of the column headers). Note the normalized message subjects. Whitespace is trimmed and in some cases a slight reordering occurs. For example, “[MailMate]\ \ Re:\ \ Some subject” becomes “Re: [MailMate] Test subject”. This magic is based on a very general system. There is no documentation for this system yet, so the following explanation should be considered a “teaser”: The subject is split into components using regular expressions specified in a configuration file. Instead of just being able to reference the <code>subject</code> of a message, one can reference <code>subject.prefix</code> (“Re:”), <code>subject.body</code> (“Test subject”), <code>subject.blob</code> (“MailMate”), or even <code>subject.word</code> (“Test” and “Subject”). This can be used when searching for values, but it is also useful when formatting strings. The subject string in the messages outline is internally defined as follows:</p>
+
+<pre><code>&quot;${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}&quot;</code></pre>
+
+<p>This is also used for replies, so you get “Re: [MailMate] Some subject” instead of “Re: [MailMate] Re: Some subject”. It may sound trivial, but you should not expect it to work if you try replying to a message like that in your current email application.</p>
+
+<h2 id='message_view'>Message View</h2>
+
+<h3 id='id4'><a name='headers'>Headers</a></h3>
+
+<p>The headers view has two modes. A compact mode which typically only takes up a single line and an extended mode with full standard headers. Note that you can click on almost any part of the displayed headers in order to make a related search (hold down ⌥ to search in “All Messages”). You can also copy headers to the pasteboard via the context sensitive menu.</p>
+
+<h2 id='id5'><a name='webview'>WebView</a></h2>
+
+<p>Messages are displayed using a standard WebView like the one used in Safari. HTML is generated for plain text messages and it is styled using CSS. Defaults are very basic, but you can <a href='customization.html#css_plist'>create your own CSS file</a> (and maybe even share it with us). Note that you can change the font and/or the font size using the Format menu (the same is true for the messages outline and the composer).</p>
+
+<p>Searching within a message is similar to searching in Safari. You can use the standard shortcuts for Find (⌘F), Find Next (⌘G), Find Previous (⇧⌘G), and for closing the find view (⌘.).</p>
+<!--
+## Statistics
+
+...
+
+## Thread Arcs
+
+...
+
+FIXME:
+
+More features are hidden in the menus. Make sure you notice the “Message ▸ Mute” menu item which is very useful for mailing lists. When a message is muted it affects all replies for the message arriving in the future. Several actions are taken. Replies are automatically muted themselves and marked as read. If the muted parent is in a different mailbox (for example, because it has been archived or deleted) then the replies are moved to the same mailbox. The result of this is that a muted message triggers the entire subthread to be handled automatically. If a message in the subthread is addressed directly to one of the known identities of the user then the muting is automatically disabled.
+
+Also note the menu items related to navigation currently in the “Message” menu. Moving to the next message (⌘⇣) automatically expands items and you can also move directly to the next unread message (⌥⌘⇣), or to the root of a thread (⇧⌘R).
+-->
+</body>
+</html>

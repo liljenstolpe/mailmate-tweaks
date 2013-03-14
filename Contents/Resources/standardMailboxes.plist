@@ -1,0 +1,99 @@
+{
+	mailboxes =
+	(
+		{
+			name = 'All Messages';
+			query = '$AllMessages';
+			uuid = 'ALL_MESSAGES';
+			mailboxes =
+			(
+				{
+					name = 'All Body Parts';
+					query = '$AllBodyParts';
+					uuid = 'ALL_BODY_PARTS';
+					countKey = 'none';
+				},
+			);
+		},
+		{
+			name = 'Inbox';
+			query = '$Inbox';
+			uuid = 'INBOX';
+			showAccounts = 1;
+		},
+		{
+			name = 'Archive';
+			query = '$Archive';
+			uuid = 'ARCHIVE';
+			showAccounts = 1;
+		},
+		{
+			name = 'Drafts';
+			query = '$Drafts'; // Special alias maintained by MailMate
+			uuid = 'DRAFTS';
+			countKey = "all";
+			showAccounts = 1;
+			defaultState = {
+				mainOutline = {
+					messagesOutlineView = {
+						enabledColumns = ( "read", "flag", "to", "subject", "date", "state");
+						outlineColumn = "to";
+					};
+				};
+			};
+		},
+		{
+			name = 'Sent Messages';
+			query = '$Sent'; // Special alias maintained by MailMate
+			// Would be nicer if we could do it 'automatically' like this:
+			//  set = 'ALL_MESSAGES';
+			//  filter = "from.address = $Identities.address";
+			uuid = 'SENT';
+			showAccounts = 1;
+			partitioningHeader = 'from.address';
+			partitioningFormatString = '${from.address}';
+			defaultState = {
+				mainOutline = {
+					messagesOutlineView = {
+						enabledColumns = ( "read", "flag", "to", "subject", "date");
+						outlineColumn = "to";
+					};
+					threadingType = 'flatThreading';
+				};
+			};
+		},
+		{
+			name = 'Junk';
+			query = "$Junk.filter(#imap-expunge !exists or #imap-expunge !=[c] 'yes')";
+			// Would be nicer if we could do it 'automatically' like this:
+			//  set = 'ALL_MESSAGES';
+			//  filter = "#source = $Accounts.junk";
+			uuid = 'JUNK';
+			showAccounts = 1;
+			defaultState = {
+				mainOutline = {
+					messagesOutlineView = {
+						enabledColumns = ( "read", "spamsievescore", "spamsievescore", "from", "subject", "date");
+						outlineColumn = "from";
+					};
+					threadingType = 'flatThreading';
+				};
+			};
+		},
+		{
+			name = 'Deleted Messages';
+			// $Trash is a special alias maintained by MailMate
+			query = "$Trash.filter(#imap-expunge !exists or #imap-expunge !=[c] 'yes')";
+			// Would be nicer if we could do it 'automatically' like this:
+			//  set = 'ALL_MESSAGES';
+			//  filter = "#source = $Accounts.trash";
+			uuid = 'TRASH';
+			showAccounts = 1;
+			defaultState = {
+				mainOutline = {
+					threadingType = 'flatThreading';
+				};
+			};
+		},
+	);
+}

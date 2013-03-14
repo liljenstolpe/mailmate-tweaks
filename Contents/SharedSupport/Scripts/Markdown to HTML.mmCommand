@@ -1,0 +1,8 @@
+{	name    = 'Markdown to HTML';
+	events  = ( 'email.display', 'email.generate' );
+	input   = 'canonical';
+	output  = 'html';
+	select  = '(content-type.type !exists or (content-type.type = text and content-type.subtype = plain)) and content-type.markup = markdown';
+	script  = '#!/usr/bin/env bash\necho "<div class=\\"markdown\\">"\n"$MM_SHARED_SUPPORT/bin/sundown"\necho "</div>"\n';
+	uuid = 'DB65F8BE-6DE5-4BD5-AB9A-0A27599BE8C5';
+}

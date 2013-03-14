@@ -1,0 +1,49 @@
+{
+	disabled = 1;
+
+	// The name is not currently used for anything
+	name    = 'Strip Mailman Footer';
+
+	// The events determine when the script is to be applied.
+	//  Currently supported: email.reply, email.display, email.new, account.synchronized.
+	events  = ( 'email.reply', 'email.display' );
+
+   // Type of input expected
+	//  Currently supported: normalized (after decoding base64/qp/charset/format=flowed)
+	//  Planned: raw (straight from the body of message body part)
+	//           decoded (after decoding base64/qp/charset)
+	//           html (it may be useful for both replies and display to be able to convert HTML to normalized text)
+	input   = 'canonical';
+
+   // Type of output generated
+   //  Currently supported: 'canonical'
+	//  Planned: raw
+	//           html (for display)
+	//           snippet? (for editor)
+	output  = 'canonical';
+
+	// Selection filter. The script is ignored if the message does not match the filter.
+	select  = 'list-id exists';
+
+   // In case there are multiple filters, they are sorted by rank -- not implemented
+	// rank    = 1;
+
+	// Inline script
+	script  = '#!/usr/bin/ruby\nwhile (line = $stdin.gets) && line !~ /^_{5,}$/\nputs line\nend\n';
+
+	// One or more actions can be taken for some event types (email.new, account.synchronized)
+	// actions = (
+	// 		{ type = moveMessage; mailbox = junk; }, // Special values are: inbox, archive, drafts, sent, junk, trash
+	//			{ type = moveMessage; mailbox = 'imap://username@example.com/SomeMailbox'; },
+	// 		{ type = changeFlags; enable = ( '\\Seen' ); disable = ( ); }, // This is done automatically when moving messages to junk
+	//			{ type = playSound; path = 'CustomSound.wav'; }, // Play sound located in a standard Sound location (like ~/Library/Sounds/)
+	//			{ type = playSound; path = '/path/to/CustomSound.wav'; }, // Play sound at specified path
+	// 	);
+
+	// For easily disabling a script
+	// disabled = 1;
+
+	// Unique identifier -- it is automatically generated if not provided
+	// (only provided here to allow the command to be overwritten)
+	uuid = 'DE103649-94C2-40F3-9BAD-A65DD7C0FBEA';
+}

@@ -1,0 +1,32 @@
+{
+	type = composer;
+
+	defaultIdentifiers =
+	(
+		sendMessage,
+		NSToolbarSpaceItem,
+		addressBook,
+		// attach,
+		// NSToolbarSpaceItem,
+		// fonts, // Disabled because it may imply that rich text format messages are supported.
+		NSToolbarFlexibleSpaceItem,
+		save,
+	);
+
+	allowedIdentifiers =
+	(
+		sendMessage,
+		sendAndArchiveParent,
+		addressBook,
+		// attach,
+		fonts,
+		save,
+
+		// Using the following verbatim which is not so nice. The variables names are extended with 'Identifier'.
+//		NSToolbarPrintItem,
+		NSToolbarCustomizeToolbarItem,
+		NSToolbarSeparatorItem,
+		NSToolbarSpaceItem,
+		NSToolbarFlexibleSpaceItem,
+	);
+}

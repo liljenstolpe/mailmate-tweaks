@@ -1,0 +1,8 @@
+{
+	disabled = 1;
+	name    = 'New Mail';
+	events  = ( 'account.synchronized' );
+	select  = "#source.path = 'INBOX' and #flags.flag !=[x] '\\Seen'";
+	actions = ( { type = playSound; path = '/System/Library/Sounds/Glass.aiff'; }, );
+	uuid = '36471876-4F80-453D-8948-BF05B893D0E8';
+}

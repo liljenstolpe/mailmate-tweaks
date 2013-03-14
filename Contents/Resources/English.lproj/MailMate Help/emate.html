@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Command Line Interface (emate)</title>
+</head>
+
+<body>
+<h1 id='id1'><a name='emate'>Command Line Interface (`emate`)</a></h1>
+
+<p>MailMate includes a shell command named <code>emate</code> which is located inside the MailMate application bundle. It can be used to create and, optionally, send emails directly from the command line.</p>
+
+<p>It is recommended to make a symbolic link to <code>emate</code> and never make a copy. This ensures that new versions of MailMate automatically updates the <code>emate</code> command as well. Make sure <code>~/bin/</code> exists and paste the following in the Terminal:</p>
+
+<pre><code>ln -s /Applications/MailMate.app/Contents/Resources/emate ~/bin/emate</code></pre>
+</body>
+</html>

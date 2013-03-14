@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Rebuild Database</title>
+</head>
+
+<body>
+<a name='rebuild'> </a>
+<h1 id='rebuild_database'>Rebuild Database</h1>
+
+<p>MailMate handles a large number of files on your disk. Most of them are downloaded messages, but there are also files which are used for the indexing of all message headers. These index files are needed for almost every aspect of MailMate. In general, these files are saved very carefully by MailMate and it is even able to roll back to a safe state if MailMate terminates unexpectedly or is forced to quit.</p>
+
+<p>Nevertheless, on rare occasions an inconsistency can be introduced in the index files or the messages stored. This can be triggered by a bug in MailMate, but it can also happen if files are somehow corrupted or deleted on disk. In particular, it can happen after restoring files from a backup.</p>
+
+<p>If it happens then it is very likely to be detected by MailMate and then a window is automatically shown to inform the user. This window has various options to solve the problem. It is very likely that you are never going to see this window, but if you do then try the options one-by-one from top to bottom.</p>
+
+<p>If you think a problem requiring rebuilding was caused by MailMate then you are encouraged to send some feedback. You can use the “Help ▸ Send Feedback&#8230;” menu item to do this.</p>
+
+<h2 id='manually_resetting_mailmate'>Manually resetting MailMate</h2>
+
+<p>It is also possible to manually trigger database rebuilding. The following Terminal command is similar to what MailMate does when being asked to rebuild:</p>
+
+<pre><code>printf &quot;OldDatabase&quot; &gt; ~/Library/Application\ Support/MailMate/.rebuild.tmp</code></pre>
+
+<p>Then restart MailMate. When the rebuilding has finished, you should take a look at the contents of the following folder:</p>
+
+<pre><code>~/Library/Application\ Support/MailMate/OldDatabase/</code></pre>
+
+<p>Again, if you had to do this due to what you think is a MailMate bug then please report it.</p>
+</body>
+</html>

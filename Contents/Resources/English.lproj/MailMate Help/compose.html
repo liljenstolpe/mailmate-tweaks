@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Compose</title>
+</head>
+
+<body>
+<a name='compose'> </a>
+<h1 id='compose'>Compose</h1>
+<!--
+## Editor
+
+plain text, format=flowed, ...
+-->
+<h2 id='headers'>Headers</h2>
+
+<p>By default, only the <code>To</code> header and the <code>Subject</code> header is shown in the composer. You can add more headers and control which should be shown by default via the popup menu in the left side of the Composer status bar.</p>
+
+<h2 id='markup'>Markup</h2>
+
+<p>See <a href='preferences.html#markup_support'>preferences</a>.</p>
+
+<h2 id='identities'>Identities</h2>
+
+<p>If you have more than 1 email address configured in your IMAP accounts (in total) then a popup menu is available for selecting the <code>From</code> address to be used. Note that the default <code>From</code> address is derived by MailMate based on either the message replied or the primary recipient for a new message. For new messages, the address is automatically updated when changing the <code>To</code> header except if an explicit choice has been made.</p>
+<!-- Describe derivation heuristic -->
+<p>The menu also includues a “Customize&#8230;” menu item which allows you to alter the currently selected identity. The text field shown supports completion based on the <code>From</code> header of all previously sent messages.</p>
+
+<h2 id='signatures'>Signatures</h2>
+
+<p>Many email clients allow you to configure a selection of signatures and this is also <a href='preferences.html#signatures'>true for MailMate</a>. This is especially useful if a signature is automatically inserted when you compose a new message, but this requires the email client to be able to guess which signature you need. Some email clients solve this problem by letting the user explicitly choose a signature to be used for each email account, but MailMate takes a different approach to this problem.</p>
+
+<p>In MailMate, the choice of default signature is based on the main recipient of the email rather than the account/identity used. MailMate looks for the most recent email to the same recipient and reuses the choice of signature. The same is done for the choice of top or bottom posting. Changing these choices will then affect any future emails to the same recipient since the email will become the new most recent email. If no previous email exists (with a choice of signature) to the recipient then MailMate falls back to choosing the most often used signature sent using the same identity.</p>
+<img alt='images/signatures_popup.png' src='images/signatures_popup.png' class='center' />
+<p>After using this system for a while, you&#8217;ll be able to have your preferred signature and signature placement chosen by default for most of your emails.</p>
+
+<p>Note that MailMate does handle the following caveat: If you change one of your existing signatures, for example by updating a phone number, then this will work as expected even when the signature is used in a new email where previous emails to the same recipient uses a signature with the old phone number.</p>
+
+<p>Also note that <a href='hidden_preferences.html'>hidden preferences</a> include a setting to make MailMate see new messages and replies as two different types of messages when deriving a signature from previously sent messages.</p>
+
+<h2 id='attachments'>Attachments</h2>
+
+<p>Attachments can be added either by dragging them onto the composer or by using the “Attach Files&#8230;” (⇧⌘A) menu item. Using the attachments menu in the Composer status bar you can also view existing attachments or remove them.</p>
+
+<p>Inline attachments/images are not supported.</p>
+</body>
+</html>

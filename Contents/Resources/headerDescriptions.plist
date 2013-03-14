@@ -1,0 +1,11 @@
+// Note: This file desperately needs to be extended.
+// The best way to do it, is to go through some of the most important RFCs, e.g. those related to the 822-format, MIME and mailing lists.
+// Could also use 'Common Internet Message Headers' (http://tools.ietf.org/html/rfc2076) as a source.
+// Note: http://tools.ietf.org/html/rfc4021 (contains list with short descriptions)
+// Note: http://tools.ietf.org/html/rfc5322
+{
+	from = { description = 'Name (optional) and address of the author of a message.'; url = 'http://tools.ietf.org/html/rfc5322#section-3.6.2'; };
+	to = { description = 'Primary recipients of a message.'; url = 'http://tools.ietf.org/html/rfc5322#section-3.6.3'; };
+	cc = { description = 'Secondary recipients of a message (carbon copies).'; url = 'http://tools.ietf.org/html/rfc5322#section-3.6.3'; };
+	bcc = { description = 'Hidden recipients of a message (blind carbon copies).'; url = 'http://tools.ietf.org/html/rfc5322#section-3.6.3'; };
+}

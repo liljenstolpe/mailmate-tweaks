@@ -1,0 +1,1593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC
+    "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN"
+    "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' xmlns:svg='http://www.w3.org/2000/svg'>
+<head><meta http-equiv='Content-type' content='application/xhtml+xml;charset=utf-8' /><title>Release Notes</title></head>
+<body>
+<h1 id='release_notes'>Release Notes</h1>
+
+<p>Read the <a href='help:anchor=introduction%20bookID=&apos;MailMate%20Help&apos;'>Introduction</a> if you are new to MailMate (or if you have not read it before). Please remember that MailMate is shareware and that future development depends on your support. If MailMate is not the email client of your dreams then it would be greatly appreciated if you took the time to write a short note about your dreams to <a href='mailto:mm-feedback@freron.com'>mm-feedback@freron.com</a>.</p>
+
+<p>If you bought MailMate in the Mac App Store and you would like to have a regular license key then write an email with your request using “Help ▸ Send Feedback&#8230;” within MailMate. It is important you do it with the Mac App Store version of MailMate.</p>
+<!-- If you bought MailMate in the Mac App Store then don't forget that you can rate and review [here][appstore]. Note that it is not possible for a developer to reply to such reviews, so don't forget to write to [support][] if you have any problems. --><!-- [support]: mailto:mm-support@freron.com --><!-- [appstore]: macappstore://itunes.apple.com/app/id465891339?mt=12 -->
+<h2 id='revision_3256_friday_february_20_2013'>Revision 3256 (Friday, February 20, 2013)</h2>
+
+<p>This version of MailMate is released to fix a bug which affects users with certain messages using a japanese charset encoding (<code>iso-2022-jp</code>). The bug was introduced recently when implementing a workaround for other messages which used the same encoding incorrectly. Unfortunately, the bug can make MailMate terminate every time such a problematic message is parsed. This can happen when retrieving a message from an IMAP server or when viewing or deleting an existing message.</p>
+
+<h2 id='revision_3255_monday_february_4_2013'>Revision 3255 (Monday, February 4, 2013)</h2>
+
+<ul>
+<li>Implemented <code>replyList:</code> selector. It can be used to reply to a mailing list disregarding any other message headers.</li>
+
+<li>Added <code>replyList:</code> and <code>send:</code> to manual page with key binding selectors.</li>
+
+<li>Workaround for mis-encoded japanese messages (<code>iso-2022-jp</code>): When conversion fails (using <code>iconv</code>) MailMate skips to the next line and continues the conversion.</li>
+
+<li>Fixed replying to inlined PGP encrypted messages. The decrypted text is now used for the reply.</li>
+
+<li>Now strips the PGP parts when replying to an inline PGP signed message.</li>
+
+<li>Fixed stability problems with encrypting messages with attachments (both OpenPGP and S/MIME).</li>
+
+<li>Shows a warning before opening the Address Panel in the composer if MailMate is not allowed to access Contacts on Mountain Lion.</li>
+
+<li>Uses bold font for a collapsed message with one or more descendants (when collapsed).</li>
+
+<li>Added <code>maxNumberOfRetries</code> as an optional key for <code>Sources.plist</code> and <code>Submission.plist</code>. This can be used to extend the number of retry attempts when connections are very slow. Each retry attempt doubles the time out value used for the connection. The default is 2.</li>
+
+<li>Distortion improved a bit: Now distorts headers when viewing multiple messages. HTML is still not distorted.</li>
+
+<li>Some code added to track down a bug where MailMate tries to send the same message twice (MailMate still aborts when this happens.)</li>
+</ul>
+
+<h2 id='revision_3239_wednesday_january_30_2013'>Revision 3239 (Wednesday, January 30, 2013)</h2>
+
+<h3 id='new_mailbox_search_option'>New mailbox search option</h3>
+
+<p>Added “None” as an alternative option for matching on mailboxes (in addition to “Any” and “All”). This enables one to easily construct searches like “All messages in mailbox A, but none of the messages in mailbox B or C.”.</p>
+
+<h3 id='new_mailbox_related_selectors_for_custom_key_bindings'>New mailbox related selectors for custom key bindings</h3>
+
+<p>New selectors for custom key bindings to be able to change tags on all messages of the currently displayed mailbox (or search result). Here is an example marking messages as read/unread:</p>
+
+<pre><code>	&quot;1&quot; = ( &quot;mailboxToggleTag:&quot;, &quot;\\Seen&quot; );
+	&quot;2&quot; = ( &quot;mailboxSetTag:&quot;, &quot;\\Seen&quot; );
+	&quot;3&quot; = ( &quot;mailboxRemoveTag:&quot;, &quot;\\Seen&quot; );</code></pre>
+
+<p>Also added a new selector to expunge (permanenly delete) any messages marked as <code>\Deleted</code> in the currently displayed mailbox (or search result). This can be used to make MailMate behave like a traditional IMAP email client. Here is an example:</p>
+
+<pre><code>	&quot;D&quot; = &quot;expungeDeletedMessages:&quot;;</code></pre>
+
+<p>To make that work well then you also need to display <code>\Deleted</code> messages for all mailboxes. Until a better solution has been implemented then you can do as follows:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmShowDeletedMessages -bool YES</code></pre>
+
+<p>Feedback is welcome.</p>
+
+<p>Note that the manual pages have been updated to include a list of all available keybinding selectors (in the appendix).</p>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>Fixed critical bug in the recent addition of a “Reply to &#8230;” menu item in the headers view. The menu item can be used to reply to a single person when a message has multiple recipients. Unfortunately, the sender (the “From” address) of the message was always added as a recipient of the new message and this was not visible until after sending the message.</li>
+
+<li>Improved the handling of replying to messages sent by one self. MailMate should now more reliably create a follow-up message instead of a reply.</li>
+
+<li>Now offers to force delete an account if it contains any messages not uploaded to the IMAP server (most often unsent drafts or sent messages).</li>
+
+<li>Increased padding for thread arcs in order to make it easier to see long vertical arcs.</li>
+
+<li>Workaround for a layout related crash bug.</li>
+
+<li>Fixed crash bug triggered when sending a message while still editing a recipient field.</li>
+
+<li>Fixed crash bug triggered when quitting with more than one message pending submission due to <code>MmSendMessageDelayEnabled</code> (and one chooses to send them when an alert is shown).</li>
+</ul>
+
+<h2 id='revision_3218_monday_january_21_2013__version_152'>Revision 3218 (Monday, January 21, 2013) — Version 1.5.2</h2>
+
+<ul>
+<li>Added “Reply to &#8230;” to the context sensitive menu of addresses in the headers view.</li>
+
+<li>Improved handling of OpenPGP and S/MIME. Now MailMate properly handles signed/encryped body parts in <code>multipart/mixed</code> MIME messages.</li>
+
+<li>For the Japanese users of MailMate: Now respects the first/last name ordering of individual contacts in the Address Book (Contacts on Mountain Lion).</li>
+
+<li>Inlined images are now rotated according to EXIF data in images (Mountain Lion only).</li>
+
+<li>Shows an alert when trying to add an entry to Contacts when access to Contacts is not allowed (by user preference). Previously this silently failed (Mountain Lion only).</li>
+
+<li>Enabled auto-linking for the Markdown converter.</li>
+
+<li>Updated to use Growl framework version 2.0.1.</li>
+
+<li>Added some optional toolbar buttons, a “Flag” toggle and a “Reply All” button.</li>
+</ul>
+
+<p>Added <code>sendAndArchiveParent:</code> and <code>sendAndMoveParentToMailbox:</code> selectors which can be used for custom key bindings. Also added an optional “Send and Archive” button for the composer toolbar. It is not displayed by default. Note that when doing “Send and Archive”, the archived parent is automatically marked as read (if not read already).</p>
+
+<p>Added a new submenu to the Mailbox menu named “Synchronization Schedule”. It allows the user to explictly configure how often each mailbox is synchronized, including a “Connected” item which means that the mailbox is treated like the INBOX, that is, IMAP IDLE is used. It only makes sense to have at most 3 “Connected” mailboxes since there is not yet a GUI to increase the number of simultaneous connections (it can be configured manually though).</p>
+
+<p>It is now possible to add custom headers to the composer using a hidden preference. For example, the following can be used to add a priority header to outgoing messages:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmAdditionalComposerHeaders &quot;( { headerName = &#39;X-Priority&#39;; type = &#39;plain&#39;; } )&quot;</code></pre>
+
+<p>Give the header a value of 1 and it&#8217;ll get a “high” priority.</p>
+
+<h3 id='experimental_handling_of__files'>Experimental handling of <code>winmail.dat</code> files</h3>
+
+<p>TNEF (Transport Neutral Encapsulation Format) is a proprietary attachment format which is generated by some Microsoft products. The resulting files are often named <code>winmail.dat</code>. This version of MailMate can automatically extract the files within TNEF attachments using the <code>tnef</code> command line tool, but this is not (yet) distributed with MailMate and you should consider it a very experimental feature. If you have MacPorts installed then you can get <code>tnef</code> as follows:</p>
+
+<pre><code>	sudo port install tnef</code></pre>
+
+<p>Then launch MailMate and try to open a message with a TNEF attachment (MIME type must be <code>application/ms-tnef</code>). It has only been tested on a few emails. Feedback is welcome, in particular if you have messages for which it fails to work correctly.</p>
+
+<h3 id='imap'>IMAP</h3>
+
+<ul>
+<li>Fixed bug in the handling of Message-IDs with double-quotes when searching for a message on servers without support for UIDPLUS.</li>
+
+<li>Workaround attempt for the Davmail Exchange-&gt;IMAP gateway server.</li>
+
+<li>Fixed handling of IMAP LOGIN command. It did not always work if the username needed to be quoted.</li>
+
+<li>Fixed problems with handling <code>\</code> and <code>&quot;</code> in the IMAP code.</li>
+
+<li>Improved feedback when deleting an IMAP mailbox fails, for example, some servers do not allow deleting standard mailboxes. MailMate now offers to cancel the deletion.</li>
+
+<li>Workaround for IMAP servers which (erroneously) report a negative UIDVALIDITY value (it is handled by skipping the minus sign).</li>
+</ul>
+
+<h3 id='various_fixes'>Various Fixes</h3>
+
+<ul>
+<li>Fixed a bug in the SMTP code which could result in partially sent messages.</li>
+
+<li>No longer terminates when creating a new message while no identities exist.</li>
+
+<li>Fixed problem with the configuration of reply-shortcuts in the Composer preferences pane.</li>
+
+<li>Fixed problem with Growl notifications which were no longer “clickable”. Apparently a problem introduced by Growl 2.</li>
+
+<li>Fixed bug in format string code, for example, <code>${from.name.first}</code> could fail in certain contexts.</li>
+
+<li>Changed quoted printable encoding to never end with a <code>=</code> character. These were displayed on iOS. (Quoted printable is mainly used for signed messages. In general, MailMate tries to avoid the use of quoted printable.)</li>
+
+<li>Fixed bug in the handling of the enter key (numeric key pad) in custom key bindings.</li>
+
+<li>Workaround for messages where the <code>Content-Transfer-Encoding</code> header is the same as the charset of the message (the origin of these emails are unknown). Falls back to 7bit encoding instead in this special case.</li>
+
+<li>Workaround for making iOS devices accept S/MIME signed messages from MailMate. There are still issues with signed+encrypted messages.</li>
+
+<li>Fixed a couple of layout problems.</li>
+</ul>
+
+<h2 id='revision_3157_wednesday_december_19_2012'>Revision 3157 (Wednesday, December 19, 2012)</h2>
+
+<ul>
+<li>Fixed various issues with tags related to IMAP keywords being case insensitive. Previously, some tags did not seem to stick when applied to messages, but the real problem was that MailMate did not recognize the tags due to differences in casing.</li>
+
+<li>Fixed a bug in <code>mailto:</code> handling when sending a message with attachments (via AppleScript).</li>
+
+<li>Now allowing the Bcc header when using <code>mailto:</code> with trust.</li>
+
+<li>Added manual page about the <code>mailto:</code> URL scheme.</li>
+
+<li>Added new emate command. Its only functionality, for now, is to be a convenient wrapper for the <code>mailto:</code> URL scheme (thanks to Mathias Holm for the original script).</li>
+
+<li>Updated manual page about emate.</li>
+
+<li>Improved warning for “untrusted recipient key” when encrypting messages using OpenPGP.</li>
+
+<li>Fixed the broken look of multiple attachments to be a proper table.</li>
+
+<li>Fixed problem with dynamic submailboxes disappearing too early, for example, when marking last message read in an submailbox of unread messages.</li>
+
+<li>Fixed an issue with the <code>searchAllMessages:</code> and <code>mailboxSearch:</code> selectors (available for custom key bindings).</li>
+
+<li>Fixed: The new line wrapping of headers triggered a bug in the SMTP code. A message with multiple Bcc recipients could make the SMTP thread hang in a busy loop.</li>
+</ul>
+
+<h2 id='revision_3142_friday_december_14_2012'>Revision 3142 (Friday, December 14, 2012)</h2>
+
+<ul>
+<li>Fixed problem with code signing which made MailMate repeatedly ask for access to the keychain (it did not affect all users).</li>
+
+<li>Fixed problem with any malformed HTML messages containing a <code>cid:</code> URL with no value.</li>
+
+<li>Tweaked the “Prefere Plain Text” feature such that a HTML body part is automatically shown if the plain text body part is empty.</li>
+</ul>
+
+<h2 id='revision_3139_wednesday_december_12_2012__version_151'>Revision 3139 (Wednesday, December 12, 2012) – Version 1.5.1</h2>
+
+<h3 id='tagging'>Tagging</h3>
+
+<p>This is the first version of MailMate with a user interface for tagging. Details can be found in the manual, but you can easily try it out by simply hitting <code>t</code> in the message viewer. Also note the new “Tags” preferences pane.</p>
+
+<p>The implementation of tags in MailMate is based on IMAP keywords.</p>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>When failing to encrypt (OpenPGP) a message to an untrusted recipient then “Trust Once” is now provided as an option (when trying to send).</li>
+
+<li>Untrusted S/MIME certificates are now editable (when viewed using “Show Details”), that is, the trust settings can be changed.</li>
+
+<li>Holding down ⌥ can be used to expunge selected messages immediately (instead of moving them to the trash). An alert is shown which can optionally be disabled.</li>
+
+<li>Added the ability to change the type of mailbox count when multiple mailboxes are selected.</li>
+
+<li>Suppression checkmark added to the window shown for “Empty Mailbox” actions (available for “Deleted Messages” and “Junk”).</li>
+
+<li>Improved handling of first responder state when adding/removing views. This is an improvement for both tagging and searching, for example, after tagging the focus returns to the view which had focus before opening the tags editor.</li>
+
+<li>Now wraps headers very nicely at 78 using field specifiers to properly tokenize headers. Lines can be longer if unable to wrap nicely, but lines are never longer than 998 characters. These are</li>
+
+<li>Workaround for Gmails implementation of IMAP keywords which allows the &#8217;]&#8217; character. This is non-standard, but MailMate now handles it gracefully.</li>
+
+<li>Refactored part of the window layout system.</li>
+
+<li>Fixed IMAP bug triggered when APPEND&#8217;ing messages with non-standard flags on a server with no support for non-standard flags.</li>
+
+<li>Fixed crash bug when using <code>mailto:</code> with attachments (via AppleScript).</li>
+
+<li>Fixed OpenPGP encryption-related crash bug.</li>
+</ul>
+
+<p>This release also includes a workaround for a problem under 10.7.5 which would make MailMate and the authorization interface to the keychain hang when changing the trust settings of a server certificate. The problem is related to code signing.</p>
+
+<h2 id='revision_3095_thursday_november_8_2012__version_15'>Revision 3095 (Thursday, November 8, 2012) — Version 1.5</h2>
+
+<p>This section covers all changes since version 1.4.3 of MailMate which was released as a public beta in July. It is followed by a section describing the changes since the latest public release which was version 1.4.2 (r2818/r2819).</p>
+
+<p>Note that the certificate used for code signing has changed since version 1.4.2 and you are going to be asked about allowing MailMate to access passwords in the keychain. This should only happen once for each password.</p>
+
+<p>Version 1.5 is the first version of MailMate with support for OpenPGP and S/MIME. To be able to view/verify and/or compose messages using S/MIME or OpenPGP you need to enable it in the Security preferences pane (⌘,).</p>
+
+<h3 id='various_featureschanges'>Various features/changes</h3>
+
+<ul>
+<li>Updated to Growl Framework 2.0. This means MailMate now supports Mac OS X Notifications on Mountain Lion</li>
+
+<li>Added support for colored flags (compatible with Apple Mail). This also works over IMAP for any server with support for custom IMAP keywords (the majority of servers). The primary flag color is now red in order to match Apple Mail. Default key bindings for setting colored flags is capital F followed by 1-6 (no visual support for setting these flags yet).</li>
+
+<li>“Download Linked File” (or Image) is now available in the context sensitive menu of the message view.</li>
+
+<li>Improved performance of HTML to text conversion by replacing <code>html2text.py</code> with <code>libxml2</code>.</li>
+
+<li>Removed all dependencies on the BWToolkit framework. The related changes include a new status bar below the mailbox outline.</li>
+
+<li>Added a hidden preference (<code>MmIgnoreDeliveryAddresses</code>) to ignore delivery addresses when deriving the identity to be used for a reply. Removed the <code>MmAlwaysTrustDeliveryHeaders</code> hidden preference.</li>
+</ul>
+
+<h3 id='imap'>IMAP</h3>
+
+<ul>
+<li>Fixed a problem related to case sensitive IMAP servers. It only affects installs of Mac OS X on case insensitive disks, but that is also the default. MailMate would terminate when trying to move messages between mailboxes which only differed in casing.</li>
+
+<li>Workaround for Gmail servers replying with <code>* BYE \[UNAVAILABLE\]</code> for a login attempt.</li>
+
+<li>Workaround for servers failing to provide an EXISTS response after APPEND (experienced with an IMAP server named SmarterMail).</li>
+
+<li>Fixed various issues regarding saving messages in the drafts folder on an IMAP server. It now has better performance and it may, indirectly, affect problems with some non-standard servers (Gmail) with respect to the location of sent messages.</li>
+</ul>
+
+<h3 id='bug_fixes'>Bug fixes</h3>
+
+<ul>
+<li>Workaround for a bug in OS X 10.8.2 triggered when using <code>AESendMessage</code> to send AppleScript events. This affected users of SpamSieve. Every message sent to SpamSieve would hang and then time out (after 2 minutes) making MailMate seem extremely slow.</li>
+
+<li>Local references in HTML messages now work correctly (scrolling to the correct location within the message).</li>
+
+<li>Fixed placement of caret when selecting “No Signature” in the composer (when using “Top” posting).</li>
+
+<li>Updated <code>sundown</code> (Markdown converter) to no longer auto-enumerate numbered lists since that does not work well for the plain text part of emails.</li>
+
+<li>Forwarding a message with a misplaced calendar attachment (<code>text/calendar</code> within <code>multipart/alternative</code>) now works correctly, that is, the calendar item is attached to the forwarded message. (This is a workaround for a bug in other email clients.)</li>
+
+<li>Fixed “New Message” bug when using the dock icon menu: Window was not taken to front.</li>
+
+<li>Fixed visual glitch in the date column of the messages outline when expanding/collapsing message threads.</li>
+
+<li>Fixed visual glitch when opening/closing the find banner view (⌘F).</li>
+</ul>
+
+<h3 id='debug'>Debug</h3>
+
+<p>Three new debug variables have been added to make it easier to solve various problems:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmDebugSecurity -bool YES
+	defaults write com.freron.MailMate MmDebugSend -bool YES
+	defaults write com.freron.MailMate MmDebugAddressBook -bool YES</code></pre>
+
+<p>The first one may be of interest for anyone trying out the new support for S/MIME and OpenPGP. The others are mainly introduced to track down problems reported by a few users.</p>
+
+<h2 id='revision_2980_thursday_july_26_2012__version_143'>Revision 2980 (Thursday, July 26, 2012) — Version 1.4.3</h2>
+
+<p>This version of MailMate was only released as a public beta. The following covers all changes between versions 1.4.2 and 1.4.3.</p>
+
+<h3 id='various_featureschanges'>Various features/changes</h3>
+
+<ul>
+<li>Prepared for Gatekeeper (Mountain Lion security feature) by signing MailMate with a Developer ID certificate.</li>
+
+<li>Experimental decryption/verification of PGP messages both with and without the use of MIME body parts. Note: Currently, decrypted data is always added to the database. See the manual pages about hidden preferences for details (and how to enable this feature).</li>
+
+<li>Added an action named <code>selectWithFilter:</code> to be used for key bindings. It can be thought of as a generalization of <code>selectAll:</code> and <code>deselectAll:</code> since it can be used to select any set of messages matching a filter. See the manual page about custom key bindings for more information.</li>
+
+<li>When using “Format ▸ Show Fonts” it is now possible to alter the table line height used in the mailbox outline and the messages outline. For the record, the changeable fonts are: Mailbox outline, messages outline, message view (normal and raw mode font), and composer font.</li>
+
+<li>Dragged messages (to the Finder) are now named using their subject. Configurable using hidden setting: MmFilenameFormatString.</li>
+
+<li>Dragging messages out of MailMate is now handled better using the UTI <code>public.utf-name</code>.</li>
+
+<li>Added ⌥F2 shortcut to open the context sensitive menu in the editor of the composer. The primary use case of this is to easily see and select spelling suggestions. This functionality can also assigned to a different key using custom key bindings (the selector is named <code>showContextMenu:</code>).</li>
+
+<li>No longer displays multi-page PDF documents inline (done by heuristically looking for the number of pages in PDFs).</li>
+
+<li>Added a “Show Fonts” button to the General preferences pane in order to make it a bit more obvious that font changes are possible.</li>
+
+<li>Added help button to the Counters preferences pane.</li>
+
+<li>Added a cancel button (small x in the right side) to the text field used by search conditions (only for some comparison methods).</li>
+
+<li>Inlined images (<code>cid:</code>) in HTML messages can now be dragged.</li>
+
+<li>Now parsing HTML body parts for the database when it differs (considerably) from the plain text body part alternative (or when such alternative does not exist).</li>
+
+<li>Parsing of <code>Message-ID</code> headers now allows spaces in the domain part since such headers are generated by some buggy software.</li>
+
+<li>Now validating the domain part of the <code>Message-ID</code> created for new messages. Replaced by <code>mailmate-app.com</code> if it does not validate.</li>
+
+<li>No longer logs warnings about missing subparts of MIME multiparts when only headers have been fetched.</li>
+
+<li>Threads in search results are now auto-expanded when fewer than 500 messages are found.</li>
+
+<li>Add key bindings file with Postbox key bindings (created by Ian Beck).</li>
+
+<li>Now remembers scroll position for selected message(s).</li>
+
+<li>Changed the composer layouts: They are now horizontal/vertical variants of the preview layout. By default the preview is shown when markup languages are enabled, but it can always be explicitly enabled/disabled (⌃⌥⌘P).</li>
+</ul>
+
+<h3 id='optimizations'>Optimizations</h3>
+
+<p>Multiple aspects of MailMate have been optimized. This should be noticeable for most users, in particular users with a large number of messages and/or mailboxes. Optimizations include:</p>
+
+<ul>
+<li>faster startup time</li>
+
+<li>faster searches (in particular when searching addresses, subjects, or body text)</li>
+
+<li>messages outline sorting (in particular when sorting on addresses or subjects)</li>
+
+<li>synchronization of IMAP accounts</li>
+
+<li>faster when moving forward/backward in search history</li>
+</ul>
+
+<h3 id='completion_of_recipient_namesaddresses'>Completion of recipient names/addresses</h3>
+
+<ul>
+<li>MailMate now supports searching LDAP servers when autocompleting names/addresses in the composer window, but there is currently no GUI for this feature. Read more about it in the manual page about “Hidden Preferences”. Feedback is welcome.</li>
+
+<li>Added a comma to all “lastname, firstname” completion suggestions.</li>
+
+<li>Fixed bug in the sorting of possible completions shown.</li>
+</ul>
+
+<h3 id='extended__url_scheme_to_be_used_via_applescript'>Extended <code>mailto</code> URL scheme to be used via AppleScript</h3>
+
+<p>It is now possible to create new messages in MailMate with attachments using AppleScript. It is also possible to send these messages without bring MailMate to the front.</p>
+
+<p>For a long time, MailMate has supported the <code>mailto</code> URL scheme. For example, the following link creates a message with recipient, subject, and default body text:</p>
+
+<pre><code>	mailto:me@example.com?subject=Test&amp;body=Body%20text</code></pre>
+
+<p>It can be used within HTML pages as a link, but it can also be called directly, for example, using the <code>open</code> command in the Terminal:</p>
+
+<pre><code>	open &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&quot;</code></pre>
+
+<p>Using the <code>open</code> command it is also possible to specify the application to be used when creating the message:</p>
+
+<pre><code>	open -a MailMate &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&quot;</code></pre>
+
+<p>Otherwise, the default email application is used (this can be configured in the General preferences pane in Apple Mail or MailMate).</p>
+
+<p>MailMate now extends the <code>mailto</code> syntax to include some additional special parameters. These are <code>attachment-url</code> and <code>send-now</code>. For security reasons they are ignored except if the URL is provided via AppleScript. It can be done as follows using a single line in the Terminal:</p>
+
+<pre><code>	osascript -e &#39;open location &quot;mailto:me@example.com?subject=Test&amp;body=Body%20text&amp;attachment-url=file:///full/path/to/file.txt&amp;send-now=yes&quot; with trust&#39;</code></pre>
+
+<p>Note the important <code>with trust</code> part of the AppleScript command. This is needed to make sure MailMate does not ignore the special parameters.</p>
+
+<p>In practice, all of this means that MailMate can now be integrated with applications which need to send messages with attachments. Examples for iCal and BusyCal are provided, but it is currently a bit tricky to use them since integration requires the developers of the applications to add scripts for MailMate (and don&#8217;t ever expect that to happen for iCal). For now, the scripts can be enabled as described below using the Terminal (assuming all applications are in <code>/Applications</code>).</p>
+
+<p>iCal:</p>
+
+<pre><code>	mv /Applications/iCal.app/Contents/Resources/Scripts/Mail.scpt /Applications/iCal.app/Contents/Resources/Scripts/MailBackup.scpt
+	ln -s /Applications/MailMate.app/Contents/SharedSupport/Other/iCal/Mail.scpt /Applications/iCal.app/Contents/Resources/Scripts/</code></pre>
+
+<p>UPDATE: The above does not work on Mountain Lion since Apple no longer uses the <code>Mail.scpt</code> file. It is unknown whether or not a workaround exists.</p>
+
+<p>BusyCal:</p>
+
+<pre><code>	mv /Applications/BusyCal.app/Contents/Resources/Scripts/MailAttachmentScript.scpt /Applications/BusyCal.app/Contents/Resources/Scripts/MailAttachmentScriptBackup.scpt
+	ln -s /Applications/MailMate.app/Contents/SharedSupport/Other/BusyCal/MailAttachmentScript.scpt /Applications/BusyCal.app/Contents/Resources/Scripts/</code></pre>
+
+<p>UPDATE: The above does not work for BusyCal 2.0. It might work if the script is placed in the following location (not tested): <code>/Volumes/Mountain\ Lion/Users/benny/Library/Application\ Scripts/com.busymac.busycal2/com.freron.MailMate.scpt</code></p>
+
+<p>Note that updating iCal/BusyCal or moving MailMate is going to break the symbolic links created above.</p>
+
+<p>An example script for LaunchBar (nightlies) is also included. It should be used with the “Preferences ▸ Actions ▸ Options ▸ Create Emails with” preferences item. The script is located here: <code>MailMate.app/Contents/SharedSupport/Other/Launchbar/SentHandlers.scpt</code>. LaunchBar should then allow you to create an email with any selected files attached (selected in the Finder).</p>
+
+<h3 id='imap'>IMAP</h3>
+
+<p>It is now possible to manipulate the use of namespaces for each IMAP account. This is important for some users, especially those needing to specify what is known as an IMAP prefix in most email clients (most often this is not necessary). The feature is described in the chapter about “Hidden Preferences” in the manual.</p>
+
+<p>Gmails IMAP server does not report changes to IMAP keywords/flags including its read state (when watching for changes in the INBOX). As an experimental workaround, MailMate can now be told to regularly check for keyword changes. You can try it by running the following command in the terminal:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmEnableKeywordsCheckInIDLEForGmail -bool YES</code></pre>
+
+<p>Other IMAP related changes are:</p>
+
+<ul>
+<li>Improved heuristic for guessing standard IMAP mailboxes when they have not been explicitly set.</li>
+
+<li>Moved “Edit Subscriptions&#8230;” to the IMAP account editor.</li>
+
+<li>Fixed issue with “Edit Subscriptions”. It did not work correctly if the IMAP username/hostname of the account had been changed.</li>
+
+<li>Fixed behavior for IMAP servers advertising UIDPLUS without support for UIDs in APPEND/COPY responses.</li>
+
+<li>Workarounds for Courier 2004 server (GoDaddy). One workaround for flags which the server does not report correctly immediately after changing them and another workaround for UIDs not being properly detected after an APPEND/COPY due to failed SEARCHes for <code>Message-ID</code>s. Also fixed a more general potential message duplication problem when appending.</li>
+
+<li>Improved behavior for servers (Gmail) with sudden NO rejections on fetch queries combined with termination of the connection (BYE).</li>
+
+<li>Fixed the subscriptions editor to also use the namespaceResponse hidden preference.</li>
+
+<li>Reduced maximum IMAP command line length to work better with servers with a relatively small limit on command line length.</li>
+
+<li>Fixed an issue with uploading messages (APPEND) triggered when one of them (and not the first one) had no or non-standard IMAP keywords.</li>
+</ul>
+
+<h3 id='experimental_dual_mode'>Experimental dual mode</h3>
+
+<p>Introduced a new layout class to handle multiple modes in a window. This is used to provide a dual-mode layout in which one can switch between list mode and message mode. To control it, a key binding is needed for <code>nextMode:</code>. To enable this layout, you need to do the following:</p>
+
+<pre><code>mkdir -p ~/Library/Application\ Support/MailMate/Resources/Layouts/Mailboxes/
+cp /Applications/MailMate.app/Contents/Resources/Layouts/Mailboxes/dualMode.plist ~/Library/Application\ Support/MailMate/Resources/Layouts/Mailboxes/</code></pre>
+
+<p>And then edit <code>dualMode.plist</code> by removing the <code>enabled = 0</code> line.</p>
+
+<h3 id='bug_fixes'>Bug fixes</h3>
+
+<ul>
+<li>Fixed problem with messages erroneously being shown as part of the currently displayed mailbox (messages for which IMAP keywords had changed).</li>
+
+<li>Fixed: For convenience dock/menu-counts are shown when editing counters even if they are 0. Unfortunately the 0-counters were not removed when closing the preferences window.</li>
+
+<li>Now properly updates the search result when selecting something in the popup for an &#8216;is/is not&#8217; comparison.</li>
+
+<li>Better detection of URLs when &lt;&gt; and punctuation is involved (when converting from canonical text to HTML).</li>
+
+<li>Fixed sorting of the Spam Score column in the messages outline.</li>
+
+<li>Fixed some minor memory leaks related to internal conversion of property lists.</li>
+
+<li>Fixed problem with repeated autosave requester after rebuilding database.</li>
+
+<li>Changed wording in the headline of the password requester to avoid confusion about the username used for the account.</li>
+
+<li>Fixed various issues/bugs related to the history of searches.</li>
+
+<li>Fixed termination of MailMate triggered when forwarding certain types of messages.</li>
+
+<li>Fixed termination of MailMate related to clicking on items in the headers view.</li>
+
+<li>Changed how <code>cid:</code> references are handled. It should now work better with non-unique or malformed <code>Content-ID</code> headers. In practice, certain HTML messages with embedded images are now shown correctly even though they contain bad <code>Content-ID</code> headers.</li>
+
+<li>Fixed termination of MailMate when using the “File ▸ Open Message” menu item. It was not correctly enabled/disabled.</li>
+
+<li>Fixed termination of MailMate related to “Show Fonts”.</li>
+</ul>
+
+<h2 id='revision_2818_tuesday_march_27_2012__version_142'>Revision 2818 (Tuesday, March 27, 2012) — Version 1.4.2</h2>
+
+<p>Version 1.4.1 of MailMate unfortunately introduced a performance bug which under certain circumstances can make MailMate practically unusable (high CPU and disk usage). The problem is particularly bad with large mail stores. Thanks to the users helping identify and solve this issue. It is strongly recommended to update to version 1.4.2. (Note that version 1.4.2 works on Mac OS X Leopard as well.)</p>
+
+<h3 id='from_address_derivation_for_email_aliases'>From address derivation for email aliases</h3>
+
+<p>Derivation of the <code>From</code> address for replies has been changed. Until now it has been based on a heuristic using the <code>X-Original-To</code> header and other similar headers, but examples from users have shown that this approach does not work well in general. As a replacement for the heuristic, an optional account setting named “Address Pattern” has been introduced. It is disabled by default. The value for this option must be a regular expression which describes the format of any aliases for the account. Read more about this in the account settings chapter in the Help Book (a help button has also been added to the account settings window).</p>
+
+<h3 id='change_focus_using_key_bindings'>Change focus using key bindings</h3>
+
+<p>Introduced <code>makeFirstResponder:</code> for key bindings. This can be used to bind a key to directly activate a view. The identifiers for the views can be found in the layout files, but here are the most likely use cases:</p>
+
+<pre><code>	&quot;o&quot; = ( &quot;makeFirstResponder:&quot;, &quot;mainOutline&quot; );
+	&quot;m&quot; = ( &quot;makeFirstResponder:&quot;, &quot;messageView&quot; );
+	&quot;M&quot; = ( &quot;makeFirstResponder:&quot;, &quot;mailboxesOutline&quot; );</code></pre>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>Improved headers editor for recipient addresses in the composer. Previously, multiple tokens were created if pasting text in the middle of an existing token or if tab&#8217;ing when the cursor was in the middle of an existing token.</li>
+
+<li>IMAP mailbox states are now cached. This makes scrolling in the mailboxes outline smoother.</li>
+
+<li>Bounces “Download” folder instead of opening it when saving an attachment.</li>
+
+<li>Fixed “Edit ▸ Find ▸ Mailbox Search” menu item. It now works correctly when selected using the mouse (previously it switched to “All Messages”).</li>
+</ul>
+
+<h2 id='revision_2802_wednesday_march_21_2012'>Revision 2802 (Wednesday, March 21, 2012)</h2>
+
+<p><strong>IMPORTANT:</strong> This is the last release of MailMate which supports Mac OS X Leopard (10.5). This affects roughly 2% of the current user base (even less if including Mac App Store users) which is about the same as the number of Mac OS X Mountain Lion users (10.8). This revision of MailMate disables the automatic software update when running MailMate on Leopard.</p>
+
+<h2 id='revision_2801_thursday_march_15_2012__version_141'>Revision 2801 (Thursday, March 15, 2012) — Version 1.4.1</h2>
+
+<h3 id='customizable_swipe_gestures'>Customizable swipe gestures</h3>
+
+<p>Trackpad gestures are now supported by MailMate. It has been implemented with customization in mind as described in the following. The 4 standard swipe directions, left, right, up, and down, are transformed into key down events with the unicode characters <code>\U2193</code>, <code>\U2190</code>, <code>\U2192</code>, and <code>\U2191</code> (→ ← ↑ ↓). It is a bit of a hack, but it allows great flexibility with respect to what can now be done with gestures. By default, standard key bindings have been extended as follows:</p>
+
+<pre><code>	&quot;→&quot;      = &quot;nextMessage:&quot;;
+	&quot;←&quot;      = &quot;previousMessage:&quot;;
+	&quot;↑&quot;      = &quot;previousThread:&quot;;
+	&quot;↓&quot;      = &quot;nextThread:&quot;;
+	&quot;^→&quot;      = &quot;nextUnreadMessage:&quot;;
+	&quot;^←&quot;      = &quot;previousUnreadMessage:&quot;;
+	&quot;^↑&quot;      = &quot;previousUnreadThread:&quot;;
+	&quot;^↓&quot;      = &quot;nextUnreadThread:&quot;;</code></pre>
+
+<p>The defaults may be changed (feedback is welcome), but in any case you can change it yourself using a custom set of key bindings. Swipe to archive, switch mailbox, delete messages, or whatever you like. As indicated by the defaults, it is possible to combine swipes with the use of modifier keys.</p>
+
+<h3 id='other_new_keybindings'>Other new keybindings</h3>
+
+<p>Based on a user request, the following actions are now available for binding keys to expand/collapse messages or threads in the messages outline (when organizing by thread):</p>
+
+<pre><code>	expand:
+	collapse:
+	expandThread:
+	collapseThread:</code></pre>
+
+<p>In addition to <code>toggleTag:</code>, it is now also possible to explicitly set or remove tags:</p>
+
+<pre><code>	setTag:
+	removeTag:</code></pre>
+
+<h3 id='improvements'>Improvements</h3>
+
+<p>Most importantly, a number of optimizations should result in faster startup time, smoother scrolling in the messages outline, and faster display of messages, in particular, for large message stores.</p>
+
+<ul>
+<li>Added preferences for when to automatically mark messages unread (see the “Composer” preferences pane).</li>
+
+<li>Added support for named alternative email addresses (details in the chapter about account settings in the manual).</li>
+
+<li>Updated Markdown converter (<code>sundown</code>). It is now better at handling changes in quote-level although this is non-standard Markdown behavior. Also fixed handling of quoted code blocks which would often fail when indented code blocks were in use.</li>
+
+<li>Better detection of whether Markdown can be used for replies. Markdown is now enabled whenever the text replied to is known to be Markdown or does not contain Markdown markup.</li>
+
+<li>Added the use of an external script to convert HTML to plain text (Markdown) when needed for replies or forwarded messages.</li>
+
+<li>Now warns when trying to send a message from an account with no SMTP server configured (instead of silently not sending).</li>
+
+<li>Improved handling of links in the composer. No longer opened on single click. Hold down command to open a link or use the menu item.</li>
+
+<li>Drag&#8217;n&#8217;drop of email addresses between fields behaves as one would expect. The GUI feedback is still wrong (inverted). Hold down option or command to copy.</li>
+
+<li>Added “Reset Usage History” button in the Signatures preferences pane. MailMate now also automatically uses the first configured signature (if any exists) when a signature cannot be derived otherwise.</li>
+
+<li>IMAP server name and username settings can now be changed when editing account settings.</li>
+
+<li>Improved IMAP code for handling non-UIDPLUS servers.</li>
+
+<li>Changed how deleted messages are handled internally. Some actions should be (feel) faster now.</li>
+
+<li>Added columns for “Date Sent”. (Currently only works properly for new messages or if rebuilding the database.)</li>
+
+<li>Indentation in the messages outline column has been improved (the one with triangles). In particular, there is no indentation when not organizing by thread.</li>
+
+<li>Improved default columns shown for standard mailboxes under SOURCES (such as showing “To” instead of “From”).</li>
+
+<li>Improved mailbox outline display performance.</li>
+
+<li>Improved performance of resetting messages (“Message ▸ Reset&#8230;”).</li>
+
+<li>Better handling of address-only messages when completing addresses.</li>
+
+<li>Improved parsing of spam status related headers.</li>
+
+<li>No longer necessary to close the Quick Look panel before clicking a new Quick Look button.</li>
+
+<li>Improved behavior when moving signature to top after adding text to the top of the message. It is now placed under any text entered and before the “On &#8230; wrote:” line.</li>
+
+<li>Specialized handling of a <code>text/calendar</code> body part when it is part of <code>multipart/alternative</code> (created by buggy software). It is now shown as an attachment when viewing the <code>text/plain</code> or <code>text/html</code> body part.</li>
+
+<li>Import Messages: Option to import into the destination mailbox even if messages are found within some hierarchy of folders.</li>
+
+<li>Improved importing of mailbox folders created by Lion Apple Mail.</li>
+
+<li>Added enclose-related words to the default attachments check.</li>
+
+<li>No longer trusts <code>X-Original-To</code>-like headers when creating new messages if they come before any <code>Received</code> headers (this matches how replies work).</li>
+
+<li>Improved From address derivation. Now any <code>X-Original-To</code> and <code>X-Delivered-To</code> headers are ignored if they come <em>after</em> any <code>Received</code> headers.</li>
+
+<li>Improved derivation of From address for mailing lists where the <code>X-Original-To</code> header was not useful. Now it works if the real address is only found in the <code>for</code> part of a <code>Received</code> header. These parts of <code>Received</code> headers are now scanned for known addresses.</li>
+
+<li>Attachment links are now draggable (and not just the attachment icons).</li>
+
+<li>Introduced hidden preference for setting the default type for mailbox counters: <code>MmMailboxDefaultCountKey</code>. Set it to <code>none</code> to disable counting by default.</li>
+
+<li>Improved drag&#8217;n&#8217;drop of messages. Now inserts titled URL in RTF documents and a plain link in plain text documents. Also uses so-called promised files instead of real files.</li>
+</ul>
+
+<h3 id='new_hidden_preferences'>New hidden preferences</h3>
+
+<p>The following three boolean hidden preferences values are now available:</p>
+
+<pre><code>	MmMoveSentRepliesToMailboxOfRepliedMessage
+	MmAddressCompletionMailbox
+	MmNonPrivateNamespacesEnabled</code></pre>
+
+<p>The first one is self-explanatory, the second one can be used to control which messages are used for completion of email addresses in the composer, and the last one can be used to enable experimental support for non-private IMAP namespaces. Feedback is welcome, but none of these features should be considered complete.</p>
+
+<h3 id='fixes'>Fixes</h3>
+
+<ul>
+<li>Fixed bug which resulted in forwarded messages being marked as answered.</li>
+
+<li>When opening a message using a menu bar counter menu item or by clicking on a notification then the message is opened in the main window. Previously it often failed, because of an active search (which is now cleared instead).</li>
+
+<li>Fixed various problems related to circular message references including self-referencing messages. This includes crashes involving the <code>maximum_value_for_header</code> function. It has been solved by always breaking cycles when threading messages.</li>
+
+<li>Various issues fixed with regard to mailbox dragging/reordering.</li>
+
+<li>Fixed issue triggered by receiving <code>text/enriched</code> attachments which are really msword documents (generated by a buggy email client).</li>
+
+<li>Fixed bug related to messages with <code>message/rfc822</code> as content type in the root body part.</li>
+
+<li>Fixed sorting of Read state column (blue dot).</li>
+
+<li>Fixed parsing of (yet another) non-standard From address variant: <code>address (name &lt;address&gt;)</code>.</li>
+
+<li>Fixed issue with the hidden preference to prepopulate the Bcc header.</li>
+
+<li>Fixed handling of <code>mailto:</code> URL scheme when used to launch MailMate.</li>
+
+<li>Fixed crash bug when exiting MailMate with one or more open mailbox editors.</li>
+
+<li>Fixed crash bug which could be triggered by recipient addresses containing “single quote” marks.</li>
+
+<li>Fixed crash bug which (under special circumstances) could be triggered when using “Edit as New Message” followed by removing an attachment.</li>
+
+<li>Workaround for problem with &#8216;Gordano Messaging Suite IMAP4 server v15.02.3689&#8217;.</li>
+
+<li>Workaround for server which did not return a hierarchy delimiter when requested to do so (Surgemail).</li>
+
+<li>Fixed pasting URLs copied from a Webview. Previously the name was pasted instead of the URL.</li>
+
+<li>Added boolean defaults value MmEncodeFullSubjectLines. This can be used as a workaround for problems with buggy websites (like http://www.followup.cc/).</li>
+
+<li>Now uses the correct SMTP settings when sending a message with a derived email address.</li>
+
+<li>Now properly handling draft messages which were never saved, but which were still part of the database because of a crash. This fixed bug has the side-effect that when rebuilding a database empty messages are likely to appear in the Drafts mailboxes.</li>
+
+<li>Fixed an IMAP namespace problem. Triggered when multiple namespaces of a given type are reported by a server.</li>
+
+<li>More robust handling of IMAP servers unable to return the bodies of existing messages (workaround for MS Exchange bug).</li>
+
+<li>Now able to handle 0-sized IMAP messages (a problem which is rare and difficult to reproduce).</li>
+
+<li>Fixed behavior when detecting changed UIDVALIDITY value for an IMAP mailbox. Previously it could fail if the mailbox contained messages with no UIDs.</li>
+
+<li>Changed handling of IMAP messages with empty headers and body.</li>
+
+<li>Fixed default state for ignoring server subscription states (it was supposed to be on by default, but this was not the case).</li>
+
+<li>Updated default IMAP server used for iCloud IMAP accounts (<code>imap.mail.me.com</code>) when importing accounts from Apple Mail.</li>
+
+<li>Workaround for mailbox creation problem with buggy Yahoo IMAP server.</li>
+
+<li>Fixed SMTP settings in the IMAP account settings window to properly show an empty string.</li>
+
+<li>Improved date parsing such that some problematic <code>Received</code> headers are skipped (essentially a workaround for headers generated by a Gmail migration).</li>
+</ul>
+
+<h2 id='revision_2651_saturday_december_17_2011__version_14'>Revision 2651 (Saturday, December 17, 2011) — Version 1.4</h2>
+
+<p>Until this version of MailMate, during startup the user has been notified of any previous crashes and then offered the opportunity to submit them to Freron Software. This has been a very useful feature and crashes are now quite rare in general due to the fixes which have followed the crash reports sent. The feature still exists, but it has been simplified. The Preferences (⌘,) has a new setting where MailMate can be told to automatically send crash reports quietly. This is disabled by default, but you are automatically asked (once) to enable it if a crash report is found.</p>
+
+<h3 id='reorganized_and_extended_preferences'>Reorganized and extended preferences</h3>
+
+<p>The Preferences (⌘,) window has been reworked and now contains 7 panes. Previously hidden preferences have been given a GUI and other preferences have been improved. “Software Update” has moved from the MailMate menu to its own pane and it has more detailed settings. In particular, you can configure it to automatically download beta versions of MailMate.</p>
+
+<h3 id='markdown_support'>Markdown support</h3>
+
+<p>Markdown support is now available and you can enable it in “Preferences ▸ Composer”. The composer window is then going to include a Markdown-related menu in the status bar. You can read more about it in the Help Book, but essentially it means that you can write your messages in Markdown style and then MailMate is going to generate an HTML body part as an alternative to the plain text (Markdown) body part. Note that the composer has an alternative layout which makes it easier to experiment with this feature (see “View ▸ Layouts” when using the composer).</p>
+
+<h3 id='imapsmtp'>IMAP/SMTP</h3>
+
+<p>For new users, IMAP server subscriptions states are now ignored by default. This can be changed in the “Edit Subscriptions&#8230;” interface. For existing users (that is, existing databases) the default is still to respect server subscriptions.</p>
+
+<p>The quest continues to support as many IMAP servers as possible. Some servers are more challenging (euphemism for buggy) than others, and some times servers reveal bugs in MailMate. The following are all of the IMAP related changes:</p>
+
+<ul>
+<li>IMAP/SMTP data parsing: Line endings should be so-called CRLF according to the standards, but MailMate now handles CR&#8217;s without LF&#8217;s as gracefully as possible (this fixes an iCloud IMAP server problem).</li>
+
+<li>Workaround for bug in MS Exchange IMAP server (wrong result for UID SEARCH commands).</li>
+
+<li>Server reachability is now handled a bit differently in an attempt to fix some issues with both IMAP and SMTP.</li>
+
+<li>Fix for problem with an MS Exchange IMAP server where the server provided information which was not requested for the destination mailbox of a move command (this is legal behavior, but it was not expected by MailMate in this special case).</li>
+
+<li>Introduced a “failed” stated for IMAP accounts which makes it easier for MailMate to avoid taking mailboxes offline unless explicitly requested by the user.</li>
+
+<li>Now accepts differing mailbox hierarchy delimiters returned from LIST and LSUB if one of them is NIL.</li>
+
+<li>Automatically ignoring “[Gmail]/Important” for new accounts. Also better at detecting “All Mail” and “Starred” when they are localized.</li>
+
+<li>Fixed various issues in the subscriptions editor, including broken filtering. You can now use ⌥ to select/deselect all (filtered) items.</li>
+</ul>
+
+<p>When sending a message fails then a “Try Later” option is now available. It&#8217;ll retry after 15 minutes and then present the requester again (if it fails again). Each time the retry delay is doubled. When quitting, MailMate notifies the user if any messages are on hold.</p>
+
+<p>If sending while offline then messages are automatically queued for sending when going online again. The state of individual messages can be seen in the Drafts mailbox. Using hidden options it is also possible to delay sending any messages (the delay is measured in seconds):</p>
+
+<pre><code>	defaults write com.freron.MailMate MmSendMessageDelayEnabled -bool YES
+	defaults write com.freron.MailMate MmSendMessageDelay -integer 60</code></pre>
+
+<ul>
+<li>SMTP: Increased end of DATA timeout to 10 minutes to be compliant with RFC5321.</li>
+</ul>
+
+<h3 id='database_rebuilding'>Database rebuilding</h3>
+
+<p>MailMate now automatically offers to rebuild the database if an inconsistency is detected. The user is asked to choose between basing the rebuild on already downloaded messages or basing the rebuild on redownloading all messages. When based on downloaded messages, MailMate tries to maintain the usage history of signatures.</p>
+
+<p>This is a major new feature even though you may never see it. The previous solution was to output an error to the system log and then simply terminate MailMate. It was not very user-friendly and it was difficult to recover manually.</p>
+
+<p>Part of the implementation of this feature means that the UIDs of IMAP messages are now stored in file attributes. Also, moving messages between mailboxes is now done much more efficiently than it was before (on the local disk).</p>
+
+<h3 id='other_new_features'>Other new features</h3>
+
+<p>Navigation keys have been for thread navigation (in the Messages menu for now). The corresponding selectors are <code>next/previousThread:</code> and <code>next/PreviousUnreadThread:</code> and they can be used for custom keybindings if needed. The default keys mirrors the keys for <code>next/previous(Unread)Message:</code> with the addition of the control key (⌃).</p>
+
+<p>The From address of a message is now customizable. A “Customize&#8230;” menu item has been added to the From-menu. This opens a simple sheet with a text field. The text field features automatic completion based on previously sent messages. Note that the From menu is not shown if only 1 identity is known (configured in accounts), but this is likely not an issue for users wanting to customize the From header.</p>
+
+<p>Another new selector is <code>scrollPageDownOrNextUnreadMessage:</code> which can currently only be used by assigning a key using custom key bindings. The idea is to assign it to the space key to make it behave a bit differently with respect to finding the next message (standard key binding simply looks for the next message and not the next unread message).</p>
+
+<p>Two algorithms now exist for the dynamic signatures system. It can be configured using the Terminal as follows:</p>
+
+<pre><code>	defaults write com.freron.MailMateSimple MmDynamicSignatureMethod -string standard</code></pre>
+
+<p>The three possible values are <code>none</code> (to disable it), <code>standard</code> (the default), and <code>messageType</code>. The last one bases its signature guess on whether the message is new or is a reply. This is for users who typically write an initial message with a large signature and then subsequently use a small signature.</p>
+
+<ul>
+<li>SpamSieve is not launched before it is really needed, that is, when a message arrives in a mailbox covered by the SpamSieve settings.</li>
+
+<li>Dragging of so-called promised files now works with the composer. This means dragging events from iCal to the composer should work.</li>
+
+<li>“Edit ▸ Select Duplicates” feature (⌃⌥⌘A). If duplicate messages exist then this command selects anything but the original messages (those known for the longest time). This is a useful feature, but it is likely to be replaced with something more flexible in the future.</li>
+
+<li>Added new menu item for resetting messages, that is, remove them locally and then refetch them from the IMAP server (“Messages ▸ Reset&#8230;”).</li>
+
+<li>Added dock menu item for composing a new message.</li>
+
+<li>The default mailbox search terms are now automatically altered if viewing a mailbox with sent or draft messages such that any occurrence of <code>from</code> is replaced by <code>recipient</code>.</li>
+
+<li>Moved Return/Enter to open messages to the standard key bindings (from Gmail bindings). Fixed the Enter key binding to actually work.</li>
+
+<li>As an experimental feature, <code>insertFormatString:</code> has been added as an alternative to <code>insertText:</code> for key bindings. Mainly to allow one to do something like <code>&quot;x&quot; = ( &quot;reply:&quot;, &quot;insertFormatString:&quot;, &quot;Hi ${from.name.first},\n\n&quot;);</code>.</li>
+
+<li>Updated documentation.</li>
+</ul>
+
+<h3 id='fixes'>Fixes</h3>
+
+<ul>
+<li>Fixed bug related to creating a new message with an attachment, saving it, and then removing the attachment. In some cases the attachment was never really removed (the problem was related to autosaving).</li>
+
+<li>Fixed bug in reply code when replying to multiple senders. Most of the time only 1 sender was included in the To-header.</li>
+
+<li>Fixed messages outline to keep the selected row displayed when changing sorting column.</li>
+
+<li>Blind fix to an issue which only occurs for a single user with a very large number of configured accounts.</li>
+
+<li>Fixed problem with Growl 1.3.x on Lion. Also updated the Growl framework included with MailMate to version 1.2.3. Cannot just upgrade to the 1.3 framework since it does not work for 10.5.</li>
+
+<li>The state of the headers view (disclosure triangle) is now also saved in single message viewer windows.</li>
+
+<li>Fixed headers view menu item such that “New Message to&#8230;” works when only an email address is available. Also added “Reply to&#8230;” which is useful for emails with a reply-to field which would otherwise be used by default.</li>
+
+<li>Improved debug output for signature derivation.</li>
+
+<li>Fixed potential crash bug when new messages are deleted immediately (server side).</li>
+
+<li>Fixed bug in parsing of Thunderbird account preferences.</li>
+
+<li>Improved default identity for a new message when messages outline sorting has the newest message at top.</li>
+
+<li>Fixed crash bug when parsing a malformed <code>message:</code> URL.</li>
+
+<li>Improved navigation and sorting of threads when having newest message at top.</li>
+
+<li>Now showing registration window when trial time has ended (30 days of active use), but it is still possible to skip it and continue under the restriction of only being able to send 2 messages per launch.</li>
+
+<li>“Edit as New Message&#8230;” now maintains the original From header even if the email address is not explicitly configured in account settings.</li>
+
+<li>Replaced the Markdown converter, <code>upskirt</code>, with the latest revision from github. Note that its name has now changed to <code>sundown</code>.</li>
+
+<li>Fixed bug in the From -&gt; Recipient replacement for mailbox searching in a drafts mailbox.</li>
+
+<li>The preview layout (⌘1) of the Composer has been improved, in particular, the choice of layout is persistent and the window is now always closed when sending.</li>
+
+<li>Fixed autosave-related termination bug when editing drafts with attachments (often seen when forwarding).</li>
+
+<li>Swapped j/k related bindings in the Gmail keybindings file.</li>
+</ul>
+
+<h2 id='revision_2491_sunday_september_25_2011'>Revision 2491 (Sunday, September 25, 2011)</h2>
+
+<p>In addition to a range of fixes/improvements, this release also includes some important steps towards improving integration with other applications. Some of it is still in an experimental state, but you can read more about it further below. It might even be fun to play with.</p>
+
+<h3 id='various_fixesimprovements'>Various fixes/improvements</h3>
+
+<ul>
+<li>Fixed saving of splitview divider positions. It failed in some cases when restarting MailMate (the width of the mailboxes outline was not preserved).</li>
+
+<li>Fixed problem with a message being displayed even when a mailbox search has no matches (the previously selected message was still shown).</li>
+
+<li>Fixed various problems where MailMate would try to synchronize a non-existing or non-selectable IMAP mailbox.</li>
+
+<li>Improved forwarding behavior for messages with a <code>text/html</code> body part.</li>
+
+<li>Fixed counting of attachments (implicitly the display of the paper clip in the messages outline) to work when attachments are hidden within one of the body parts of a <code>multipart/alternative</code> MIME body part (most often produced by buggy email clients).</li>
+
+<li>Fixed some printing issues with message headers. Also, Quick Look buttons are no longer printed.</li>
+
+<li>Temporary solution for hiding Bcc headers when forwarding/printing is to use boolean defaults values MmNeverForwardBcc/MmNeverPrintBcc.</li>
+
+<li>Fixed program termination when copying messages to universal mailboxes.</li>
+
+<li>Fixed problems related to the responder chain when closing windows. This could terminate MailMate, e.g., when closing a composer window by sending a message.</li>
+
+<li>Fixed problem with synchronization of mailboxes when launching MailMate. In some cases this could lead to termination of MailMate.</li>
+
+<li>Changed behavior of MailMate if a (buggy) IMAP server returns out of range sequence numbers. MailMate now reports the problem to the user instead of terminating.</li>
+
+<li>Increased timeout value used after uploading a message to an SMTP server. Some servers are very slow to respond.</li>
+
+<li>Improved sorting of subjects in the messages outline.</li>
+</ul>
+
+<p>Also added debug code to more easily get a log from a failing server connection. When an error window is shown with the options of “Take Account/Mailbox Offline” or “Retry” then you can hold down ⇧ to produce a log of a retry attempt. The file is saved to the Desktop with a name with the following pattern: &#8220;MailMate_server_mailbox.txt&#8221;.</p>
+
+<h3 id='integration_with_other_applications'>Integration with other applications</h3>
+
+<p>Safari has menu items which can be used to easily mail pages or links. These menu items now also work for MailMate with the caveat that MailMate attaches page content (since the composer supports plain text only).</p>
+
+<p>Also new is that MailMate supports the following in the Services menu: “New Email With Attachment” and “New Email With Selection”.</p>
+
+<p>It is also possible to obtain a special MailMate menu item in the PDF menu of the printing dialog (this works in any application). This can be done by making an alias to MailMate in the following folder:</p>
+
+<pre><code>	~/Library/PDF Services/</code></pre>
+
+<p>After making the alias, the name of the alias can be changed to, e.g., “Mail PDF with MailMate.app”.</p>
+
+<p>Finally, MailMate now also handle the following URL schemes: <code>mid</code>, <code>cid</code>, and <code>message</code>. Note that they can be “assigned” to MailMate by using the email application chooser in the (General) Preferences. Whether you need to do this depends on which email applications you have used in the past, e.g., “Apple Mail” only supports (and introduced) the <code>message</code> URL scheme.</p>
+
+<p>Also added a menu item for “Copy as Link” using the <code>message</code> URL format. This URL scheme is an undocumented Apple feature, but this is going to work better if switching between Apple Mail and MailMate. An alternative could be the <code>mid</code> URL format which is standardized. This might be optional in the future.</p>
+
+<h3 id='a_restful_interface'>A RESTful interface</h3>
+
+<p>In order to try out the following very experimental feature, you need to enable it before launching MailMate:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmHTTPServerEnabled -bool YES</code></pre>
+
+<p>Now you can test it by entering the following URL in your favorite web browser:</p>
+
+<pre><code>	http://localhost:54321</code></pre>
+
+<p>The only thing displayed is a link to the following:</p>
+
+<pre><code>http://localhost:54321/messages</code></pre>
+
+<p>This should show you a list of all messages in MailMate. You can click on any message, but don&#8217;t click on junk messages since external references (images mostly) are most likely not blocked in the browser. The link to message number 1 (if it exists) would then be:</p>
+
+<pre><code>	http://localhost:54321/messages/1</code></pre>
+
+<p>You can also see the message number of any message in MailMate by enabling the “Msg ID” column in the messages outline. In the special mailbox “All Body Parts” you can also see the message number of any body part.</p>
+
+<p>The default <code>Content-Type</code> depends on the HTTP Accept header. In a browser, <code>text/html</code> is likely returned for any messages or body parts of type <code>text/*</code>, <code>message/rfc822</code>, or <code>multipart/*</code>. Other body parts are returned as they are defined in the MIME body part headers, for example, a body part of type <code>image/png</code> is returned as <code>image/png</code> (decoded to its binary form). When using <code>curl</code> from the command line then the default output is <code>text/plain</code> for body parts where this return type is supported. This is nicely decoded canonical (utf-8 encoded) text.</p>
+
+<p>The returned data can be changed by explicitly stating the accepted type(s). For example, using <code>curl</code> from the command line, you can retrieve a raw message as follows:</p>
+
+<pre><code>	curl -H&#39;Accept: message/rfc822&#39; http://localhost:54321/messages/1</code></pre>
+
+<p>Or you can retrieve the HTML formatted message used in the browser:</p>
+
+<pre><code>	curl -H&#39;Accept: text/html&#39; http://localhost:54321/messages/1</code></pre>
+
+<p>You can also reference header values as follows:</p>
+
+<pre><code>	http://localhost:54321/messages/1/headers/x-mailer</code></pre>
+
+<p>In this case the result would be a json array like <code>[&quot;MailMate r2460&quot;]</code> if the message had been written in the latest (registered) revision of MailMate. The following is an example of how to use a specifier to only get the <code>MailMate</code> part of the header:</p>
+
+<pre><code>	http://localhost:54321/messages/1/headers/x-mailer/name</code></pre>
+
+<p>You can also try the above in a browser where the following URL can be used to see a list of all headers in a message:</p>
+
+<pre><code>	http://localhost:54321/messages/1/headers</code></pre>
+
+<p>Note that <code>message/rfc822</code> is also supported for the URL above.</p>
+
+<p>All of this is work in progress and should be considered a “proof of concept”. The main goal is to use this as an interface for retrieving information about messages in MailMate from scripts in any language.</p>
+
+<p>For now, MailMate still lacks a way to run commands on selected messages and therefore the above is not yet very useful in practice, but you are encouraged to play with it and maybe even provide some feedback.</p>
+
+<h2 id='revision_2419_wednesday_august_24_2011__version_131'>Revision 2419 (Wednesday, August 24, 2011) — Version 1.3.1</h2>
+
+<h3 id='custom_key_bindings'>Custom key bindings</h3>
+
+<p>The custom key bindings feature is now exposed in the GUI. It can be enabled in “Preferences ▸ General” and a comma-separated list of custom key bindings files can be entered. For now, only a Gmail key bindings file is distributed with MailMate. A help button in the preferences leads to a help book chapter which describes how you can create your own shortcuts, for example, to go to specific mailboxes, move messages, or to toggle IMAP keywords/tags.</p>
+
+<p>Note: If you have used this feature while it was not exposed in the GUI then you still need to go to the preferences and enable it.</p>
+
+<h3 id='hidden_preferences'>Hidden preferences</h3>
+
+<p>Over time, numerous hidden preferences have been described in the release notes. A new <a href='help:anchor=hidden_preferences%20bookID=com.freron.MailMate.help'>chapter</a> in the help book lists all of them. Some of them are eventually going to have GUI counter parts, some will stay hidden, and some will be removed again. Look through the list to see if it contains one or more useful features for you. Feedback is welcome.</p>
+
+<h3 id='guessing_standard_mailboxes'>“Guessing” standard mailboxes</h3>
+
+<p>Introduced strategy for guessing standard mailbox names, for example, MailMate automatically figures out to use a mailbox named “Trash” for deleted messages instead of creating a new mailbox named “Deleted Messages”. This is a heuristic approach since there is no standard for getting this information from IMAP servers except for the non-standard XLIST extension used by Google (and maybe others have adopted it). This extension is also supported by MailMate.</p>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>Now updates the choice of From-address (identity) when changing the main recipient in new messages (not for replies).</li>
+
+<li>Now stops updating From-address/signature when an explicit choice has been made (for example, after choosing “No Signature”).</li>
+
+<li>Fixed completion of names when inserting adress book groups in the composer (previously only the first name was included)..</li>
+
+<li>Fixed selection-problem in the Correspondence outline (nested messages were not always selected).</li>
+
+<li>Fixed problem with duplicates in the Drafts folder after quitting MailMate while writing an unsaved new message.</li>
+
+<li>Removed unnecessary refresh when using Quick Look. In some cases this could also terminate MailMate.</li>
+
+<li>The Quick Look buttons no longer require javascript and are thus displayed for all messages (previously not shown for HTML messages).</li>
+
+<li>Automatically expands the SOURCES section in mailbox outline when adding new accounts. Important for the new non-obvious show/hide style used in Lion.</li>
+
+<li>Fixed issue on Lion with respect to restoring window frames on startup.</li>
+
+<li>When selecting a mailbox MailMate makes a quick check for new messages. For smart mailboxes MailMate identifies any explicit mailboxes on which the mailbox is based (recursively) and makes quick checks for new messages in these.</li>
+
+<li>Added “View ▸ Clear Scrollback” (⌘K) menu item for clearing the log view in the Activity Viewer. It clears all logs if no connections are selected.</li>
+
+<li>Fixed sorting problem for messages with address fields with only an email address.</li>
+
+<li>Fixed selection problem in the correspondence outline. Some times MailMate would not select the correct message after, e.g., archiving.</li>
+</ul>
+
+<h3 id='link_crashes_default_folder_x'>Link crashes (Default Folder X)</h3>
+
+<p>Some users have reported crashes when clicking on links in emails on Lion. If you experience this problem then it is very likely that you need to update the Default Folder X application. This problem also seems to not be limited to MailMate, but may occur for other applications as well.</p>
+
+<h2 id='revision_2359_saturday_august_6_2011'>Revision 2359 (Saturday, August 6, 2011)</h2>
+
+<ul>
+<li>Fixed problem with the IMAP server at gmx.net (MailMate never finished synchronizing mailboxes). The problem may also have affected other IMAP servers.</li>
+
+<li>Fixed an issue with viewer windows not opening on restart.</li>
+
+<li>Fixed problem related to actions immediately after changed message selection (like double-clicking or when archiving multiple messages quickly one by one).</li>
+
+<li>Now properly remembering whether or not automatic spelling correction is enabled in the composer.</li>
+</ul>
+
+<p>Added temporary solution for adding a bcc header by default to all outgoing messages. Write the following in the Terminal if you need this:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmDefaultBccHeader -string me@example.com</code></pre>
+
+<p>Added experimental prefs value MmAllMessagesFilter to make searches faster. It can be used to reduce the number of messages included in the “All Messages” mailbox. All messages are still available via the IMAP sources/mailboxes:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmAllMessagesFilter -string &quot;#date &gt; 1 years ago&quot;</code></pre>
+
+<h2 id='revision_2341_wednesday_august_3_2011__version_13'>Revision 2341 (Wednesday, August 3, 2011) — Version 1.3</h2>
+
+<p>With this release MailMate now officially supports Mac OS X 10.7 (Lion). Lion related changes are described in the following subsection. The release notes for this release are extensive, but you should note the subsections further below describing some new experimental features, in particular, a new flexible system for custom key bindings (providing Gmail-like keyboard shortcuts) and the first small steps toward support for OpenPGP.</p>
+
+<h3 id='lion_related_features_and_fixes'>Lion related features and fixes</h3>
+
+<ul>
+<li>Added full screen mode in Lion (⌃⌘F).</li>
+
+<li>Fixed account importer to work for Apple Mail on Lion.</li>
+
+<li>Added menu item in “View ▸ Spelling” for toggling the use of automatic spelling corrections.</li>
+
+<li>Fixed problem on Lion with storing/restoring view frame sizes. Most often seen by a wrongly sized mailbox outline.</li>
+
+<li>No longer using a private API for non-local address books when running on Lion (Apple fixed this issue).</li>
+
+<li>Fixed occasional beeps and other problems triggered when quitting MailMate.</li>
+</ul>
+
+<h3 id='new_features_and_improvements'>New features and improvements</h3>
+
+<ul>
+<li>Undo/redo supported for moving messages.</li>
+
+<li>Changed the look of attachments using tables and an updated stylesheet. This includes a button for “Quick Look” and drag&#8217;n&#8217;drop of the file icon.</li>
+
+<li>Improved replying to messages in the Sent mailbox (which are handled as follow-ups instead of replies): Cc and Bcc are handled, the “Reply or Reply All” requester is never shown, and the default signature is derived correctly.</li>
+
+<li>Mailbox Search/Editor: Fixed several date related issues including sticky values when changing comparison method or duplicating rows.</li>
+
+<li>Mailbox Search/Editor: Date comparisons can now be done on the received date as well.</li>
+
+<li>When cancelling/closing a mailbox search MailMate now returns to the originally selected mailbox.</li>
+
+<li>Changed derivation of default From address to prioritize known recipient addresses higher than delivery addresses.</li>
+</ul>
+
+<p>Two new options have been added to Preferences/General (based on frequent requests):</p>
+
+<ol>
+<li>An option to change the default behavior of double-clicking a message. It can now be set to open the message instead of searching for related messages.</li>
+
+<li>An option to use a bold font style for unread messages.</li>
+</ol>
+
+<p>There is also a new hidden boolean option. When enabled, any message viewer or composer window is taken to the front when the dock icon is clicked. Normal behavior is to always open a mailbox viewer if none exists:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmShowAnyViewerOnDockIconClick -bool yes</code></pre>
+
+<h3 id='custom_keybindings'>Custom keybindings</h3>
+
+<p>A new system is in place to provide custom key bindings for common tasks. As an example MailMate includes many of the key bindings used by Gmail. There is no GUI option yet, but this feature should be stable. To enable it, run the following from the Terminal:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmCustomKeyBindingsName -string &quot;Gmail&quot;</code></pre>
+
+<p>The key bindings are defined in the files located in:</p>
+
+<pre><code>	MailMate.app/Contents/Resources/KeyBindings/</code></pre>
+
+<p>It is possible to create a new key bindings file and place it in:</p>
+
+<pre><code>	~/Library/Application Support/MailMate/Resources/KeyBindings/</code></pre>
+
+<p>The Gmail key bindings file can be used as a starting point for new files. It includes most of what is possible to do. Each key-combination (or series of key-combinations) can be bound to one or more actions. Each action is defined by a so-called selector.</p>
+
+<p>Some selectors accept an additional argument. These are <code>insertText:</code>, <code>goToMailbox:</code>, <code>moveToMailbox:</code>, and <code>toggleTag:</code>. The <code>goToMailbox:</code> and <code>moveToMailbox:</code> selectors work both with and without an argument. Alternatively, <code>goToMailbox:</code> can take the unique id of any mailbox as an argument (see Mailboxes.plist) and <code>moveToMailbox:</code> can take one of the following as an argument:</p>
+
+<ol>
+<li>A standard mailbox name such as inbox, archive, drafts, sent, junk, and trash.</li>
+
+<li>A mailbox path without an account such as <code>/Special</code>.</li>
+
+<li>A full path for a mailbox within an account such as <code>imap://you@imap.example.com/Special</code></li>
+</ol>
+
+<p>The following example would bind the key <code>g</code> to move a message to a mailbox named <code>Special</code> within the account the message is currently located:</p>
+
+<pre><code>	g = ( &quot;moveToMailbox:&quot;, &quot;/Special&quot;);</code></pre>
+
+<p>Here is an example of using key bindings to tag messages. It also illustrates the use of nested key bindings:</p>
+
+<pre><code>	&quot;t&quot; = {
+		&quot;s&quot; = ( &quot;toggleTag:&quot;, &quot;Special&quot; );
+	};</code></pre>
+
+<p>In this example, entering <code>ts</code> toggles a tag named <code>Special</code>. It should be possible to define a column showing the state of such a tag and it is possible to match on it when searching or creating smart mailboxes. Other than that the tag is “invisible” for now. Note that the tag is given directly to the IMAP server and thus you should use ASCII and no special characters including no use of space.</p>
+
+<h3 id='basic_experimental_openpgp_support'>Basic experimental OpenPGP support</h3>
+
+<p>The first step has been taken towards support for OpenGPG. So far, there is only support for decrypting and verifying ASCII armored text parts (inlined signatures/encrypted text). It should not be considered stable, but you can help by trying it out anyways.</p>
+
+<p>MailMate is currently hardcoded to use <code>/usr/local/bin/gpg2</code> which you need to install if you do not already have it. The GPGTools installer is recommended (or just MacGPG2 and optionally GPG Keychain Access).</p>
+
+<p>To enable this feature in MailMate you need to paste the following in the Terminal:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmEnableOpenPGP -bool yes</code></pre>
+
+<h3 id='experimental_imap_window'>Experimental “IMAP window”</h3>
+
+<p>Since MailMate is an offline email client it requires a lot of disk space if you have a large collection of emails. As an experimental feature MailMate now offers to only fetch a subset of messages based on their age. It is currently controlled with an application wide preferences value:</p>
+
+<pre><code>	defaults write com.freron.MailMate MmIMAPWindowInDays -int 365</code></pre>
+
+<p>This should limit MailMate to only fetch messages with a date within the latest year (technically, it is based on the so-called INTERNALDATE of the message on the server).</p>
+
+<p>MailMate does not dynamically adapt to changes to these settings yet. It only has an effect when initially synchronizing an account. (Internally, MailMate supports controlling this window at both account and mailbox level, but this currently requires manual editing of state files.)</p>
+
+<p>Any feedback on this feature is welcome, but use it with care. It <em>is</em> experimental.</p>
+
+<h3 id='other_changes_and_fixes'>Other changes and fixes</h3>
+
+<p>The following is a detailed list of all other changes since the latest public release:</p>
+
+<ul>
+<li>Improved the behavior of MailMate with regard to the INTERNALDATE provided for a message uploaded to an IMAP server.</li>
+
+<li>Fixed termination problems triggered when deleting an account or some times just quitting MailMate.</li>
+
+<li>Coalesced identically named “Open Message” menu items in the “File” menu.</li>
+
+<li>Fixed problem with lacking quotes around names in email addresses. Now only allows <code>-_</code> and alphanumeric characters without quoting.</li>
+
+<li>Fixed problem with flags not being set for new messages (resulting in an unread state for sent messages).</li>
+
+<li>Fixed selection of next/previous message in some circumstances when, for example, archiving messages.</li>
+
+<li>Temporary solution to a visual problem with showing a large number of recipients in the headers view.</li>
+
+<li>Fixed problem which could cause MailMate to be stuck in a mailbox, i.e., it was impossible to get into a different mailbox.</li>
+
+<li>Fixed visual glitch when deleting text. It was fixed by not removing attributes unless they exist (seems to be an NSTextView bug). Also tried to fix a performance problem, but this was not possible.</li>
+
+<li>Fixed rare crash related to unescaped quotes (triggered under certain circumstances when inserting a quote character in a recipient field in the composer).</li>
+
+<li>Fixed crash related to the use of &#8217; when searching for a string in an email.</li>
+
+<li>Added “attaching” to the default set of words triggering a potential warning about missing attachments.</li>
+
+<li>Improved threading of messages with a References header but no In-Reply-To header.</li>
+
+<li>Better/correct splitting of quoted paragraphs when doing it at the end of a line.</li>
+
+<li>Now properly showing From-popup when basing reply on a delivery header with a different address than the address of a single-account-single-address configuration.</li>
+
+<li>Generated HTML is now much more readable (“Show HTML Source”).</li>
+
+<li>Removed explicit stylesheet used for “Show Raw Source”. Replaced by styling pre-elements which have been assigned a special class name (<code>raw</code>).</li>
+
+<li>MailMate is now compiled using <code>clang</code> instead of <code>gcc</code>. May or may not improve performance (no benchmarks done), but it certainly improves development speed.</li>
+
+<li>Fixed bug which would some times cause the importer window to never appear.</li>
+
+<li>Detection/display of links surrounded by \&lt;&#8230;&gt; in plain text now works better.</li>
+
+<li>Improved (less strict) parsing of Message-ID header.</li>
+
+<li>Fixed various issues with key bindings. In particular, space did not always work as expected. This was related to how/when Cocoa issues the performClick: action.</li>
+
+<li>Swapped the priority of Content-Description filename and Content-Type name when determining a filename.</li>
+</ul>
+
+<p>When using the following debug variable, a log file is dumped to <code>/tmp/mailmate_imap_subscriptions.log</code> if an error occurs while fetching mailboxes to be displayed for “Edit Subscriptions”.</p>
+
+<pre><code>	defaults write com.freron.MailMate LoggingEnabled -bool YES</code></pre>
+
+<p>(It also enables logging for the Activity Viewer even when the Activity Viewer is closed.)</p>
+
+<h2 id='revision_2204_monday_june_13_2011'>Revision 2204 (Monday, June 13, 2011)</h2>
+
+<ul>
+<li>Fixed multiple issues with authentication in both IMAP and SMTP. This is a good time to retry with any problematic accounts.</li>
+
+<li>SMTP: When trying port 465 (which is non-standard and undocumented) both STARTTLS and portwrapped SSL is attempted. If you have had problems enabling SSL on port 465 then it might work now.</li>
+
+<li>Fixed various issues displaying HTML messages.</li>
+
+<li>Attachments are now (more often) displayed when viewing the plain text body part of a message with an HTML alternative.</li>
+
+<li>Workaround for problem with displaying rare subject lines with multiple blobs a la: “[blob1] Re: [blob2] Re: Re: Subject&#8230;”.</li>
+
+<li>Close any active mailbox search when closing the messages viewer window. This makes the counter menus more reliable when selecting messages.</li>
+</ul>
+
+<h2 id='revision_2191_wednesday_june_8_2011'>Revision 2191 (Wednesday, June 8, 2011)</h2>
+
+<h3 id='improved_markdown_support_still_experimental'>Improved Markdown support (still experimental)</h3>
+
+<p>MailMate now ships with a Markdown converter. It is named <code>upskirt</code> and it was originally created for GitHub. A blog post will soon be posted which describes the Markdown experiment in more detail.</p>
+
+<p>An alternative composer window has also been included by default. It contains a message view to make it easy to preview the current draft by simply saving it. See the “View ▸ Layouts” menu or just hit ⌘2 in the composer.</p>
+
+<p>The default CSS has been improved to work better with the output from <code>upskirt</code>. This includes a simple look for tables.</p>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>Changed default tooltip for thread arcs. It now simply states from name and a relative date, for example, “John Appleseed, 2 days ago”.</li>
+
+<li>Fixed minor problem with displaying attachments with an explicit inline content disposition.</li>
+
+<li>Fixed some SMTP authentication problems.</li>
+
+<li>Fixed problem with occasionally unsaved text field values in the preferences windows.</li>
+</ul>
+
+<h2 id='revision_2175_thursday_june_2_2011'>Revision 2175 (Thursday, June 2, 2011)</h2>
+
+<p>Fixed issues with IMAP authentication methods (AUTH=PLAIN and AUTH=CRAM-MD5).</p>
+
+<h2 id='revision_2169_thursday_june_2_2011__version_12'>Revision 2169 (Thursday, June 2, 2011) — Version 1.2</h2>
+
+<p><em>Special note:</em> Goggle has changed the default set of mailboxes provided via IMAP. It is strongly recommended to go into the Labels part of the Gmail web settings and make sure the following mailboxes are marked as “Show in IMAP”: Sent Mail, Drafts, Spam, and Trash.</p>
+
+<h3 id='new_look_for_attachments'>New look for attachments</h3>
+
+<p>A transition has started to provide a more table-like display of non-inlined attachments with 1 row for each attachment. Note that:</p>
+
+<ul>
+<li>Dragging attachments (including inlined images) now works as expected.</li>
+
+<li>The context sensitive menu is shown when right-clicking anywhere in a row.</li>
+
+<li>There is a new menu item to “Open With”.</li>
+</ul>
+
+<p>Inlined PDFs are shown using the img HTML tag (thus avoiding PDF plugins). Note that you can always Quick Look attachments (⌘Y). If you never want to inline PDFs then you can do the following in the Terminal (temporary solution until a general system is in place):</p>
+
+<pre><code>defaults write com.freron.MailMate MmNeverInlinePDF -bool YES</code></pre>
+
+<h3 id='updated_stylesheet_for_the_messages_view'>Updated stylesheet for the messages view</h3>
+
+<p>As part of the attachment changes, the HTML generated has been simplified and the default CSS file has been updated/extended. If you have created a local stylesheet variant you may need to update it. If you have experience with CSS then you are encouraged to take a look at the default stylesheet:</p>
+
+<pre><code>/Applications/MailMate.app/Contents/Resources/MmMessagesWebView/stylesheet.css</code></pre>
+
+<p>You can extend the stylesheet by creating a file in the following location:</p>
+
+<pre><code>~/Library/Application Support/MailMate/Resources/MmMessagesWebView/stylesheet.css</code></pre>
+
+<p>You can see the HTML generated for a message by using “View ▸ Show HTML Source” (⌃⌘U) within MailMate.</p>
+
+<h3 id='experimental_markdown_for_writing_emails'>Experimental: Markdown for writing emails</h3>
+
+<p>The following enables an extra option in the composer which allows you to tell MailMate that you are writing your message using Markdown:</p>
+
+<pre><code>defaults write com.freron.MailMate MmAllowMarkupLanguages -bool YES</code></pre>
+
+<p>The motivation for this idea is going to be described in a blog post, but in short, if Markdown is chosen then <code>markup=markdown</code> is appended to the Content-Type of the text body part of the message. This can be ignored by the receiving email application or it can be used to convert the Markdown text to HTML before displaying it. Currently, the only email client to do so is of course MailMate and currently it only works if MailMate finds <code>markdown</code> or <code>upskirt</code> in the default path (a Markdown to HTML command is currently not distributed with MailMate).</p>
+
+<h3 id='various_new_features'>Various new features</h3>
+
+<ul>
+<li>Added submenu items for counter menus in the status bar: Archive, Move to Junk, Delete, Reply, Forward, and “Mark as Flagged/Read”.</li>
+
+<li>Added “Empty Mailbox” menu item for Deleted Messages and Junk.</li>
+
+<li>Added shortcut to synchronize the currently selected mailbox (⇧⌘N).</li>
+
+<li>It is now possible to synchronize smart mailboxes which are based on IMAP mailboxes (also ⇧⌘N).</li>
+
+<li>Escape can now be used for both cancelling text search in webview and for cancelling mailbox search.</li>
+</ul>
+
+<p>If available the IMAP XLIST command is now used (supported by Gmail) to get the standard mailboxes. This should make MailMate work better (by default) when used with localized variants of Gmail. It may also affect your current setup if mailbox types had not been explicitly assigned.</p>
+
+<h3 id='delivery_headers'>Delivery headers</h3>
+
+<p>Changed the detection of delivery headers (such as <code>X-Original-To</code>) such that it no longer requires the existence of an identity with the same domain in an email address as found in the delivery header. If this is a problem for some users then please report it (more real life examples would be useful since this is basically a heuristic). The new behavior can currently be disabled using:</p>
+
+<pre><code>defaults write com.freron.MailMate MmAlwaysTrustDeliveryHeaders -bool NO</code></pre>
+
+<p>MailMate is now also better at guessing an appropriate from address for, e.g., mailing list messages (essentially doing the same as when replying to messages).</p>
+
+<h3 id='new_debug_variables'>New debug variables</h3>
+
+<p>Debug variable for scripts:</p>
+
+<pre><code>defaults write com.freron.MailMate MmDebugScripts -bool YES</code></pre>
+
+<p>Debug variable for logging communication between SpamSieve and MailMate:</p>
+
+<pre><code>defaults write com.freron.MailMate DebugSpamDetection -bool YES</code></pre>
+
+<p>If you have had problems with accounts getting stuck in a “disconnected” state then you can help debug the problem doing as follows:</p>
+
+<pre><code>defaults write com.freron.MailMate MmDebugReachability -bool YES</code></pre>
+
+<p>This is going to log data which can be found in Console.app when the problem occurs.</p>
+
+<h3 id='details_detail_details'>Details, detail, details</h3>
+
+<p>This is an example of how you can change the font of the headers view (intermediate solution since the headers are planned to be moved to the messages view):</p>
+
+<pre><code>defaults write com.freron.MailMate MmHeadersViewFontName -string &quot;LucidaGrande&quot;
+defaults write com.freron.MailMate MmHeadersViewFontSize -float 16</code></pre>
+
+<p>Other details:</p>
+
+<ul>
+<li>Changed the parsing of the List-ID header identifiers to include those not following the format in RFC2919 (for example, the IMAP protocol mailing list).</li>
+
+<li>“Move to/Go to Mailbox” now use the full mailbox path in the mailbox chooser. This should make it easier to match submailboxes.</li>
+
+<li>If available the IMAP ID command is used to tell the server about MailMate.</li>
+
+<li>Fixed problem with updating universal mailboxes when changing assigned mailbox types in IMAP accounts.</li>
+
+<li>Fixed problem with unnecessary resizing of views in the Widescreen layout (triggered when doing a mailbox search).</li>
+
+<li>Fixed problem with matching some mailbox names in “Move to/Go to”, (mailbox names with non-ASCII not created in MailMate).</li>
+
+<li>Fixed: The mailbox search did not work correctly for &#8216;exists/not exists&#8217; queries (they were simply ignored).</li>
+
+<li>Fixed problem with the From-field not being shown when a single account was configured with multiple addresses.</li>
+
+<li>Fixed problem with an email with a date which was 410 years ago (and any similar date-handling problems).</li>
+
+<li>Fixed problem with Synchronize All Sources.</li>
+
+<li>Fixed problem with MailMate terminating after entering a recipient in the composer. It was triggered when restarting MailMate with a composer window open with a non-existing message.</li>
+
+<li>Fixed problem with moving messages into the INBOX on an account with an INBOX namespace. An INBOX/INBOX was created, but the messages were still correctly moved to INBOX.</li>
+
+<li>Fixed problem with percentages shown in the statistics view (only a problem on Leopard).</li>
+
+<li>Improved detection of local IP for use in the EHLO of SMTP (important to avoid rejection by some SMTP servers).</li>
+
+<li>Fixed crash when deleting an account (triggered by trying to get the state of a non-existing mailbox).</li>
+</ul>
+
+<h2 id='revision_2089_wednesday_may_4_2011__version_112'>Revision 2089 (Wednesday, May 4, 2011) — Version 1.1.2</h2>
+
+<h3 id='improved_mailbox_search'>Improved mailbox search</h3>
+
+<p>It is now possible to save the default mailbox search conditions. Setup the search you would like by default (likely with empty text fields) and then select “Edit ▸ Find ▸ Use as Default Search”. Note that (as always) empty text field values are ignored when doing a mailbox search (as opposed to the smart mailbox editor). This is not new, but it is useful to know if setting up multiple conditions in the default search.</p>
+
+<p>Also, when adding rows in the rule editor the new row is based on the row for which + was clicked (or the closest following simple row if a compound row is clicked).</p>
+
+<h3 id='improved_completion_of_addresses_in_the_composer'>Improved completion of addresses in the composer</h3>
+
+<ul>
+<li>Stays in edit mode when pasting if the pasted string does not appear to contain an email address.</li>
+
+<li>When a single token is selected, the space key can be used to go into edit mode.</li>
+
+<li>When completing addresses and no matches are found, the casing is now returned to how it was entered. This is especially useful when manually entering an email address which is unknown to MailMate.</li>
+
+<li>Fixed various issues with duplicate entries in the suggested completions.</li>
+
+<li>Fixed an issue with reordering of first/last name when completion was based on previous recipients.</li>
+
+<li>Fixed an issue with tabbing out of an address header when a group name is entered.</li>
+</ul>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<p>Fixed a bug related to the junk state of messages. When deleting a message in Junk it was wrongly marked as not junk. A bad side-effect of this is that SpamSieve was also notified that it was not junk. If you have been affected by this bug then you should consider resetting the corpus in SpamSieve. Thanks to Erik for reporting this problem (ticket #124).</p>
+
+<p>Empty email address groups are now ignored when sending via SMTP. This can be used to, for example, send to “Undislosed Recipients:;” without getting an error. For convenience you can create an empty Address Book group with “Undisclosed recipients:;” as a name (or some other name, but remember to include “:;”).</p>
+
+<p>Added support for the SMTP authorization method named LOGIN. This is an alternative to PLAIN which is already supported by MailMate, but some SMTP servers only support LOGIN. These methods are almost identical, but LOGIN requires more round trips to the server than PLAIN. If you have had problems with MailMate continually asking for a password for some SMTP servers then this might be a solution.</p>
+
+<ul>
+<li>Open Messages (⌘O) now opens multiple messages in one window. Separate windows can still be obtained using ⇧⌘O.</li>
+
+<li>The behavior of smart mailboxes with filters such as “date is within last x days” has been improved.</li>
+
+<li>The Bcc header is stripped by MailMate itself instead of leaving it to mail transfer agents.</li>
+
+<li>Fixed memory-issue with importing large IMAP accounts/mailboxes.</li>
+
+<li>Fixed minor issue with replies based on selected text (ticket #121).</li>
+</ul>
+
+<h2 id='revision_2038_friday_april_8_2011__version_111'>Revision 2038 (Friday, April 8, 2011) — Version 1.1.1</h2>
+
+<h3 id='autosave'>Autosave</h3>
+
+<p>When composing a message, a copy is autosaved every 30 seconds (but only if changes exist). When launching MailMate, any autosaved messages are detected and the user is asked to either discard or import. This should never result in more than 2 versions of a draft: The autosaved version and the most recently explicitly saved version.</p>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<ul>
+<li>Reordering of standard mailboxes is now allowed.</li>
+
+<li>“Save Attachment&#8230;” now shows and allows changes to the default filename.</li>
+
+<li>More information provided when importing messages.</li>
+
+<li>The Flag column in the messages outline is now used to display an exclamation mark for high priority messages (only when message is not flagged).</li>
+
+<li>Improved replying to messages in “Sent Messages”. It previously failed when the message was not sent from the first identity of an account.</li>
+
+<li>Removed maximum width for a couple of integer columns in the messages outline in order to better handle custom font sizes.</li>
+
+<li>Only applying SpamSieve to messages without the $NotJunk flag. This is needed, for example, if running SpamSieve on two machines when trying to move a message from the Junk mailbox back into the Inbox.</li>
+
+<li>Now using “MIME-Version” instead of “Mime-Version” in new messages. Details matter.</li>
+
+<li>Workaround for Gmail for a problem resulting in sent messages ending up in the trash. How to reproduce the problem is unresolved but it is likely related to Googles alternative interpretation of the IMAP standard.</li>
+
+<li>Workaround for servers wrongly providing EXISTS responses before EXPUNGE (Yahoo, MS Exchange 2007, and probably others).</li>
+
+<li>Fixed various other IMAP issues.</li>
+</ul>
+
+<h2 id='revision_2003_friday_march_25_2011__version_11'>Revision 2003 (Friday, March 25, 2011) — Version 1.1</h2>
+
+<h3 id='mailmate_for_everybody'>MailMate for everybody</h3>
+
+<p>Several improvements allow MailMate to work with most (if not all) IMAP servers. Send some feedback if you have an IMAP account which does not work with MailMate.</p>
+
+<p>The most important improvements are:</p>
+
+<ul>
+<li>No longer requiring the UIDPLUS extension. Servers with the UIDPLUS extension are still recommended since it is both more robust and more efficient when utilized by an offline IMAP client such as MailMate.</li>
+
+<li>Better handling of IMAP servers with limited support for IMAP keywords (such as MS Exchange IMAP).</li>
+
+<li>Handles when the INBOX on the server is not in uppercase (such as Yahoo IMAP).</li>
+</ul>
+
+<h3 id='image_blocking_improved'>Image blocking improved</h3>
+
+<p>The default in MailMate is now to always block external references, but the user has detailed control of the behavior using some new preferences (currently under General). The most important setting is “Block external references for messages in …” which allows the user to define a mailbox containing the messages for which blocking should be enabled. The default is “All Messages”, but it could be any smart mailbox, for example, a smart mailbox excluding messages which have been identified as being safe. This could be based on headers inserted by server-side spam detection software (like “X-Spam-Score” or “X-Spam-Flag”).</p>
+
+<p>For convenience, the preferences also include a checkbox for “Load external references for messages marked Not Junk” (this could also be done using a smart mailbox as described above). This is especially useful when combined with a new SpamSieve option which allows you to automatically mark messages as Not Junk if they have a low spam score.</p>
+
+<p>Go to the General preferences and play with these new settings and send some feedback if it somehow cannot handle your preferred use of image blocking.</p>
+
+<p>Note that blocking is always enabled for messages in “Junk” or “Deleted Messages”. It is also always enabled for attached messages (occurs when using something like “Forward as Attachment&#8230;” has been used to construct an email). This allows one to safely receive forwarded spam.</p>
+
+<h3 id='composer_related_changes'>Composer related changes</h3>
+
+<p>When completing addresses, MailMate now looks in all Address Book sources. Technical note: This is done using a private API and therefore this feature may be removed again in future versions of MailMate. Feedback on both success and failure of this feature is welcome.</p>
+
+<p>When pasting in the composer, text is preferred to images (pasting an image makes it an attachment). This was necessary since otherwise pasting text from some applications would instead result in the attachment of an image.</p>
+
+<p>Also note:</p>
+
+<ul>
+<li>Email address completion now works for Address Book groups including distribution list identifiers.</li>
+
+<li>Improved splitting/merging of quoted paragraphs.</li>
+</ul>
+
+<h3 id='other_changes'>Other changes</h3>
+
+<p>MailMate now enforces a 30-day trial period. It is measured as days of active use measured by the number of days on which messages have been sent. When the trial period has expired, you can still use MailMate, but you can only send 2 messages per launch.</p>
+
+<p>Interesting minor changes:</p>
+
+<ul>
+<li>Separate search shortcuts: Search All Messages (⌥⌘F) and Mailbox Search (⌃⌥⌘F).</li>
+
+<li>The Search button in the toolbar now keeps MailMate in the current mailbox if holding down ⌥.</li>
+
+<li>Allows renaming of standard mailboxes.</li>
+</ul>
+
+<p>Various (less interesting) fixes:</p>
+
+<ul>
+<li>Fixed bug in saving attachments using “Message ▸ Save Attachments&#8230;” triggered when focus was in the message view (nothing was saved).</li>
+
+<li>Fixed rare crash bug related to a message being deleted while in the process of being displayed in the message view.</li>
+
+<li>Fixed problem triggered when an IMAP connection was reused to select a second mailbox just after a message was expunged from the first mailbox (server-side).</li>
+
+<li>Fixed crash bug which was triggered when a new IMAP mailbox was registered and a popup button with mailboxes was in use at the same time.</li>
+
+<li>“Move Out of Junk” is no longer greyed out in the messages menu when messages are selected in the Junk.</li>
+
+<li>Fixed bug in the filter editor (Mailbox Search) which would make it ignore parts of the query if an any/all expression existed with a single child.</li>
+
+<li>Removed toolbar button in the Preferences window.</li>
+</ul>
+
+<h2 id='revision_1951_saturday_march_5_2011__version_102'>Revision 1951 (Saturday, March 5, 2011) — Version 1.0.2</h2>
+
+<p>The SpamSieve support can now be enabled in the preferences. This includes the choice of a mailbox in which SpamSieve should be used to check new messages. By default, this mailbox is the unified Inbox, but it could be any smart or real mailbox.</p>
+
+<p>The handling of messages outline columns has been improved. Submailboxes automatically inherit the settings of parent mailboxes unless explicit changes are made and it is now possible to select the outline column (the column with a triangle) which is useful if the order of columns is changed.</p>
+
+<p>Composer related changes:</p>
+
+<ul>
+<li>Improved the default choice of identity (from-address) for new messages.</li>
+
+<li>Fixed handling of signatures such that “No Signature” is remembered for future messages.</li>
+
+<li>Fixed quoting level color when removing the last quote level character.</li>
+
+<li>The various settings in the Substitutions menu (in the context sensitive menu) are now saved. In particular, Text Replacements can be enabled (see Language and Text in the System Preferences).</li>
+</ul>
+
+<p>IMAP related changes:</p>
+
+<ul>
+<li>Fixed issue where subscribed mailboxes under a private namespace were not found (due to a missing delimiter in the namespace prefix).</li>
+
+<li>When creating a mailbox with the same name as an unsubscribed mailbox, the mailbox is automatically subscribed (instead of failing).</li>
+
+<li>Added alternating row colors in subscriptions sheet.</li>
+</ul>
+
+<p>Other changes:</p>
+
+<ul>
+<li>Added “Common Headers or Body” to make it easier to search addresses, subject, or unquoted body text.</li>
+
+<li>Fixed encoding of long header lines with non-ASCII and no spaces (for example, a subject line in Japanese).</li>
+
+<li>Now allows whitespace around “=” in Content-Type parameters (in order to handle a bug in at least some versions of PHPMailer).</li>
+</ul>
+
+<h2 id='revision_1928_february_23_2011__version_101'>Revision 1928 (February 23, 2011) — Version 1.0.1</h2>
+
+<h3 id='reply_all_vs_reply'>Reply All vs. Reply</h3>
+
+<p>Until now MailMate only had a single “Reply” button (and menu item). It worked as “Reply All” and the only way to make a private reply was by clearing the Cc header. This has now been improved, but even though a “Reply All” (⇧⌘R) menu item has been added, the intention is that it is not needed, because of the new behavior of “Reply”.</p>
+
+<p>The feature is quite simple. When replying to a message with multiple recipients, MailMate displays a sheet to ask if one wants to reply to all or to reply to the author only. There are easy shortcuts for both alternatives (Return and Space).</p>
+
+<p>Rationale: It is bad to reply to all if one really wanted to reply to a single person. But it is also bad (although not as critical) to forget to reply to all when that would have been appropriate. The solution here is to always ask when a message has multiple recipients. If you dislike this behavior, you can go to Preferences/General to make Reply work as in, for example, Apple Mail.</p>
+
+<h3 id='spamsieve_experimental'>SpamSieve (experimental)</h3>
+
+<p>As you may have noticed, MailMate has no built-in junk-filtering. This is unlikely to change soon (if ever), but now there is support for SpamSieve, a shareware utility for identifying spam. It was, more or less, implemented today, so for now it is an experimental feature and can only be enabled via a hidden preference.</p>
+
+<p>To enable it, copy/paste the following to the Terminal:</p>
+
+<pre><code>defaults write com.freron.MailMate SpamSieveEnabled -bool YES</code></pre>
+
+<p>Note that the preference above may be cleared by MailMate if it fails to find and launch SpamSieve.</p>
+
+<p>The SpamSieve support works as follows.</p>
+
+<ul>
+<li>Any new message in any Inbox is given to SpamSieve. If it is identified as spam then it is automatically moved to Junk (within the same account).</li>
+
+<li>If a message is explicitly marked as “Junk” by the user then SpamSieve is told that the message is good.</li>
+
+<li>If a message is explicitly marked as “Not Junk” by the user then SpamSieve is told that the message is spam.</li>
+</ul>
+
+<p>You can use the “Junk/Not Junk” keywords to train SpamSieve. The SpamSieve score can be seen in a dedicated messages outline column. A planned feature is to allow the user to specify the mailbox for which SpamSieve should be used to check for spam. The default is the unified Inbox.</p>
+
+<h3 id='memory_leak_in_activity_viewer'>Memory leak in Activity Viewer</h3>
+
+<p>An important memory leak was found in the Activity Viewer. It was especially bad if the Activity Viewer was open during the initial synchronization of account(s).</p>
+
+<h3 id='other'>Other</h3>
+
+<p>There is now a hidden option to enable alternating row colors in the messages outline:</p>
+
+<pre><code>defaults write com.freron.MailMate MmMessagesOutlineUsesAlternatingRowColors -bool YES</code></pre>
+
+<p>Minor changes and bug fixes:</p>
+
+<ul>
+<li>Fixed the row height in the outlines for custom fonts (some fonts were previously clipped).</li>
+
+<li>Fixed date issue caused by UNIX calls and CFTimeZone disagreeing on the current time zone (in relation to UTC).</li>
+
+<li>Added “Save Attachment&#8230;” to the context sensitive menu in the message view.</li>
+
+<li>Enabled “New Folder” in save panels for attachments.</li>
+
+<li>Improved handling of opening .eml files (but still not showing .eml messages which are not known by MailMate).</li>
+
+<li>Now encoding all application/* MIME types as base64.</li>
+
+<li>Fixed crash/efficiency bug related to adding the bodies of retrieved messages to the database.</li>
+
+<li>Fixed crash bug triggered, e.g., when double-clicking on a message in the To-column when the message had multiple recipients.</li>
+
+<li>Improved parsing of quoted strings in headers, e.g., filenames containing double quotes.</li>
+
+<li>Fixed crash bug which could be triggered by “Edit as New Message…”.</li>
+
+<li>Fixed “Use as Default Headers” in the Composer which was broken in recent updates.</li>
+
+<li>Fixed crash related to renaming IMAP accounts.</li>
+
+<li>Added messages with the \Deleted flag to the set of messages which should not be trusted to fetch external resources.</li>
+
+<li>Removed “Delivered-To” from the set of headers checked when trying to deduce an alias for a from-address. Should probably never have been added in the first place.</li>
+
+<li>Looking for Thunderbird settings in ~/Library/Thunderbird/profiles.ini instead of Profiles.ini.</li>
+</ul>
+</body></html>

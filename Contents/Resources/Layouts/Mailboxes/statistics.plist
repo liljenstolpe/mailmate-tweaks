@@ -1,0 +1,71 @@
+{
+	name = "Statistics";
+	rootViewer =
+	{
+		viewerType = "MmSplitView";
+		orientation = "horizontal";
+		children =
+		(
+			{
+				viewerType = "MmBoxView";
+				orientation = "vertical";
+				defaultSize = 200;
+				minWidth = 100;
+				autoresize = 0;
+				toggleMenuTitle = "Mailboxes";
+				toggleKeyEquivalent = "^~@d";
+
+				dragRect = { width = 16.0; height = 16.0; location = "bottomRight"; };
+
+				children =
+				(
+					{
+						identifier = "mailboxesOutline";
+						viewerType = "MmMailboxesOutlineView";
+						stickyMessages = 1;
+					},
+					{
+						viewerType = "MmMailboxesStatusBar";
+					},
+				);
+			},
+			{
+				viewerType = "MmSplitView";
+				orientation = "vertical";
+				children =
+				(
+					{
+						identifier = "pathOutlineBox";
+						viewerType = "MmBoxView";
+						orientation = "vertical";
+						defaultSize = 250;
+						autoresize = 0;
+						children =
+						(
+							{
+								identifier = "pathControl";
+								viewerType = "MmPathControlView";
+								sources = ( { sourceIdentifier = "mailboxesOutline"; } );
+							},
+							{	viewerType = "MmSeparatorView"; showWithViews = ( "pathControl" ); },
+							{
+								identifier = "mainOutline";
+								viewerType = "MmMessagesOutlineView";
+								// columnSettings = "outlineColumns";
+								sources = ( { sourceIdentifier = "pathControl"; } );
+								minHeight = 50;
+							},
+						);
+					},
+					{
+						viewerType = "MmHighScoreView";
+						sources = ( { sourceIdentifier = "pathControl"; } );
+						minHeight = 100;
+						minWidth = 450;
+//						defaultSize = 350;
+					},
+				);
+			},
+		);
+	};
+}

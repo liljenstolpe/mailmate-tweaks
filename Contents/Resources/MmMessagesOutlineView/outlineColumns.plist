@@ -1,0 +1,613 @@
+// If no 'formatting' is given then the 'sortKey' is used instead (which is faster when no real formatting is needed)
+
+{
+	columns =
+	{
+		subject =
+		{
+			title = "Subject"; // how can the title be easily localized?
+			sortKey = "subject.blob,subject.body,subject.prefix";
+			formatting =
+			{
+				formatString = "${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}";
+				doubleClick =
+				{
+					// FIXME: In this case, the style of inserted words could be bold or italic (well, something that looks good without the single quotes)
+					titleFormatting = { prefixString = "Subject is "; formatString = "“${subject.body}”"; separator = " or "; };
+					queryFormatting = { formatString = "subject.body = '${subject.body}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			minimumWidth = 10;
+
+			relatedSearches =
+			(
+				{
+					titleFormatting = { formatString = "Related to “${subject.body}”"; separator = " or "; };
+					queryFormatting = { formatString = "subject.body = '${subject.body}'"; separator = " or "; escapeSingleQuotes = 1; };
+					// keyEquivalent = "s";
+				},
+				{
+					titleFormatting = { formatString = "Related to [${subject.blob}]"; separator = " or "; };
+					queryFormatting = { formatString = "subject.blob = '${subject.blob}'"; separator = " or "; escapeSingleQuotes = 1; };
+				}
+			);
+		};
+		from =
+		{
+			title = "From";
+			sortKey = "from.name,from.address"; // FIXME: should be '${from.name:${from.address}}'
+			formatting =
+			{
+				formatString = "${from.name:${from.address}}";
+				doubleClick =
+				{
+					titleImage = "NSUser";
+					titleFormatting = { prefixString = "From "; formatString = "“${from.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "from.address = '${from.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			relatedSearches =
+			(
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From “${from.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "from.address = '${from.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From “${from.name}”"; separator = " or "; };
+					queryFormatting = { formatString = "from.name = '${from.name}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From or To “${from.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "#any-address.address = '${from.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From or To “${from.name}”"; separator = " or "; };
+					queryFormatting = { formatString = "#any-address.name = '${from.name}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				// {
+				// 	titleImage = "NSUser";
+				// 	titleFormatting = { formatString = "From “${cc.address}”"; };
+				// 	queryFormatting = { formatString = "cc.address = '${cc.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				// },
+			);
+		};
+		to =
+		{
+			title = "To";
+			sortKey = "to.split.name,to.split.address";
+			formatting =
+			{
+				formatString = "${to.name:${to.address}}";
+				// Not tested: formatString = "${to.name:${to.address:${cc.name:${cc.address:${bcc.name:?Bcc: ${bcc.name}:${bcc.address:+Bcc: ${bcc.address}}}}}}}";
+				doubleClick =
+				{
+					titleFormatting = { prefixString = "To "; formatString = "“${to.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "to.address = '${to.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			relatedSearches =
+			(
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "To “${#recipient.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "#recipient.address = '${#recipient.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "To “${#recipient.name}”"; separator = " or "; };
+					queryFormatting = { formatString = "#recipient.name = '${#recipient.name}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From or To “${#recipient.address}”"; separator = " or "; };
+					queryFormatting = { formatString = "#any-address.address = '${#recipient.address}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+				{
+					titleImage = "NSUser";
+					titleFormatting = { formatString = "From or To “${#recipient.name}”"; separator = " or "; };
+					queryFormatting = { formatString = "#any-address.name = '${#recipient.name}'"; separator = " or "; escapeSingleQuotes = 1; };
+				},
+			);
+		};
+		date =
+		{
+			// fix this
+			// and setup the column-settings
+			//  falling back on recursing for max-value when it is collapsed... (collapsed, recursed, ...)
+			title = "Date Received";
+			sortKey = "#date-received";
+			sortMaximumValue = 1;
+			// formatting =
+			// {
+			// 	formatString = "${#date-received}";
+			// 	doubleClick =
+			// 	{
+			// 		titleFormatting = { prefixString = "Date is "; formatString = "“${#date-received.day}”"; };
+			// 		queryFormatting = { formatString = "#date-received.day = '${#date-received.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+			// 	};
+			// };
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						onlyIfCollapsed = 1;
+						maximumValue = 1;
+						formatString = "${#date-received}";
+					},
+					{
+						formatString = "${#date-received}";
+						doubleClick =
+						{
+							titleFormatting = { prefixString = "Date is "; formatString = "“${#date-received.day}”"; separator = " or "; };
+							queryFormatting = { formatString = "#date-received.day = '${#date-received.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+						};
+					},
+				);
+			};
+
+			type = "date";
+		};
+		relativeDate =
+		{
+			title = "Date Received";
+			menuTitle = "Date Received (relative)";
+			sortKey = "#date-received";
+			formatting =
+			{
+				formatString = "${#date-received}";
+				doubleClick =
+				{
+					titleFormatting = { prefixString = "Date is "; formatString = "“${#date-received.day}”"; separator = " or "; };
+					queryFormatting = { formatString = "#date-received.day = '${#date-received.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			type = "relativeDate";
+		};
+		dateSent =
+		{
+			title = "Date Sent";
+			sortKey = "#date-sent";
+			sortMaximumValue = 1;
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						onlyIfCollapsed = 1;
+						maximumValue = 1;
+						formatString = "${#date-sent}";
+					},
+					{
+						formatString = "${#date-sent}";
+						doubleClick =
+						{
+							titleFormatting = { prefixString = "Date is "; formatString = "“${#date-sent.day}”"; separator = " or "; };
+							queryFormatting = { formatString = "#date-sent.day = '${#date-sent.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+						};
+					},
+				);
+			};
+
+			type = "date";
+		};
+		dateSentRelative =
+		{
+			title = "Date Sent";
+			menuTitle = "Date Sent (relative)";
+			sortKey = "#date-sent";
+			formatting =
+			{
+				formatString = "${#date-sent}";
+				doubleClick =
+				{
+					titleFormatting = { prefixString = "Date is "; formatString = "“${#date-sent.day}”"; separator = " or "; };
+					queryFormatting = { formatString = "#date-sent.day = '${#date-sent.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			type = "relativeDate";
+		};
+		lastViewed =
+		{
+			title = "Last Viewed";
+			sortKey = "#date-last-viewed";
+			formatting =
+			{
+				doubleClick =
+				{
+					titleFormatting = { prefixString = "Date is "; formatString = "“${#date-last-viewed.day}”"; separator = " or "; };
+					queryFormatting = { formatString = "#date-received.day = '${#date-last-viewed.day}'"; separator = " or "; escapeSingleQuotes = 1; };
+				};
+			};
+			type = "date";
+		};
+		size =
+		{
+			title = "Size";
+			sortKey = "#size";
+			sortAsInteger = 1;
+			formatting = { formatString = "${#size.formatted}"; alignment = "right"; };
+		};
+		flags =
+		{
+			title = "Raw Flags";
+			minimumWidth = 60;
+			//maximumWidth = 30;
+			formatting = { formatString = "${#flags}"; };
+		};
+		mailbox =
+		{
+			title = "Source Mailbox";
+			sortKey = "#source.path.noinbox";
+			formatting = {
+				children =
+				(
+					{ formatString = "${#source.path.noinbox} – "; },
+					{ formatString = "${#source-name}"; } // Hack (only works if used as a single key in a format-string).
+				);
+			};
+		};
+		read =
+		{
+			type = image;
+			titleImage = "HeaderUnread";
+			menuTitle = "Read";
+			minimumWidth = 16;
+			maximumWidth = 16;
+			sortKey = "#flags.seen";
+
+			matchQueries =
+			{
+				isDeleted = "#flags.flag = '\\Deleted'";
+				isUnread = "#flags.flag !=[x] '\\Seen'";
+				 // All messages having personal replies
+				 // This works, but it relies on $Sent which may not be good enough in general (if the user does not have a single Sent mailbox -- same goes for the double-click search)
+ 				isRepliedPersonally = "message-id =[c] $Sent.in-reply-to or #flags.flag = '\\Answered'";
+				// isReplied = "message-id =[c] $Msgs.in-reply-to"; // All messages having any reply (could be and'ed with \\Answered to be used above)
+				isForwarded = "#flags.flag = '$Forwarded' or #flags.flag = 'Forwarded'";
+			};
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						matchQuery = isDeleted;
+						string = "Deleted";
+						doubleClick =
+						{
+							titleFormatting = { string = "Deleted"; };
+							queryFormatting = { string = "#flags.flag = '\\Deleted'"; };
+						};
+					},
+					{
+						matchQuery = isUnread;
+						string = "StateUnread";
+						doubleClick =
+						{
+							titleFormatting = { string = "Unread"; };
+							queryFormatting = { string = "#flags.flag !=[x] '\\Seen'"; };
+						};
+					},
+					{
+						recursively = 1;
+						onlyIfCollapsed = 1;
+						matchQuery = isUnread;
+						string = "StateUnreadGray";
+					},
+					{
+						matchQuery = isRepliedPersonally;
+						string = ReplyTemplate;
+						doubleClick =
+						{
+							titleFormatting = { formatString = "Replies to “${subject}”"; separator = " or "; };
+							setFormatting = { string = "SENT"; };
+							queryFormatting = { formatString = "in-reply-to = '${message-id}'"; separator = " or "; };
+
+							messageSelection = onlyIfSingleMessage;
+							mailboxSelection = "SENT";
+						};
+					},
+					// {
+					// 	matchQuery = isReplied;
+					// 	string = ...; // Should be a more discrete version of the normal reply-graphics.
+					// 	doubleClick =
+					// 	{
+					// 		titleFormatting = { formatString = "Replies to ${from.name}"; };
+					// 		setFormatting = { string = "ALL_MESSAGES"; };
+					// 		queryFormatting = { formatString = "in-reply-to = '${message-id}'"; };
+					// 	};
+					// },
+					{
+						matchQuery = isForwarded;
+						string = ForwardTemplate;
+						doubleClick =
+						{
+							titleFormatting = { formatString = "Forwardings of “${subject}”"; separator = " or "; };
+							setFormatting = { string = "ALL_MESSAGES"; };
+							queryFormatting = { formatString = "references = '${message-id}'"; separator = " or "; };
+
+							messageSelection = onlyIfSingleMessage;
+							mailboxSelection = "ALL_MESSAGES";
+						};
+					},
+					{
+						string = " "; // Special value which means no image.
+						doubleClick =
+						{
+							titleFormatting = { string = "Unread"; };
+							queryFormatting = { string = "#flags.flag !=[x] '\\Seen'"; };
+						};
+					},
+				);
+			};
+		};
+		security =
+		{
+			title = "🔒";
+			menuTitle = "Security";
+			minimumWidth = 16;
+			maximumWidth = 16;
+			sortKey = "content-type.subtype";
+			matchQueries =
+			{
+				//✓🔒🔓
+				// Would be better if we could reflect whether or not the message had been successfully decrypted (and maybe verified -- maybe using a red cross for failure)
+				isEncrypted = "(content-type.type = 'multipart' and content-type.subtype = 'encrypted') or (content-type.type = 'application' and content-type.subtype = 'pkcs7-mime')";
+				isSigned = "content-type.type = 'multipart' and content-type.subtype = 'signed'";
+			};
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						matchQuery = isEncrypted;
+						string = "🔒";
+						doubleClick =
+						{
+							titleFormatting = { string = "Encrypted"; };
+							queryFormatting = { string = "(content-type.type = 'multipart' and content-type.subtype = 'encrypted') or (content-type.type = 'application' and content-type.subtype = 'pkcs7-mime')"; };
+						};
+					},
+					{
+						matchQuery = isSigned;
+						string = "✓";
+						doubleClick =
+						{
+							titleFormatting = { string = "Signed"; };
+							queryFormatting = { string = "content-type.type = 'multipart' and content-type.subtype = 'signed'"; };
+						};
+					},
+				);
+			};
+		};
+		flag =
+		{
+			titleImage = "HeaderFlag";
+			menuTitle = "Flag";
+			type = image;
+			minimumWidth = 16;
+			maximumWidth = 16;
+			sortKey = "#flags.flagged";
+
+			// type = image;
+			matchQueries =
+			{
+				isFlagged = "#flags.flag = '\\Flagged'";
+				isHighPriority = "x-priority.value = '1' or x-priority.value = '2'";
+				// The matching order is important since we only check enabled bits
+				isFlag7 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit0' and #flags.flag = '$MailFlagBit1' and #flags.flag = '$MailFlagBit2'";
+				isFlag6 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit1' and #flags.flag = '$MailFlagBit2'";
+				isFlag5 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit0' and #flags.flag = '$MailFlagBit2'";
+				isFlag3 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit0' and #flags.flag = '$MailFlagBit1'";
+				isFlag4 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit2'";
+				isFlag2 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit1'";
+				isFlag1 = "#flags.flag = '\\Flagged' and #flags.flag = '$MailFlagBit0'";
+			};
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						matchQuery = isFlag7;
+						string = "Flag0";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag6;
+						string = "Flag6";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag5;
+						string = "Flag5";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag3;
+						string = "Flag3";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag4;
+						string = "Flag4";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag2;
+						string = "Flag2";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlag1;
+						string = "Flag1";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isFlagged;
+						string = "Flag0";
+						doubleClick =
+						{
+							titleFormatting = { string = "Flagged"; };
+							queryFormatting = { string = "#flags.flag = '\\Flagged'"; };
+						};
+					},
+					{
+						matchQuery = isHighPriority;
+						string = "HighPriority";
+						doubleClick =
+						{
+							titleFormatting = { string = "High priority"; };
+							queryFormatting = { string = "x-priority.value = '1' or x-priority.value = '2'"; };
+						};
+					},
+				);
+			};
+			
+		};
+		msgid =
+		{
+			title = "Msg ID";
+			minimumWidth = 50;
+			// maximumWidth = 50; // Not good for larger font sizes.
+			sortKey = "#body-part-id";
+			sortAsInteger = 1;
+		};
+		uid =
+		{
+			title = "UID";
+			minimumWidth = 50;
+			// maximumWidth = 50; // Not good for larger font sizes.
+			sortKey = "#uid";
+			sortAsInteger = 1;
+		};
+		spamscore =
+		{
+			title = "Spam Score";
+			sortKey = "x-spam-status.score,x-spam-score.score"; // Note: May not work as expected for a mix of these values...
+			formatting = { formatString = "${x-spam-status.score:${x-spam-score.score}}"; };
+			type = number; // Currently hardcoded to be right-aligned with 3 decimals
+			sortAsFloat = 1;
+		};
+		spamsievescore =
+		{
+			title = "SpamSieve Score";
+			sortKey = "#spamsieve-score";
+			formatting = { formatString = "${#spamsieve-score}"; };
+			sortAsInteger = 1;
+		};
+		attachments =
+		{
+			titleImage = "HeaderAttachment";
+			menuTitle = "Attachments";
+			sortKey = "#attachments-count";
+			sortAsInteger = 1;
+			type = image;
+			minimumWidth = 16;
+			maximumWidth = 16;
+
+			matchQueries = { hasAttachments = "#attachments-count != '0'"; };
+			formatting =
+			{
+				matchQuery = hasAttachments;
+				string = "AttachmentTemplate";
+				// formatString = "${#attachments-count}"; // Use this when the image can be combined with a count
+
+				doubleClick =
+				{
+					titleFormatting = { formatString = "Attachments from ${from.name:${from.address}}"; separator = " or "; };
+					setFormatting = { string = "ALL_BODY_PARTS"; };
+					queryFormatting = { formatString = "#parent-body-part = ${#body-part-id} and ((content-type.type exists and content-type.type != text and content-type.type != multipart) or content-disposition.type = attachment)"; separator = " or "; };
+					mailboxSelection = "ALL_BODY_PARTS";
+				};
+			};
+		};
+		mailer =
+		{
+			title = "Mailer";
+			sortKey = "#mailer.name";
+		};
+		state =
+		{
+			title = "State";
+			type = "levelIndicator";
+			matchQueries =
+			{
+				isDraft = "#flags.flag = '\\Draft'";
+				isPending = "#relay exists";
+				isInProgress = "##progress exists";
+				isSubmitted = "#relayed exists";
+				isDelayed = "#relay exists and #relay-date exists";
+			};
+			formatting =
+			{
+				type = firstMatch;
+				children =
+				(
+					{
+						matchQuery = isInProgress;
+						formatString = "${##progress}";
+					},
+					{
+						matchQuery = isDelayed;
+						formatString = "Waiting to retry";
+					},
+					{
+						matchQuery = isPending;
+						string = "Pending submission";
+					},
+					{
+						matchQuery = isDraft;
+						string = "Draft";
+					},
+					{
+						matchQuery = isSubmitted;
+						formatString = "Sent via ${#relayed.server}";
+					},
+				);
+			};
+		};
+	};
+
+	// defaultColumns = ( "msgid", "synchronize", "read", "from", "subject", "date");
+	// defaultColumns = ( "synchronize", "read", "from", "subject", "date");
+	defaultSortKey = "#date-received";
+	defaultColumns = ( "read", "flag", "from", "subject", "date" );
+	outlineColumn = "from";
+}

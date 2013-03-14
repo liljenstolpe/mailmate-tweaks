@@ -1,0 +1,6 @@
+{
+	TicketVersion = 1;
+	// The names of notifications are used in the Growl GUI
+	AllNotifications = ( "New Mail" );
+	DefaultNotifications = ( "New Mail" );
+}

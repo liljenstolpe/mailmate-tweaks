@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Low-Level Customization</title>
+</head>
+
+<body>
+<h1 id='lowlevel_customization'>Low-Level Customization</h1>
+
+<p>All of the following is <em>subject to change</em>. It is essentially a peek into some of the raw inner workings of MailMate and you could very easily make changes which would cause MailMate to malfunction. Even if something does work, it is not unlikely that it is going to malfunction in future updates of MailMate.</p>
+
+<p>That said, the following is also an opportunity to play with aspects of an email program which are most often strictly off limits.</p>
+
+<h2 id='general'>General</h2>
+
+<p>Most of the following files are located in the <code>Resources</code> folder of MailMate. A custom version of a file can be made by making a copy in <code>~/Library/Application Support/MailMate/Resources/</code> and then edit it. In some cases, the copy replaces the original and in others, the copy extends the original.</p>
+
+<p>With the exception of cascading style sheet (css) files, the files are in the <a href='http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/PropertyLists/OldStylePlists/OldStylePLists.html#//apple_ref/doc/uid/20001012-BBCBDBJE'>ASCII property list format</a>.</p>
+
+<h2 id='message_headers'>Message Headers</h2>
+<!--
+*ToDo: Add background information on the basic rules for headers in RFC2822 messages and how MailMate normalizes them.*
+-->
+<p>Apart from normalization of message headers, all information needed from message headers is obtained using the regular expressions in <code>specifiers.plist</code> (currently located in <code>Frameworks/OakMIME/Resources</code>). It contains specifications of parsers and shorthands.</p>
+
+<h3 id='parser'>Parser</h3>
+
+<p>A parser specifies how to identify the various parts of a message header. The names of these parsers can then be used in queries/filters to reference the data of interest in a simple manner.</p>
+
+<p>The following are examples of a <code>From</code> header containing the same email address:</p>
+
+<pre><code>From: Foo Bar &lt;foo@bar.com&gt;
+From: &lt;foo@bar.com&gt;
+From: &quot;Foo Bar&quot; &lt;foo@bar.com&gt;
+From: foo@bar.com (Foo Bar)
+From: foo@bar.com</code></pre>
+
+<p>Hiding the complexities of the above, it is possible to reference the email address by simply writing <code>from.address</code>. Since parsers also exist for the various parts of an email address, it is even possible to write <code>from.address.domain.toplevel</code> (or implicitly by just using <code>from.toplevel</code>).</p>
+
+<p>Currently, you can both specify new parsers and override existing parsers (extreme care should be taken if doing the latter). The format of the parsers is informally specified in the file itself. Remember: The format is subject to change.</p>
+
+<h3 id='shorthand'>Shorthand</h3>
+
+<p>A shorthand specifies how a special header name (a shorthand) can be used to reference multiple headers. Current examples are <code>#recipient</code> which merges <code>to</code>, <code>cc</code> and <code>bcc</code> and <code>#mailer</code> which merges <code>x-mailer</code>, <code>user-agent</code> and <code>x-newsreader</code>.</p>
+
+<p>Currently, shorthands cannot be altered or extended.</p>
+
+<h3 id='headers_popup'>Headers PopUp</h3>
+
+<p>The headers and parsers available are exposed in MailMate via the headers popup shown, e.g., when specifying the filter for a smart mailbox. A default set of headers shown in this popup is specified in <code>headersPopUp.plist</code>. More headers can be found using the Other… menu item in the popup. Descriptions for these headers are specified in <code>headerDescriptions.plist</code> (currently very incomplete). Both files can be customized.</p>
+
+<h2 id='layouts'>Layouts</h2>
+
+<p>[…] <!--
+*ToDo: Additional comments in this and the following sections*
+--></p>
+
+<p>Replaceable and extendable:</p>
+
+<pre><code>headersFormatting.plist (short/long formatting for the headers view)
+Layouts/
+	Composer/
+		default.plist
+	Mailboxes/
+		correspondence.plist
+		default.plist
+		statistics.plist
+		threadArcs.plist
+	Message/
+		default.plist</code></pre>
+
+<h2 id='toolbars'>Toolbars</h2>
+
+<p>Not customizable yet:</p>
+
+<pre><code>composerToolbar.plist
+mailboxesToolbar.plist
+messageToolbar.plist
+toolbarItems.plist</code></pre>
+
+<h2 id='messages_viewer'>Messages Viewer</h2>
+
+<h3 id='id1'><a name='mailboxes_plist'>Mailboxes Outline</a></h3>
+
+<p>A set of standard mailboxes are defined in the file <code>standardMailboxes.plist</code> and an additional set of default example mailboxes are defined in <code>defaultMailboxes.plist</code>. The latter is copied to <code>Mailboxes.plist</code> which is located in the application support folder (<code>~/Library/Application Support/MailMate/</code>). Changes to the standard mailboxes are saved as deltas in <code>Mailboxes.plist</code>. Currently the GUI does not allow one to define custom mailbox icons for the mailboxes, but this can be done by editing <code>Mailboxes.plist</code> (you MUST quit MailMate first). In particular, one can reuse the graphics from Mail by adding the following:</p>
+
+<pre><code>deltaMailboxes =
+(
+	{	imagePath = &quot;/Applications/Mail.app/Contents/Resources/InMailbox.png&quot;;
+		uuid = &quot;INBOX&quot;;
+	},
+	{	imagePath = &quot;/Applications/Mail.app/Contents/Resources/DraftsMailbox.png&quot;;
+		uuid = &quot;DRAFTS&quot;;
+	},
+	{	imagePath = &quot;/Applications/Mail.app/Contents/Resources/SentMailbox.png&quot;;
+		uuid = &quot;SENT&quot;;
+	},
+	{	imagePath = &quot;/Applications/Mail.app/Contents/Resources/JunkMailbox.png&quot;;
+		uuid = &quot;JUNK&quot;;
+	},
+	{	imagePath = &quot;/Applications/Mail.app/Contents/Resources/TrashMailbox.png&quot;;
+		uuid = &quot;TRASH&quot;;
+	}
+);</code></pre>
+
+<p>Extendable file defining the set of possible counters for each mailbox (defaults are All, Unread, Flagged, and Unreplied):</p>
+
+<pre><code>countMenu.plist</code></pre>
+
+<h3 id='messages_outline'>Messages Outline</h3>
+
+<p>Extendable:</p>
+
+<pre><code>MmMessagesOutlineView/outlineColumns.plist (available columns in messages outline view)</code></pre>
+
+<h3 id='id2'><a name='css_plist'>Message Display</a></h3>
+
+<p>Extendable stylesheet for WebView:</p>
+
+<pre><code>MmMessagesWebView/stylesheet.css</code></pre>
+
+<h2 id='composer'>Composer</h2>
+
+<p>Replaceable:</p>
+
+<pre><code>MmMessageTextView/display.plist (foreground/background coloring of quoting levels)</code></pre>
+</body>
+</html>

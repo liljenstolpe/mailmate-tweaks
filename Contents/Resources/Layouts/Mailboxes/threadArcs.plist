@@ -1,0 +1,104 @@
+{
+	name = "Thread Arcs";
+	rootViewer =
+	{
+		viewerType = "MmSplitView";
+		orientation = "horizontal";
+		children =
+		(
+			{
+				viewerType = "MmBoxView";
+				orientation = "vertical";
+				defaultSize = 200;
+				minWidth = 100;
+				autoresize = 0;
+				toggleMenuTitle = "Mailboxes";
+				toggleKeyEquivalent = "^~@d";
+
+				dragRect = { width = 16.0; height = 16.0; location = "bottomRight"; };
+
+				children =
+				(
+					{
+						identifier = "mailboxesOutline";
+						viewerType = "MmMailboxesOutlineView";
+						stickyMessages = 1;
+					},
+					{
+						viewerType = "MmMailboxesStatusBar";
+					},
+				);
+			},
+			{
+				viewerType = "MmSplitView";
+				orientation = "vertical";
+				collapsibleSubview = 2; // Incomplete support -- no way to get it back (1 = first, 2 = last)
+				children =
+				(
+					{
+						identifier = "pathOutlineBox";
+						viewerType = "MmBoxView";
+						orientation = "vertical";
+						defaultSize = 250;
+						autoresize = 0;
+						children =
+						(
+							{
+								identifier = "pathControl";
+								viewerType = "MmPathControlView";
+								sources = ( { sourceIdentifier = "mailboxesOutline"; } );
+							},
+							{	viewerType = "MmSeparatorView"; showWithViews = ( "pathControl" ); },
+							{
+								viewerType = "MmSplitView";
+								minHeight = 50;
+								orientation = "horizontal";
+								children =
+								(
+									{
+										identifier = "mainOutline";
+										viewerType = "MmMessagesOutlineView";
+										// columnSettings = "outlineColumns";
+										sources = ( { sourceIdentifier = "pathControl"; } );
+//										defaultSize = 350;
+//										threadingType = "flatThreading";
+									},
+									{
+										viewerType = "MmThreadArcsView";
+										sources = ( { sourceIdentifier = "mainOutline"; } );
+										selectionSources = ( { sourceIdentifier = "mainOutline"; } );
+										transformation = "$ALL_MESSAGES.filter(#thread-id =[c] $mainOutline.#thread-id)";
+										defaultSize = 30;
+										minWidth = 30;
+										orientation = "vertical";
+									},
+								);
+							},
+						);
+					},
+					// Horizontal variant
+					// {
+					// 	viewerType = "MmThreadArcsView";
+					// 	sources = ( { sourceIdentifier = "mainOutline"; } );
+					// 	selectionSources = ( { sourceIdentifier = "mainOutline"; } );
+					// 	transformation = "$ALL_MESSAGES.filter(#thread-id =[c] $mainOutline.#thread-id)";
+					// 	defaultSize = 30;
+					// 	minHeight = 30;
+					// 	minWidth = 50;
+					// 	toolTipFormatting = 
+					// 	{
+					// 		children =
+					// 		(
+					// 			{ formatString = "${from.name:${from.address}}"; },
+					// 			{ prefixString = ", "; formatString = "${#date-received-relative}"; },
+					// 		);
+					// 	};
+					// },
+					{
+						inject = ( "messageView.plist" );
+					},
+				);
+			},
+		);
+	};
+}

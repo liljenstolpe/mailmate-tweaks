@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>untitled</title>
+</head>
+
+<body>
+<h1 id='key_binding_selectors'>Key Binding Selectors</h1>
+
+<h2 id='navigation'>Navigation</h2>
+<table><thead><tr><th>Selector</th><th>Argument</th><th>Action</th></tr></thead><tbody><tr><td style='text-align: left;'>nextMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to next message (expand if necessary)</td>
+</tr><tr><td style='text-align: left;'>previousMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to previous message</td>
+</tr><tr><td style='text-align: left;'>nextThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to next thread</td>
+</tr><tr><td style='text-align: left;'>previousThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to previous thread</td>
+</tr><tr><td style='text-align: left;'>nextUnreadMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to next unread message (expand if necessary)</td>
+</tr><tr><td style='text-align: left;'>previousUnreadMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to previous unread message</td>
+</tr><tr><td style='text-align: left;'>nextUnreadThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to next unread thread</td>
+</tr><tr><td style='text-align: left;'>previousUnreadThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Move to previous unread thread</td>
+</tr><tr><td style='text-align: left;'>expand:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Expand selected messages</td>
+</tr><tr><td style='text-align: left;'>collapse:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Collapse selected messages</td>
+</tr><tr><td style='text-align: left;'>expandThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Expand selected threads</td>
+</tr><tr><td style='text-align: left;'>collapseThread:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Collapse selected threads</td>
+</tr><tr><td style='text-align: left;'>expandAll:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Expand all threads</td>
+</tr><tr><td style='text-align: left;'>collapseAll:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Collapse all threads</td>
+</tr><tr><td style='text-align: left;'>scrollPageDown:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Scroll one page down</td>
+</tr><tr><td style='text-align: left;'>scrollPageUp:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Scroll one page up</td>
+</tr><tr><td style='text-align: left;'>scrollPageDownOrNextUnreadMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Scroll one page down if possible or skip to next message</td>
+</tr><tr><td style='text-align: left;'>makeFirstResponder:</td><td style='text-align: left;'>View identifier</td><td style='text-align: left;'>Identifiers can be found in layout files</td>
+</tr><tr><td style='text-align: left;'>goToMailbox:</td><td style='text-align: left;'>Mailbox UUID (optional)</td><td style='text-align: left;'>Select mailbox (or show mailbox selection window)</td>
+</tr><tr><td style='text-align: left;'>searchAllMessages:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Initiate search in “All Messages”</td>
+</tr><tr><td style='text-align: left;'>mailboxSearch:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Initiate search in currently selected mailbox</td>
+</tr></tbody></table>
+<h2 id='selection'>Selection</h2>
+<table><thead><tr><th>Selector</th><th>Argument</th><th>Action</th></tr></thead><tbody><tr><td style='text-align: left;'>selectAll:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Select all messages</td>
+</tr><tr><td style='text-align: left;'>deselectAll:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Clear selection of messages</td>
+</tr><tr><td style='text-align: left;'>moveDownAndModifySelection:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Extend selection downwards</td>
+</tr><tr><td style='text-align: left;'>moveUpAndModifySelection:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Extend selection upwards</td>
+</tr><tr><td style='text-align: left;'>selectWithFilter:</td><td style='text-align: left;'>Filter string</td><td style='text-align: left;'>Select a subset of messages matched by the filter</td>
+</tr></tbody></table>
+<h2 id='message_actions'>Message actions</h2>
+<table><thead><tr><th>Selector</th><th>Argument</th><th>Action</th></tr></thead><tbody><tr><td style='text-align: left;'>openMessages:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Open message(s) in separate window(s)</td>
+</tr><tr><td style='text-align: left;'>newMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Create new message and open composer</td>
+</tr><tr><td style='text-align: left;'>reply:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Reply to selected message</td>
+</tr><tr><td style='text-align: left;'>replySender:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Reply to only the sender of the selected message</td>
+</tr><tr><td style='text-align: left;'>replyAll:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Reply to both sender and all recipients of the selected message</td>
+</tr><tr><td style='text-align: left;'>replyList:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Reply to the mailing list of the selected message (if possible)</td>
+</tr><tr><td style='text-align: left;'>forwardMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Forward selected message(s)</td>
+</tr><tr><td style='text-align: left;'>forwardAsAttachment:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Forward selected message as an attachment</td>
+</tr><tr><td style='text-align: left;'>moveToMailbox:</td><td style='text-align: left;'>Mailbox UUID (optional)</td><td style='text-align: left;'>Move selected messages to mailbox (or show mailbox selection window)</td>
+</tr><tr><td style='text-align: left;'>moveThreadToMailbox:</td><td style='text-align: left;'>Mailbox UUID</td><td style='text-align: left;'>(not fully implemented)</td>
+</tr><tr><td style='text-align: left;'>archive:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;moveToMailbox:&#8217;, &#8216;archive&#8217; )</td>
+</tr><tr><td style='text-align: left;'>moveToJunk:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;moveToMailbox:&#8217;, &#8216;junk&#8217; )</td>
+</tr><tr><td style='text-align: left;'>deleteMessage:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;moveToMailbox:&#8217;, &#8216;trash&#8217; )</td>
+</tr><tr><td style='text-align: left;'>toggleTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Toggle an IMAP keyword (not necessarily a tag)</td>
+</tr><tr><td style='text-align: left;'>setTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Set an IMAP keyword (not necessarily a tag)</td>
+</tr><tr><td style='text-align: left;'>removeTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Remove an IMAP keyword (not necessarily a tag)</td>
+</tr><tr><td style='text-align: left;'>toggleReadState:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;toggleTag:&#8217;, &#8216;\Seen&#8217; )</td>
+</tr><tr><td style='text-align: left;'>toggleFlag:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;toggleTag:&#8217;, &#8216;\Flagged&#8217; )</td>
+</tr><tr><td style='text-align: left;'>toggleMuteState:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Shorthand for ( &#8216;toggleTag:&#8217;, &#8216;$Muted&#8217; )</td>
+</tr><tr><td style='text-align: left;'>saveAttachments:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Display “Save Attachments” panel</td>
+</tr><tr><td style='text-align: left;'>saveAttachmentsInDownloads:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Save attachments in Downloads folder</td>
+</tr><tr><td style='text-align: left;'>undo:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Undo action (moved messages or keyword changes)</td>
+</tr><tr><td style='text-align: left;'>redo:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Redo action (moved messages or keyword changes)</td>
+</tr></tbody></table>
+<h2 id='mailbox_actions'>Mailbox actions</h2>
+<table><thead><tr><th>Selector</th><th>Argument</th><th>Action</th></tr></thead><tbody><tr><td style='text-align: left;'>mailboxToggleTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Toggle tag for messages in currently displayed mailbox (or search result)</td>
+</tr><tr><td style='text-align: left;'>mailboxSetTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Set tag for messages in currently displayed mailbox (or search result)</td>
+</tr><tr><td style='text-align: left;'>mailboxRemoveTag:</td><td style='text-align: left;'>IMAP keyword</td><td style='text-align: left;'>Remove tag for messages in currently displayed mailbox (or search result)</td>
+</tr><tr><td style='text-align: left;'>expungeDeletedMessages:*</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Permanently delete any messages marked as <code>\Deleted</code> in the currently displayed mailbox (or search result)</td>
+</tr></tbody></table>
+<p>* Experimental feature which can be used to make MailMate behave like a traditional IMAP email client. Currently this also requires enabling the following preference in the Terminal (to prevent MailMate from hiding <code>\Deleted</code> messages):</p>
+
+<pre><code>defaults write com.freron.MailMate MmShowDeletedMessages -bool YES</code></pre>
+
+<h2 id='composer'>Composer</h2>
+<table><thead><tr><th>Selector</th><th>Argument</th><th>Action</th></tr></thead><tbody><tr><td style='text-align: left;'>saveDocument:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Save draft</td>
+</tr><tr><td style='text-align: left;'>showContextMenu:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Show context sensitive menu (can be used to show spelling alternatives in the composer)</td>
+</tr><tr><td style='text-align: left;'>send:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Send message</td>
+</tr><tr><td style='text-align: left;'>sendAndArchiveParent:</td><td style='text-align: left;'>-</td><td style='text-align: left;'>Send message and then archive the replied message</td>
+</tr><tr><td style='text-align: left;'>sendAndMoveParentToMailbox:</td><td style='text-align: left;'>Mailbox UUID</td><td style='text-align: left;'>Send message and then move the replied message to the given mailbox</td>
+</tr><tr><td style='text-align: left;'>insertString:</td><td style='text-align: left;'>string</td><td style='text-align: left;'>Insert text in composer</td>
+</tr><tr><td style='text-align: left;'>insertFormatString:**</td><td style='text-align: left;'>format string</td><td style='text-align: left;'>Insert text in composer using a format string</td>
+</tr></tbody></table>
+<p>** Experimental feature added as an alternative to <code>insertText:</code>. Mainly to allow one to do something like <code>&quot;x&quot; = ( &quot;reply:&quot;, &quot;insertFormatString:&quot;, &quot;Hi ${from.name.first},\n\n&quot;);</code>.</p>
+</body>
+</html>

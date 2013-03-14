@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Organize</title>
+</head>
+
+<body>
+<a name='organize'> </a>
+<h1 id='organize'>Organize</h1>
+
+<h2 id='mailboxes'>Mailboxes</h2>
+
+<p>The basic means of organizing email is through the use of mailboxes. MailMate supports 3 kinds of mailboxes which are described in the following subsections. For all mailbox types the following is useful to know:</p>
+
+<ul>
+<li>
+<p>You can change the displayed count of messages for a mailbox (unread, flagged, …).</p>
+</li>
+
+<li>
+<p>You can change the currently selected mailbox using “Go to Mailbox…” (⌘T). This opens a window listing all mailboxes. Advanced filtering is supported and your favorite abbreviations for mailboxes are cached. Without filtering, the list is sorted such that the most recently used mailbox is at the top.</p>
+</li>
+
+<li>
+<p>You can move selected messages to any (IMAP) mailbox using “Move to Mailbox…” (⌥⌘T). Again, filtering and abbreviations are supported.</p>
+</li>
+</ul>
+<img alt='Mailbox chooser' class='center' src='images/go_to_mailbox.png' />
+<h3 id='standard_mailboxes'>Standard Mailboxes</h3>
+
+<p>The standard mailboxes are the mailboxes which cannot be changed, because they have a standard purpose. The first mailbox in the mailbox outline, “All Messages”, contains all messages in your IMAP account(s) except those in the designated mailboxes for deleted messages or messages marked as junk.</p>
+
+<p>Below “All Messages” you find the a well-known set of standard mailboxes: “Inbox”, “Drafts”, “Sent Messages”, “Junk”, and “Deleted Messages”. There is also a mailbox named “Archive”. As the name implies, this mailbox is intended for archiving messages. If you have multiple IMAP accounts configured then these mailboxes are universal, that is, they unify mailboxes across multiple IMAP accounts. It is possible to expand these mailboxes if one wants to see which account a message is located in.</p>
+
+<p>The universal mailboxes can also be used as targets for moving messages. MailMate will move the messages such that they each stay within their original IMAP account.</p>
+
+<p>Note: The mailbox for “Sent Messages” has an additional level of mailboxes if an account has multiple addresses. One mailbox for each identity used as a from address.</p>
+
+<h3 id='smart_mailboxes'>Smart Mailboxes</h3>
+
+<p>MailMate encourages the use of so-called “smart” mailboxes. These are virtual mailboxes which show messages which belong to a specified set of mailboxes and which match some set of conditions. When handling a new message in the Inbox, the basic decision to make is whether it should be archived or trashed. The rest should be handled by smart mailboxes.</p>
+
+<p>Below the universal mailboxes in the mailbox outline you find a range of smart mailboxes which exemplifies what is possible with MailMate. In particular, note the “Mailing Lists” mailbox: If you have any mailing list messages they are automatically divided into smart mailboxes as children of the “Mailing Lists” mailbox. There is currently no graphical user interface for making this kind of mailbox yourself (but you can <a href='customization.html#mailboxes_plist'>edit</a> a file). The same goes for the automatically displayed children of the “Unread” mailbox.</p>
+
+<p>Double-click any smart mailbox in order to see how it has been configured.</p>
+<!--
+### Source Mailboxes
+
+\[…\]
+-->
+<h2 id='mailbox_editor'>Mailbox Editor</h2>
+
+<p>When creating a new smart mailbox or when editing an existing mailbox, the mailbox editor is opened. The content of a smart mailbox is based on the content of one or more other mailboxes and an optional set of conditions. If you hold down the option key (⌥) then the plus buttons will change into “…” buttons (a general feature of Mac OS X). This can be used to create more complicated any/all (boolean) constructions.</p>
+<img alt='Boolean filter' class='center' src='images/boolean_filter.png' />
+<p>The most interesting part of the mailbox editor is the popup for choosing the headers used for filtering. The default set of headers is reminiscent of other email applications, but there are some important differences. Many of the headers in the menu have submenus providing more exact values for filtering. For example, instead of searching the entire “From” header for an email address, you can explicitly match the email address with “From ▸ Address”. Also note that when entering a value in the text field for a match, the value is automatically completed. Finally, if you try the “Other…” menu item then you get access to a full list of all headers seen in the imported messages.</p>
+
+<p>Two special “headers” can be used to search in the body text of messages. One for unqouted body text and another for quoted body text.</p>
+
+<p>The popup used to select the type of comparison is also interesting. Case sensitivity is an option and you can also choose to match on the headers in any body part of a message. Make sure you try selecting the “is in” type of comparison. This allows you to compare with the headers of messages in some other mailbox. For an example of this, try editing the “Examples ▸ Personal Inbox” mailbox.</p>
+<!--
+\[…\]
+-->
+<h2 id='tags'>Tags</h2>
+
+<p>Tagging is a simple concept, but it&#8217;s a very powerful tool when organizing your messages. You can can us it to apply tags to your messages and then utilitize the tags when searching and, in particular, when creating smart mailboxes.</p>
+
+<p>MailMate offers two ways to create new tags. You can do it in the <a href='preferences.html#tags'>“Tags” preferences pane</a> or you can do it by simply entering a new tag name in the tags editor. The tags editor is shown when you hit the shortcut key which is simply <code>t</code> by default (configurable in the preferences pane). A text field is shown and you can then enter and/or remove tags for the currently selected message. Changes are committed if you hit enter (↩) and cancelled if you hit the escape key. When entering tags they are automatically completed using the set of known tags.</p>
+
+<p>When multiple messages are selected then the tags editor has two text fields; one for tags to be added and another for tags to be removed from the selected messages.</p>
+
+<p>If the currently selected message has any tags then they are shown in the expanded headers view. Clicking on a tag searches for messages with the same tag. Holding down ⌥ searches the current mailbox only (like all other link searches). The tags are also available for searching and in smart mailbox conditions.</p>
+
+<p>Note that the composer allows the user to assign tags to drafts as well.</p>
+
+<h3 id='imap_keywords'>IMAP Keywords</h3>
+
+<p>The implementation of tags in MailMate is based on <a href='http://tools.ietf.org/html/rfc3501#section-2.3.2'>IMAP keywords</a>. This means that the tags are synchronized with the IMAP server if possible. The use of tags in MailMate can be limited by the support of IMAP keywords by the IMAP server. Some servers may have an upper limit on the number of IMAP keywords and some may not support them at all. Feedback is welcome if you have any problems with such limitations.</p>
+
+<p>IMAP keywords only support a subset of ASCII characters. MailMate handles this by maintaining a list of tag names and their corresponding IMAP keywords. The tag names are displayed in the user interface and the IMAP keywords are used when synchronzing with the server. Unfortunately this means that the tag names are not synchronized.</p>
+</body>
+</html>

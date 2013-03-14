@@ -1,0 +1,10 @@
+{
+	counts = (
+		{ key = "all"; title = "All"; filter = ""; /*defaultColor = ;*/ },
+		{ key = "unread"; title = "Unread"; filter = "#flags exists and #flags.flag !=[x] '\\Seen'"; }, // Existence-check is currently necessary to avoid counting non-root body parts
+		//	When/if possible	{ key = "unreadToMe"; title = "Unread to Me"; filter = "#flags.flag !=[x] '\\Seen' and to.address = $identities.address"; },
+		{ key = "flagged"; title = "Flagged"; filter = "#flags.flag = '\\Flagged'"; },
+		{ key = "unreplied"; title = "Unreplied"; filter = "#flags.flag !=[x] '\\Answered'"; },
+		{ key = "recent"; title = "Recent"; filter = "#flags.flag = '\\Recent' and #flags.flag !=[x] '\\Seen'"; }, // Recent and unread
+	);
+}

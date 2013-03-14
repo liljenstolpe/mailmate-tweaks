@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+# emate version 1.0
+# Based on a script contributed by: Mattias Holm
+# ToDo: Control default signature, Markdown, PGP, S/MIME, ...
+
+import argparse
+import os
+import subprocess
+import sys
+import urllib
+
+# The prog argument is a hack to be able to display the required 'command' argument
+# (this is important for a future implementation of emate with more functionality)
+argParser = argparse.ArgumentParser(description='MailMate command line interface.', prog='emate mailto')
+
+argParser.add_argument('-v', '--verbose',            action='store_true', help='verbose output')
+argParser.add_argument('-t', '--to',       type=str, action='append',     help='email address to send to')
+argParser.add_argument('-c', '--cc',       type=str, action='append',     help='email addresses to add to cc')
+argParser.add_argument('-b', '--bcc',      type=str, action='append',     help='email address to add to bcc')
+argParser.add_argument('-s', '--subject',  type=str, action='append',     help='subject for email')
+argParser.add_argument(      '--send-now',           action='store_true', help='send email immediately')
+# argParser.add_argument('--header', type=str, help='arbitrary header formatted as "<name>: <value>"')
+
+argParser.add_argument('attachments', nargs=argparse.REMAINDER)
+
+# Verify that the mailto argument is given
+if len(sys.argv) == 1 or sys.argv[1] != "mailto":
+    argParser.print_help()
+    sys.exit(1)
+
+# Remove the mailto argument
+del sys.argv[1]
+args = argParser.parse_args()
+
+headers = []
+for h in [("to", args.to), ("cc", args.cc), ("bcc", args.bcc), ("subject", args.subject)]:
+    if h[1] is not None:
+        joined = urllib.quote(",".join(h[1]), ",")
+        headers.append(h[0] + "=" + joined)
+
+if len(args.attachments) > 0:
+    for f in args.attachments:
+        headers.append("attachment-url=" + urllib.quote(os.path.abspath(f), "/"))
+
+if args.send_now:
+    headers.append("send-now=yes")
+
+# Read STDIN if someone is piping to it
+if not sys.stdin.isatty():
+    data = sys.stdin.read()
+    if data and len(data) > 0:
+        headers.append("body=" + urllib.quote(data, "\n"))
+
+mailtoLink = "mailto:?" + "&".join(headers)
+# Note: Could also convert LF style newlines to CRLF, but MailMate handles it either way.
+
+if args.verbose:
+    print "Telling MailMate to open: " + mailtoLink
+
+ascript = 'tell application "MailMate"\nopen location "%s" with trust\nactivate\nend tell' % (mailtoLink)
+
+try:
+    subprocess.check_call(["osascript", "-e", ascript])
+except:
+    print("cannot run osascript")

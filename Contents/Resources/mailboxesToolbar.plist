@@ -1,0 +1,44 @@
+{
+	type = mailboxes;
+
+	defaultIdentifiers =
+	(
+		back-forward,
+		NSToolbarSpaceItem,
+		archive-moveToJunk-deleteMessage,
+		// NSToolbarSpaceItem,
+		newMessage-reply-forwardMessage,
+		// NSToolbarSpaceItem,
+		// quickLook,
+		NSToolbarFlexibleSpaceItem,
+		sameThread-correspondence-customSearch,
+
+		// NSToolbarFlexibleSpaceItem,
+		// search,
+	);
+
+	allowedIdentifiers =
+	(
+		back-forward,
+		archive,
+		delete,
+		archive-moveToJunk-deleteMessage,
+		newMessage,
+		reply,
+		replyAll,
+		forwardMessage,
+		newMessage-reply-forwardMessage,
+		toggleFlag,
+		quickLook,
+		sameThread,
+		correspondence,
+		customSearch,
+
+		// Using the following verbatim which is not so nice. The variable names are extended with 'Identifier'.
+		NSToolbarPrintItem,
+		NSToolbarCustomizeToolbarItem,
+		NSToolbarSeparatorItem,
+		NSToolbarSpaceItem,
+		NSToolbarFlexibleSpaceItem,
+	);
+}

@@ -1,0 +1,30 @@
+{
+	"\UF728" = "deleteMessage:";         // ⌦
+	" "      = "scrollPageDown:";        // Space (alternatively it can be bound to scrollPageDownOrNextUnreadMessage:)
+	"$ "     = "scrollPageUp:";          // Shift-space
+	"\U000A" = "openMessages:";          // Return
+	"\U000D" = "openMessages:";          // Enter
+
+	"~\UF705" = "showContextMenu:";      // ⌥F2
+
+	"→"      = "nextMessage:";           // \U2193 - Swipe right
+	"←"      = "previousMessage:";       // \U2190 - Swipe left
+	"↑"      = "previousThread:";        // \U2192 - Swipe up
+	"↓"      = "nextThread:";            // \U2191 - Swipe down
+
+	"^→"      = "nextUnreadMessage:";
+	"^←"      = "previousUnreadMessage:";
+	"^↑"      = "previousUnreadThread:";
+	"^↓"      = "nextUnreadThread:";
+
+	"F" = {
+		"0" = ( "removeTag:", "\\Flagged", "removeTag:", "$MailFlagBit0", "removeTag:", "$MailFlagBit1", "removeTag:", "$MailFlagBit2" );
+		"1" = (    "setTag:", "\\Flagged", "removeTag:", "$MailFlagBit0", "removeTag:", "$MailFlagBit1", "removeTag:", "$MailFlagBit2" );
+		"2" = (    "setTag:", "\\Flagged",    "setTag:", "$MailFlagBit0", "removeTag:", "$MailFlagBit1", "removeTag:", "$MailFlagBit2" );
+		"3" = (    "setTag:", "\\Flagged", "removeTag:", "$MailFlagBit0",    "setTag:", "$MailFlagBit1", "removeTag:", "$MailFlagBit2" );
+		"4" = (    "setTag:", "\\Flagged",    "setTag:", "$MailFlagBit0",    "setTag:", "$MailFlagBit1", "removeTag:", "$MailFlagBit2" );
+		"5" = (    "setTag:", "\\Flagged", "removeTag:", "$MailFlagBit0", "removeTag:", "$MailFlagBit1",    "setTag:", "$MailFlagBit2" );
+		"6" = (    "setTag:", "\\Flagged",    "setTag:", "$MailFlagBit0", "removeTag:", "$MailFlagBit1",    "setTag:", "$MailFlagBit2" );
+		"7" = (    "setTag:", "\\Flagged", "removeTag:", "$MailFlagBit0",    "setTag:", "$MailFlagBit1",    "setTag:", "$MailFlagBit2" );
+	};
+}

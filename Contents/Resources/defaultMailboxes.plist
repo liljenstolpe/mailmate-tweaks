@@ -1,0 +1,124 @@
+{
+	mailboxes =
+	(
+		{
+			name = 'Unread';
+			set = 'ALL_MESSAGES';
+			filter = "#flags.flag !=[x] '\\Seen'";
+			partitioningHeader = '#source';
+			partitioningFormatString = '${#source.path.noinbox}';
+		},
+		{
+			name = 'Flagged';
+			set = 'ALL_MESSAGES';
+			filter = "#flags.flag = '\\Flagged'";
+			countKey = "all";
+			partitioningHeader = '#source';
+			partitioningFormatString = '${#source.path.noinbox}';
+			uuid = 'FLAGGED';
+		},
+		{
+			name = 'Muted';
+			set = 'ALL_MESSAGES';
+			filter = "#flags.flag = '$Muted'";
+			countKey = "all";
+			partitioningHeader = '#source';
+			partitioningFormatString = '${#source.path.noinbox}';
+		},
+		{
+			name = 'Mailing Lists';
+			set = 'ALL_MESSAGES';
+			filter = 'list-id.identifier exists';
+			uuid = 'MAILING_LISTS';
+			partitioningHeader = 'list-id.identifier';
+			partitioningFormatString = '${list-id.description:${subject.blob:?${subject.blob:/capitalize}:${list-id.identifier.final-level}}}';
+			showSingleChild = 1;
+		},
+		{
+			name = 'Examples';
+			mailboxes =
+			(
+				{	name = "Last Week";
+					set = "ALL_MESSAGES";
+					filter = "#date > 7 days ago";
+				},
+				{
+					name = "All Images";
+					set = 'ALL_BODY_PARTS';
+					filter = "content-type.type = 'image'";
+					countKey = "all";
+				},
+				{
+					name = "Messages with Images";
+					set = 'ALL_MESSAGES';
+					filter = "content-type.type =[a] 'image'";
+					countKey = "all";
+				},
+				{
+					name = "All PDFs";
+					set = 'ALL_BODY_PARTS';
+					filter = "content-type.type = 'application' and content-type.subtype = 'pdf'";
+					countKey = "all";
+				},
+				{
+					name = "Messages with PDFs";
+					set = 'ALL_MESSAGES';
+					filter = "content-type.subtype =[a] 'pdf'";
+					countKey = "all";
+				},
+				{
+					name = "HTML Only Messages";
+					set = 'ALL_MESSAGES';
+					filter = "content-type.type = 'text' and content-type.subtype = 'html'";
+					countKey = "all";
+				},
+				{
+					name = "HTML Body Parts";
+					set = 'ALL_BODY_PARTS';
+					filter = "content-type.type = 'text' and content-type.subtype = 'html'";
+					countKey = "all";
+				},
+				{
+					name = "Embedded Messages";
+					set = 'ALL_BODY_PARTS';
+					filter = "content-type.type = 'message'";
+					countKey = "all";
+				},
+				{
+					name = 'Personal Inbox';
+					set = 'INBOX';
+					filter = '#recipient.address = $SENT.from.address';
+					uuid = "PERSONAL_INBOX";
+				},
+				{
+					name = 'Personal Inbox with Threads';
+					set = "ALL_MESSAGES";
+					filter = '#thread-id =[c] $PERSONAL_INBOX.#thread-id';
+				},
+				{
+					name = 'Outbound';
+					set = 'ALL_MESSAGES';
+					filter = "#relay exists";
+					countKey = "all";
+					partitioningHeader = '#source';
+					partitioningFormatString = '${#source.path.noinbox}';
+					defaultState = {
+						mainOutline = {
+							messagesOutlineView = {
+								enabledColumns = ( "read", "flag", "to", "subject", "date", "state");
+								outlineColumn = "to";
+							};
+						};
+					};
+				},
+				{
+					name = 'Unsynchronized';
+					query = "$IMAPCandidates";
+					// set = 'ALL_MESSAGES'; // Needs to be $Msgs
+					// filter = "#server-flags exists or (#source.protocol =[c] 'imap' and #uid !exists) or #uid = '*' or #old-uid exists or #imap-expunge = 'yes'";
+					countKey = "all";
+				},
+			);
+		},
+	);
+}

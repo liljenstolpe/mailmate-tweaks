@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<title>Account Setup</title>
+</head>
+
+<body>
+<a name='accounts'> </a>
+<h1 id='account_setup'>Account Setup</h1>
+
+<h2 id='imap'>IMAP</h2>
+
+<p>MailMate is able to import IMAP accounts from Apple Mail and Thunderbird. You can do this using the “File ▸ Import Accounts&#8230;” menu item which opens a window showing you all importable accounts available.</p>
+
+<p>Alternatively, you can use the “File ▸ Add IMAP Account&#8230;” menu item. This opens a window in which you can manually configure an IMAP account. If you need to edit an existing account then double-click it or use “Mailbox ▸ Edit Source&#8230;” after selecting the account. The configurable values are as follows:</p>
+
+<ul>
+<li>
+<p>Description</p>
+
+<p>The name used to reference the account in the interface, e.g., in the mailbox outline.</p>
+</li>
+
+<li>
+<p>Full Name</p>
+
+<p>The name you would like to use for outgoing messages.</p>
+</li>
+
+<li>
+<p>Email Address(es)</p>
+
+<p>A comma-separated list of email addresses used for the account. Note that you should only add the addresses which you often use for new messages. These addresses are shown in a popup in the composer window, but the popup also allows you to customize the address. When replying to a message, MailMate automatically tries to use the email address for which the original message was sent. This does not require the address to be explicitly declared in the settings.</p>
+
+<p>If needed, an alternative name can be assigned to each address. Here is an example: “address1@example.com, Other Name &#60;address2@example.com&#62;”. The first address would be paired with the full name specified for the account, but the other address would be paired with the explicitly given alternative name: “Other Name”.</p>
+</li>
+
+<li>
+<p>Address Pattern</p>
+
+<p>This is an advanced feature for users with many email aliases. It allows you to tell MailMate the format of email addresses used for the account without listing them explicitly. Using this information MailMate can analyze the headers of an incoming message and automatically derive an appropriate address to be used for the default “From” address in a reply. This is combined with the “Full Name” specified above. The value used for this option must be a so-called regular expression. Example values are:</p>
+<table><thead><tr><th>Regular expression</th><th>Description</th></tr></thead><tbody><tr><td style='text-align: left;'><code>address1@example\.com</code>&#124;<code>address2@example\.com</code></td><td style='text-align: left;'>An explicit list of alternative addresses</td>
+</tr><tr><td style='text-align: left;'><code>address[0-9]*@example\.com</code></td><td style='text-align: left;'>Any address with an arbitrary suffixed number such as <code>address123@example.com</code></td>
+</tr><tr><td style='text-align: left;'><code>username\+.*@fastmail\.fm</code></td><td style='text-align: left;'>Any address with an arbitrary plus-suffixed string such as <code>username+private@fastmail.fm</code></td>
+</tr><tr><td style='text-align: left;'><code>mm-.*@freron\.com</code></td><td style='text-align: left;'>Any address with <code>mm-</code> prefixed such as <code>mm-dummy@freron.com</code></td>
+</tr></tbody></table></li>
+
+<li>
+<p>IMAP Server / User Name</p>
+
+<p>These are the most important settings. In most cases you do not need to define the port and unless you have very good reasons to do so then you should not disable the requirement for SSL (encryption of data sent via the connection to the server). Read further below for more information about subscriptions.</p>
+</li>
+
+<li>
+<p>SMTP Server / User Name</p>
+
+<p>The settings used for outgoing messages. Note that multiple accounts are allowed to share the same SMTP server.</p>
+</li>
+</ul>
+
+<p>Note that there are no password fields. Passwords are requested when needed and then stored in the system keychain if allowed. MailMate may even find passwords in the keychain and simply ask to be allowed to read them (for example, if they have been stored by another email client).</p>
+
+<h3 id='migration'>Migration</h3>
+
+<p>If you are migrating from an email client with support for IMAP then the easiest way to migrate is to ensure that all of your messages are located on IMAP servers.</p>
+
+<p>If you are migrating from a POP3 only email client then you can try the “File ▸ Import Messages&#8230;” menu item in MailMate. You are then asked to chooses files or folders to import, and you also need to specify an IMAP mailbox to be used as the root for the imported messages. MailMate imports the following:</p>
+
+<ul>
+<li>single messages in standard RFC822 format (<code>.eml</code>, <code>.msgd</code>)</li>
+
+<li>single messages in Apples extended standard RFC822 format (<code>.emlx</code>)</li>
+
+<li>messages within mbox files (<code>.mbox</code>)</li>
+</ul>
+
+<p>MailMate uses names of mbox files and names of folders in the hierarchy scanned to create a hierarchy of IMAP mailboxes.</p>
+
+<p>Note that the file extensions noted above are currently hardcoded, i.e., MailMate ignores all other files.</p>
+
+<h3 id='id1'><a name='subscriptions'>Subscriptions</a></h3>
+<!--
+This is mainly used to subscribe to non-personal mailboxes if such exist on the server. For example, the server may provide newsgroups via a shared [namespace][]. 
+-->
+<p>The IMAP standard includes the concept of <a href='http://tools.ietf.org/html/rfc3501#section-6.3.6'>mailbox subscriptions</a>. In short, the server maintains a list of subscribed (and unsubscribed) mailboxes. If your IMAP account is part of a webmail client then you can also use this subscription state to avoid fetching all mailboxes available in the web based interface. This is particularly useful for <a href='gmail.html'>handling Gmail</a>.</p>
+
+<p>MailMate goes one step further with respect to mailbox subscriptions and adds the concept of client-side subscriptions as opposed to the server-side subscriptions described above. Client-side subscriptions are maintained locally by MailMate. This has the advantage that you can can use MailMate for a selected set of mailboxes and still have other mailboxes appear in other email applications, or in MailMate itself on another machine. It can also be used for <a href='gmail.html'>handling Gmail</a> accounts as an alternative to server-side subscriptions. Currently, it is not possible to subscribe to a mailbox client-side if it is not subscribed server-side.</p>
+
+<p>Note that some email clients do not (and cannot be configured to) respect server-side subscription states and simply synchronize all mailboxes in the personal namespace. Therefore you cannot unsubscribe a mailbox in MailMate and then expect it to work for all other email clients as well.</p>
+
+<h3 id='gmail'>Gmail</h3>
+
+<p>MailMate aims to support all standards compliant IMAP servers and as many non-standard IMAP servers as possible. One of the non-standard IMAP servers is the one provided by <a href='http://mail.google.com'>Gmail</a> (Googles free webmail service). Its name is Gimap. The following explains how Gmail works via IMAP and how MailMate handles it.</p>
+
+<p>MailMate encourages the use of a single mailbox for archiving messages (for each IMAP account). This concept is similar to the “All Mail” mailbox in Gmail, but unfortunately it is not quite the same thing. In MailMate, a message is not in the “Archive” mailbox unless it has been explicitly archived. In Gmail, a message is (almost) always in “All Mail” and is simply removed from the “Inbox” when it is archived. In other words, in Gmail, a message can be in multiple mailboxes. This is even more apparent when using labels (or starring messages).</p>
+
+<p>IMAP does not support the Gmail model. If a message needs to be in multiple mailboxes then it must be duplicated. IMAP supports so-called <a href='http://tools.ietf.org/html/rfc3501#section-2.3.2'>keywords</a> (flags), but Google decided not to use these for labels. The main reasons (good or bad) are probably that IMAP keywords are/were not well supported by many email clients and it would require users to manually setup smart mailboxes for all their Gmail labels. Instead, Google chose a different approach which can be best described as a hack.</p>
+
+<p>Each label in Gmail becomes a real mailbox when accessing the messages via IMAP. Existing email clients do not expect this and the result is that each message is fetched multiple times, once for each of its labels. Even if not using labels, the problem persists since every message in Inbox, Sent Mail or Drafts are also located in All Mail. In MailMate it becomes even worse because of the special “All Messages” virtual mailbox which is going to include all the duplicates.</p>
+
+<p>MailMate tries to handle Gmail within the rules of IMAP. Unfortunately part of this means that it is not recommended to use Gmail labels unless they are essentially used as mailboxes (only 1 label for each message). The only exception it the star symbol (“[Gmail]/Starred”) which is mapped by Gmail to the standard IMAP keyword named “\Flagged” (which works in most email clients including MailMate).</p>
+
+<ul>
+<li>MailMate automatically unsubscribes the following mailboxes: “[Gmail]/All Mail”, “[Gmail]/Starred”, and “[Gmail]/Important”.</li>
+
+<li>MailMate creates a mailbox named “[Gmail]/Archive” (when it is needed).</li>
+
+<li>MailMate automatically maps the standard mailboxes of Gmail to the standard mailboxes of MailMate.</li>
+</ul>
+
+<p>The main problem with the above is that you can no longer access messages which are only in the “All Mail” mailbox. To be able to access these you need to mark them all with the “[Gmail]/Archive” label. This can be done as follows within the Gmail web client:</p>
+
+<ul>
+<li>Mark all conversations in All Mail as “[Gmail]/Archive”.</li>
+
+<li>Remove the “[Gmail]/Archive” label from all messages in the Inbox and any other standard mailboxes (except those in “[Gmail]/Starred”!)</li>
+
+<li>Remove the “[Gmail]/Archive” label from all messages which has been assigned a label within Gmail.</li>
+</ul>
+<!--
+## SMTP
+-->
+</body>
+</html>
